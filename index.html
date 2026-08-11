@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MITSU | 子どもの送迎を、確認と研修を受けた託送者へ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Shippori+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="MITSUは、保育園・幼稚園・学童・習い事などへのお子さまの送迎を、確認と研修を受けた託送者に依頼できる送迎マッチングサービスです。世田谷区烏山地域で徒歩送迎を先行提供中。">
+<style>
+/* ===================================================
+   リセット & ベース
+=================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Yu Gothic', 'ヒラギノ角ゴシック', 'Hiragino Sans', 'Meiryo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 16px;
+}
+img, video { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font: inherit; border: none; background: none; padding: 0; }
+ul, ol { list-style: none; }
+
+/* ===================================================
+   CSS変数
+=================================================== */
+:root {
+  --orange:      #EF6B3A;
+  --orange-dark: #C8501E;
+  --navy:        #1F3864;
+  --navy-dark:   #0a2040;
+  --green:       #06C755;
+  --green-dark:  #05a548;
+  --green-muted: #2e7d32;
+  --bg:          #FFF2EC;
+  --bg-alt:      #FFFFFF;
+  --surface:     #FFFFFF;
+  --text:        #2C2C2A;
+  --text-sub:    #6B5B53;
+  --border:      #EDD9CE;
+  --radius:      14px;
+  --shadow:      0 1px 6px rgba(180,80,40,0.09);
+  --max-w:       900px;
+
+  /* フォントルール: 原色オレンジ使用場面 / 相対的に大きな文字 */
+  --font-display: 'Shippori Mincho', 'Hiragino Mincho ProN', '游明朝', 'Yu Mincho', serif;
+  --font-hand:    'Caveat', cursive;
+}
+
+/* ===================================================
+   ユーティリティ
+=================================================== */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+.section    { padding: 64px 0; }
+.section--alt { background: var(--bg-alt); }
+
+.sec-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+.sec-heading {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+.sec-desc {
+  font-size: 15px;
+  color: var(--text-sub);
+  line-height: 1.85;
+  margin-bottom: 36px;
+}
+
+/* ===================================================
+   ヘッダー
+=================================================== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(255,255,255,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo {
+  font-size: 21px;
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 13px;
+  color: var(--text-sub);
+  padding: 8px 10px;
+  white-space: nowrap;
+  transition: color 0.15s;
+  border-radius: 6px;
+}
+.nav-links a:hover { color: var(--orange); background: var(--bg-alt); }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.hamburger:hover { background: var(--bg-alt); }
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--orange);
+  border-radius: 2px;
+  transition: transform 0.22s, opacity 0.22s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 20px 16px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 15px;
+  padding: 13px 4px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+
+/* ===================================================
+   CTAボタン
+=================================================== */
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--green);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 3px 12px rgba(6,199,85,0.3);
+  width: 100%;
+  max-width: 360px;
+}
+.btn-line:hover  { background: var(--green-dark); box-shadow: 0 4px 18px rgba(6,199,85,0.4); }
+.btn-line:active { transform: scale(0.98); }
+.btn-line::before { content: ""; display: inline-block; width: 22px; height: 22px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2C6.48 2 2 6.03 2 11c0 3.08 1.6 5.82 4.1 7.6L5 22l4.4-1.3C10.5 21.2 11.2 21.3 12 21.3c5.52 0 10-4.03 10-9s-4.48-9-10-9z'/%3E%3C/svg%3E") center/contain no-repeat; flex-shrink: 0; }
+
+.cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 0;
+  text-align: center;
+}
+.cta-sub {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin-top: 12px;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+/* LINE通知バー（#aboutセクション末尾） */
+.line-notice {
+  text-align: center;
+  margin-top: 60px;
+  padding: 40px 32px 36px;
+  border-radius: var(--radius);
+  background: rgba(239,107,58,0.05);
+  border: 1.5px solid rgba(239,107,58,0.18);
+  box-shadow: 0 2px 14px rgba(239,107,58,0.07);
+}
+.line-notice-icon {
+  margin-bottom: 16px;
+}
+.line-notice-head {
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+.line-notice-desc {
+  font-size: 15px;
+  color: var(--text-sub);
+  line-height: 1.85;
+  margin: 0 auto;
+  max-width: 460px;
+}
+
+/* ===================================================
+   ① ヒーロー（静的オレンジ背景）
+=================================================== */
+.hero {
+  position: relative;
+  background: var(--orange);
+  min-height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 28px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.hero-badge {
+  position: absolute;
+  bottom: 28px;
+  right: 32px;
+  background: var(--green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 50px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.68);
+  margin-bottom: 36px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: min(44px, calc((100vw - 60px) / 14.5));
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.35;
+  margin-bottom: 32px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+/* モバイルで句読点位置のみ折り返し可にするための補助クラス */
+.no-break { white-space: nowrap; }
+.hero-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  line-height: 2;
+  margin-bottom: 36px;
+}
+.btn-hero-solid {
+  background: rgba(255,255,255,0.18);
+  border-color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.btn-hero-solid:hover {
+  background: rgba(255,255,255,0.28);
+  border-color: #fff;
+}
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-hero-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 30px;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.18s, border-color 0.18s;
+  white-space: nowrap;
+  min-width: 160px;
+}
+.btn-hero-outline:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: #fff;
+}
+
+/* ===================================================
+   ② 悩みとの一致
+=================================================== */
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.pain-col-head {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-sub);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 4px;
+}
+.pain-list li, .value-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.65;
+}
+.pain-list li:last-child, .value-list li:last-child { border-bottom: none; }
+.pain-list li::before {
+  content: "●";
+  color: var(--orange);
+  font-size: 9px;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.value-list li::before {
+  content: "◆";
+  color: var(--navy);
+  font-size: 9px;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+/* ===================================================
+   ③ できること
+=================================================== */
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.flow-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.flow-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.flow-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.flow-sub   { font-size: 12px; color: var(--text-sub); line-height: 1.6; }
+
+/* 3段階フロー（丸＋四角重ねデザイン） */
+.flow3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 32px 0 40px;
+}
+.flow3-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  cursor: pointer;
+  transition: transform 0.28s ease;
+  padding-top: 24px;
+}
+.flow3-item:hover {
+  transform: scale(1.10);
+}
+.flow3-circle {
+  position: relative;
+  z-index: 2;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  box-shadow: 0 4px 16px rgba(239,107,58,0.35);
+  flex-shrink: 0;
+  transition: box-shadow 0.28s ease;
+}
+.flow3-item:hover .flow3-circle {
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,0.9),
+    0 0 14px 7px rgba(255,255,255,0.65),
+    0 0 32px 16px rgba(255,255,255,0.22),
+    0 4px 20px rgba(239,107,58,0.3);
+}
+.flow3-num {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-hand);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  z-index: 3;
+  white-space: nowrap;
+  text-shadow: 0 2px 10px rgba(239,107,58,0.9), 0 0 18px rgba(239,107,58,0.55);
+}
+.flow3-label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.95);
+  margin-top: 10px;
+}
+.flow3-card {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  margin-top: -50px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 66px 20px 26px;
+  text-align: left;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.28s ease;
+}
+.flow3-item:hover .flow3-card {
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,0.95),
+    0 0 14px 7px rgba(255,255,255,0.7),
+    0 0 32px 16px rgba(255,255,255,0.35),
+    0 6px 24px rgba(0,0,0,0.1);
+}
+.flow3-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.18);
+  line-height: 1.45;
+  text-align: left;
+}
+.flow3-card-desc {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.85;
+  text-align: left;
+}
+
+.info-box {
+  background: #FFF0EA;
+  border-left: 4px solid var(--orange);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  margin-bottom: 40px;
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.85;
+}
+.info-box strong { color: var(--orange-dark); font-weight: 700; }
+
+/* ---- LINE動画タブプレイヤー ---- */
+.vp-section { margin-bottom: 48px; }
+.vp-heading { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.vp-subdesc { font-size: 14px; color: var(--text-sub); margin-bottom: 22px; line-height: 1.8; }
+
+.vp-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 0 24px;
+  border-bottom: 1px solid var(--border);
+  overflow: visible;
+}
+.vp-tab {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sub);
+  border: 1.5px solid var(--orange);
+  border-radius: 50px;
+  background: var(--bg);
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: transform 0.22s ease, color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+/* 選択時の下線グロー */
+.vp-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -19px;
+  left: -5px;
+  right: -5px;
+  height: 2px;
+  background: var(--orange);
+  border-radius: 2px;
+  box-shadow: 0 -8px 18px 3px rgba(239,107,58,0.4), 0 -2px 6px rgba(239,107,58,0.75);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.vp-tab:hover {
+  color: var(--orange);
+  font-weight: 700;
+  transform: scale(1.12);
+  z-index: 3;
+  background: var(--bg);
+}
+.vp-tab.active {
+  color: var(--orange);
+  font-weight: 700;
+  transform: scale(1.2);
+  z-index: 3;
+  background: var(--bg);
+}
+.vp-tab.active::after {
+  opacity: 1;
+}
+
+.vp-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+  padding-top: 24px;
+}
+.vp-info { grid-column: 1; grid-row: 1; }
+.vp-vid  { grid-column: 2; grid-row: 1; }
+
+.vp-panel-label { font-size: 11px; font-weight: 700; color: var(--orange); letter-spacing: 0.1em; margin-bottom: 6px; }
+.vp-panel-title { font-size: 19px; font-weight: 800; color: var(--navy); margin-bottom: 10px; line-height: 1.4; }
+.vp-panel-desc  { font-size: 14px; color: var(--text-sub); line-height: 1.85; }
+
+.vp-video-wrap {
+  background: #111;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+.vp-video { width: 100%; display: block; border-radius: var(--radius); }
+.vp-video-fallback {
+  display: none;
+  padding: 32px 16px;
+  text-align: center;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+}
+.vp-video-fallback p { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+
+.vp-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.vp-ctrl-btn {
+  background: var(--orange);
+  color: #fff;
+  font-size: 13px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: opacity 0.15s;
+}
+.vp-ctrl-btn:hover { opacity: 0.82; }
+.vp-ctrl-btn--mute { background: var(--text-sub); }
+
+/* ---- 機能カード ---- */
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 12px;
+  box-shadow: var(--shadow);
+}
+.feature-icon  { margin-bottom: 10px; }
+.feature-icon svg, .safety-icon svg { display: block; }
+.feature-title { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.5; }
+
+/* ===================================================
+   ④ 託送者について
+=================================================== */
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 11px 14px;
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.check-item::before {
+  content: "✓";
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.license-card {
+  background: var(--surface);
+  border: 2px solid var(--orange);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(239,107,58,0.12);
+}
+.license-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.license-badge {
+  background: var(--orange);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.license-title { font-size: 15px; font-weight: 700; color: var(--navy); }
+.license-items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.license-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: var(--text);
+}
+.license-item::before {
+  content: "▷";
+  color: var(--orange);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.license-note {
+  font-size: 12px;
+  color: var(--text-sub);
+  line-height: 1.7;
+}
+
+/* ===================================================
+   託送者プロフィールカード
+=================================================== */
+.carrier-intro {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin-bottom: 18px;
+  line-height: 1.8;
+}
+.carrier-profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 34px;
+  box-shadow: var(--shadow);
+}
+.carrier-profile-avatar {
+  flex-shrink: 0;
+  width: 80px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239,107,58,0.04);
+  border-radius: 10px;
+  border: 1px solid rgba(239,107,58,0.14);
+}
+.carrier-profile-info { flex: 1; min-width: 0; }
+.carrier-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.carrier-profile-name { font-size: 16px; font-weight: 700; color: var(--navy); }
+.carrier-profile-tag {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--orange);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 5px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.carrier-profile-quote {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.75;
+  margin-bottom: 10px;
+  border-left: 2.5px solid rgba(239,107,58,0.4);
+  padding-left: 10px;
+}
+.carrier-profile-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 9px;
+}
+.carrier-profile-rating { color: #e8a020; font-weight: 700; font-size: 13px; }
+.carrier-profile-license {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.carrier-profile-license::before { content: "✓"; font-weight: 900; }
+@media (max-width: 480px) {
+  .carrier-profile { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .carrier-profile-avatar { width: 64px; height: 84px; }
+}
+
+/* ===================================================
+   ⑤ 安全性
+=================================================== */
+/* 安全性：主要3項目 */
+.safety-featured {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.safety-featured-item {
+  background: var(--surface);
+  border: 1.5px solid rgba(239,107,58,0.2);
+  border-radius: 14px;
+  padding: 24px 18px 20px;
+  box-shadow: 0 2px 14px rgba(239,107,58,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.safety-featured-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(239,107,58,0.07);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.safety-featured-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.45;
+}
+.safety-featured-desc {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* 安全性：補足項目 */
+.safety-sub-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-sub);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.safety-sub-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.safety-sub-item {
+  font-size: 13px;
+  color: var(--text-sub);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.safety-sub-item::before {
+  content: "✓";
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* ===================================================
+   中間CTA
+=================================================== */
+.cta-mid {
+  background: var(--orange);
+  padding: 52px 20px;
+  text-align: center;
+}
+.cta-mid-title { font-size: 21px; font-weight: 800; color: #fff; margin-bottom: 10px; line-height: 1.45; }
+.cta-mid-desc  { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 28px; line-height: 1.8; }
+.cta-mid .cta-sub { color: rgba(255,255,255,0.72); }
+
+/* ===================================================
+   ⑥ 料金・先行利用
+=================================================== */
+.free-banner {
+  background: rgba(239,107,58,0.05);
+  border: 1.5px solid rgba(239,107,58,0.22);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.free-banner-label {
+  display: inline-block;
+  background: var(--orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.free-banner-main {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.free-banner-main em { color: var(--orange); font-style: normal; }
+.free-banner-note { font-size: 12px; color: var(--text-sub); line-height: 1.65; }
+.price-guide {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.85;
+}
+.price-guide strong { color: var(--navy); }
+.time-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.9;
+}
+.time-card-head { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.time-card strong { color: var(--navy); }
+
+.monitor-card { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.monitor-head {
+  padding: 15px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.monitor-head--full   { background: #795548; }
+.monitor-head--closed { background: #666; }
+.monitor-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 22px 24px;
+}
+.monitor-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 20px;
+  align-items: start;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.monitor-dl dt { font-weight: 700; color: var(--text-sub); white-space: nowrap; }
+.monitor-dl dd { color: var(--text); margin: 0; }
+.monitor-note { font-size: 12px; color: var(--text-sub); line-height: 1.7; }
+
+/* ===================================================
+   ⑦ FAQ
+=================================================== */
+.faq-list { border-top: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 2px;
+  cursor: pointer;
+  background: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: left;
+  transition: color 0.15s;
+}
+.faq-btn:hover { color: var(--orange); }
+.faq-q-text { flex: 1; line-height: 1.55; }
+.faq-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-style: normal;
+  transition: transform 0.25s, border-color 0.2s, color 0.2s;
+  margin-top: 2px;
+  color: var(--text-sub);
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); border-color: var(--orange); color: var(--orange); }
+.faq-ans {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.32s ease;
+}
+.faq-ans-inner {
+  padding: 0 2px 22px;
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.95;
+}
+
+/* ===================================================
+   ⑦-2 ロードマップ（今できることと、これから目指すこと）
+=================================================== */
+.roadmap-heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  margin-bottom: 44px;
+}
+.roadmap-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 780px;
+}
+.roadmap-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 28px 20px;
+}
+.roadmap-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.roadmap-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.4;
+}
+.roadmap-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 50px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.roadmap-badge--active {
+  background: rgba(239,107,58,0.07);
+  color: var(--orange);
+  border: 1px solid rgba(239,107,58,0.28);
+}
+.roadmap-badge--future {
+  background: transparent;
+  color: var(--text-sub);
+  border: 1px solid var(--border);
+}
+.roadmap-desc {
+  font-size: 14px;
+  color: var(--orange);
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ===================================================
+   ⑧ 最終CTA
+=================================================== */
+.final-cta {
+  background: linear-gradient(145deg, var(--orange) 0%, var(--orange-dark) 100%);
+  padding: 80px 20px 72px;
+  text-align: center;
+}
+.final-title {
+  font-size: 25px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 16px;
+  line-height: 1.45;
+}
+.final-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 36px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.85;
+}
+.final-cta .btn-line { margin: 0 auto 20px; font-size: 17px; padding: 18px 32px; }
+.final-note { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.9; }
+
+/* ===================================================
+   フッター
+=================================================== */
+footer {
+  background: #1C0D06;
+  color: rgba(255,255,255,0.72);
+  padding: 52px 20px 32px;
+}
+.footer-grid {
+  max-width: var(--max-w);
+  margin: 0 auto 36px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+}
+.footer-logo { font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+.footer-tagline { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.75; }
+.footer-col h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: 13px; color: rgba(255,255,255,0.72); transition: color 0.15s; }
+.footer-col a:hover { color: #fff; }
+.footer-line-links { margin-top: 20px; }
+.footer-line-links h4 { margin-bottom: 10px; }
+.footer-line-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  padding: 7px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.footer-line-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); color: #fff; }
+.footer-line-link--parent { border-color: rgba(6,199,85,0.5); color: #69e898; }
+.footer-line-link--parent:hover { background: rgba(6,199,85,0.12); border-color: var(--green); color: #69e898; }
+.footer-bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.38);
+}
+.footer-bottom-links { display: flex; gap: 16px; }
+.footer-bottom-links a { color: rgba(255,255,255,0.38); transition: color 0.15s; }
+.footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+/* ===================================================
+   フォントルール
+   - 原色オレンジ使用場面の大見出し
+   - 相対的に大きな文字（目安 20px 以上の見出し）
+   → var(--font-display) = Shippori Mincho B1 を適用
+=================================================== */
+.hero-title,
+.sec-heading,
+.final-title,
+.vp-heading {
+  font-family: var(--font-display);
+}
+
+/* ===================================================
+   レスポンシブ
+=================================================== */
+/* ===================================================
+   オレンジ背景セクション（#features など）
+=================================================== */
+.section--orange { background: var(--orange); }
+
+.section--orange .sec-label  { color: rgba(255,255,255,0.75); }
+.section--orange .sec-heading { color: #fff; }
+.section--orange .sec-desc    { color: rgba(255,255,255,0.88); }
+
+.section--orange .flow-step  { background: #fff; border-color: rgba(255,255,255,0.2); }
+.section--orange .flow-title { color: var(--navy); }
+.section--orange .flow-sub   { color: var(--text-sub); }
+
+.section--orange .info-box {
+  background: rgba(0,0,0,0.12);
+  border-left-color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.92);
+}
+.section--orange .info-box strong { color: #fff; }
+
+.section--orange .vp-heading  { color: #fff; }
+.section--orange .vp-subdesc  { color: rgba(255,255,255,0.88); }
+.section--orange .vp-tabs       { border-bottom-color: rgba(255,255,255,0.3); }
+.section--orange .vp-tab        { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.08); }
+.section--orange .vp-tab:hover  { color: #fff; }
+.section--orange .vp-tab.active { color: #fff; }
+.section--orange .vp-tab::after  { background: rgba(255,255,255,0.9); box-shadow: 0 -8px 18px 3px rgba(255,255,255,0.25), 0 -2px 6px rgba(255,255,255,0.55); }
+.section--orange .vp-panel-label { color: rgba(255,255,255,0.72); }
+.section--orange .vp-panel-title { color: #fff; }
+.section--orange .vp-panel-desc  { color: rgba(255,255,255,0.88); }
+.section--orange .vp-video-fallback { background: rgba(0,0,0,0.15); }
+.section--orange .vp-video-fallback p { color: rgba(255,255,255,0.8); }
+.section--orange .vp-ctrl-btn { background: rgba(0,0,0,0.25); }
+
+.section--orange .feature-card  { background: #fff; border-color: rgba(255,255,255,0.15); }
+.section--orange .feature-title { color: var(--navy); }
+
+@media (max-width: 768px) {
+  .nav-links  { display: none; }
+  .hamburger  { display: flex; }
+
+  .section    { padding: 48px 0; }
+  .sec-heading { font-size: 22px; }
+
+  .hero { min-height: calc(100svh - 56px); padding: 64px 20px; }
+  .hero-title { font-size: 34px; white-space: normal; }
+  .hero-desc  { font-size: 14px; }
+  .btn-hero-outline { min-width: 140px; font-size: 13px; padding: 12px 20px; }
+  .cta-sub { white-space: normal; font-size: 12px; }
+  .vp-tab  { font-size: 11.5px; padding: 8px 4px; }
+
+  .pain-grid  { grid-template-columns: 1fr; }
+
+  .flow-steps  { grid-template-columns: 1fr 1fr; }
+  .flow3-grid  { grid-template-columns: 1fr; gap: 28px; }
+  .flow3-card  { width: 100%; }
+
+  .vp-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .vp-info { grid-column: 1; grid-row: 1; }
+  .vp-vid  { grid-column: 1; grid-row: 2; }
+
+  .feature-cards { grid-template-columns: repeat(2, 1fr); }
+  .check-grid    { grid-template-columns: 1fr; }
+  .license-items-grid { grid-template-columns: 1fr; }
+
+  .safety-featured { grid-template-columns: 1fr; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+
+  .final-title { font-size: 21px; }
+  .final-cta .btn-line { font-size: 15px; padding: 16px 24px; }
+}
+
+@media (max-width: 480px) {
+  .flow-steps    { grid-template-columns: 1fr; }
+  .feature-cards { grid-template-columns: 1fr 1fr; }
+  .btn-line { font-size: 15px; padding: 15px 20px; }
+}
+
+/* ===================================================
+   イントロ動画オーバーレイ
+=================================================== */
+#introOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#introVideo {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+#introOverlay.intro-fade-out {
+  animation: introFadeOut 0.7s ease forwards;
+  pointer-events: none;
+}
+@keyframes introFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====================================================
+  イントロ動画オーバーレイ（初回表示のみ）
+===================================================== -->
+<div id="introOverlay" aria-hidden="true">
+  <video id="introVideo" autoplay muted playsinline preload="auto">
+    <source src="videos/アニメーション.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- ====================================================
+  設定値（ここを変更するだけで全体に反映されます）
+===================================================== -->
+<script>
+var CONFIG = {
+
+  /* 保護者用公式LINE URL */
+  parentLineUrl: "https://lin.ee/XXXXXXX",
+
+  /* 託送者用公式LINE URL */
+  driverLineUrl: "https://lin.ee/YYYYYYY",
+
+  /* モニター情報
+     status: "open" = 募集中  |  "full" = 定員到達  |  "closed" = 受付終了 */
+  monitor: {
+    status:    "open",
+    area:      "世田谷区烏山地域",
+    capacity:  10,
+    targetAge: "2歳程度から10歳程度",
+    freePeriod:"約1か月"
+  },
+
+  /* ヒーロー動画（アニメーション）
+     src を差し替えるだけで更新できます。poster は任意 */
+  heroVideo: {
+    src:    "/static/videos/mitsu_animation.mp4",
+    poster: ""
+  },
+
+  /* LINE機能紹介動画（5本）
+     id・label・description はページ本文の情報源です。
+     src と poster だけを差し替えることで動画を更新できます。
+     ページ本文・タブ名・代替テキストは動画内の表記に依存しません。 */
+  lineVideos: [
+    {
+      id:          "register",
+      label:       "登録",
+      src:         "/static/videos/line_01_register.mp4",
+      poster:      "",
+      description: "保護者・お子さま・施設情報等の登録と、担当する託送者を送迎前に確認できます。"
+    },
+    {
+      id:          "booking",
+      label:       "予約",
+      src:         "/static/videos/line_02_booking.mp4",
+      poster:      "",
+      description: "送迎内容や日時を入力して送迎を予約します。"
+    },
+    {
+      id:          "calendar",
+      label:       "カレンダー機能",
+      src:         "/static/videos/line_03_calendar.mp4",
+      poster:      "",
+      description: "予約済みの送迎予定をカレンダー形式で確認できます。"
+    },
+    {
+      id:          "location",
+      label:       "位置情報",
+      src:         "/static/videos/line_04_location.mp4",
+      poster:      "",
+      description: "送迎中は、担当する託送者の現在位置や送迎状況を公式LINEから確認できます。"
+    },
+    {
+      id:          "complete",
+      label:       "送迎終了後",
+      src:         "/static/videos/line_05_complete.mp4",
+      poster:      "",
+      description: "受け取り確認、施設からのお子さまの様子や先生からの連絡確認、送迎の評価を行います。"
+    }
+  ],
+
+  /* 対応時間 */
+  support: {
+    lineHours:  "24時間",
+    adminHours: "原則9時から17時"
+  }
+
+};
+</script>
+
+<!-- ====================================================
+  ヘッダー
+===================================================== -->
+<header class="header" role="banner">
+  <div class="header-inner">
+    <a href="/project" class="logo" aria-label="MITSU トップページ">MITSU</a>
+    <nav class="nav-links" aria-label="サイトナビゲーション">
+      <a href="#service">サービスについて</a>
+      <a href="#features">できること</a>
+      <a href="#carrier">託送者について</a>
+      <a href="#safety">安全性</a>
+      <a href="#pricing">料金・先行利用</a>
+      <a href="#faq">よくある質問</a>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="モバイルナビゲーション">
+    <a href="#service">サービスについて</a>
+    <a href="#features">できること</a>
+    <a href="#carrier">託送者について</a>
+    <a href="#safety">安全性</a>
+    <a href="#pricing">料金・先行利用</a>
+    <a href="#faq">よくある質問</a>
+  </nav>
+</header>
+
+<!-- ====================================================
+  ① ファーストビュー／サービス概要
+===================================================== -->
+<section id="service" aria-label="サービス概要">
+  <div class="hero">
+    <div class="hero-badge">対象地域：世田谷区烏山地域</div>
+    <div class="hero-inner">
+      <h1 class="hero-title">送り迎えを、<span class="no-break">ひとりで抱えない</span></h1>
+      <p class="hero-desc">
+        保育園、学童、習い事など、子どもの日々の移動を、地域の力で支える。<br>
+        MITSUは、送り迎えを担う地域の人と保護者をつなぎ、<br>世田谷区烏山エリアで先行提供をしています。
+      </p>
+      <div class="hero-btns">
+        <a class="btn-hero-outline btn-hero-solid" href="#about">サービスについて</a>
+        <a class="btn-hero-outline" href="#pricing">先行利用について</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA① -->
+  <div class="cta-wrap">
+    <a class="btn-line js-cta" href="#">公式LINEで登録・相談する</a>
+    <p class="cta-sub">最初の約1か月は無料でご利用いただけます。詳細や先行利用の受付状況は公式LINEからご確認ください。</p>
+  </div>
+</section>
+
+<!-- ====================================================
+  ② 悩みとの一致
+===================================================== -->
+<section id="about" class="section section--alt" aria-label="こんなお悩みに">
+  <div class="container">
+    <p class="sec-label">こんなお悩みに</p>
+    <h2 class="sec-heading">忙しい夕方に、時間とゆとりを</h2>
+
+    <div class="pain-grid">
+      <div>
+        <p class="pain-col-head">こんな場面で使われています</p>
+        <ul class="pain-list">
+          <li>保育園から習いごとへの送りをお願いしたい</li>
+          <li>学童から自宅までのお迎えを頼みたい</li>
+          <li>習いごと中の待ち時間、往復時間を無くしたい</li>
+          <li>この日だけお迎えを誰にも頼めない</li>
+          <li>保育士さんからの伝言とかを確認したい</li>
+        </ul>
+      </div>
+      <div>
+        <p class="pain-col-head">生まれる時間とゆとり</p>
+        <ul class="value-list">
+          <li>夕食や家事を進める時間</li>
+          <li>仕事をひと段落させる時間</li>
+          <li>きょうだいへの時間</li>
+          <li>帰宅後にお子さまとゆっくり過ごすゆとり</li>
+          <li>「間に合うかな？」という心配がない心のゆとり</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="line-notice">
+      <div class="line-notice-icon">
+        <svg viewBox="0 0 40 40" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="6" width="34" height="25" rx="5" fill="rgba(239,107,58,0.1)" stroke="#EF6B3A" stroke-width="1.8"/>
+          <line x1="11" y1="14" x2="29" y2="14" stroke="#EF6B3A" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="11" y1="19.5" x2="24" y2="19.5" stroke="#EF6B3A" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M14 31 L14 37 L22 31" stroke="#EF6B3A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="line-notice-head">すべてが公式LINEから</p>
+      <p class="line-notice-desc">アプリのインストール不要。利用登録、予約、位置情報共有などを公式LINEから行えます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+  ③ MITSUでできること
+===================================================== -->
+<section id="features" class="section" aria-label="MITSUでできること">
+  <div class="container">
+    <p class="sec-label">できること</p>
+    <h2 class="sec-heading">MITSUの使い方</h2>
+
+    <!-- 3段階フロー -->
+    <div class="flow3-grid">
+
+      <div class="flow3-item">
+        <div class="flow3-circle">
+          <span class="flow3-num">1</span>
+          <span class="flow3-label">登録</span>
+        </div>
+        <div class="flow3-card">
+          <p class="flow3-card-title">託送者の確認</p>
+          <p class="flow3-card-desc">公式LINEよりお子さまの情報や保育園などを登録すると、担当の託送者の免許証を確認することができます。<br>免許証には顔写真や過去の評価、子供関係の経歴などを確認することができます。</p>
+        </div>
+      </div>
+
+      <div class="flow3-item">
+        <div class="flow3-circle">
+          <span class="flow3-num">2</span>
+          <span class="flow3-label">初回の練習</span>
+        </div>
+        <div class="flow3-card">
+          <p class="flow3-card-title">初回の送迎練習</p>
+          <p class="flow3-card-desc">初回の利用時には、保護者様・お子さま・託送者の3人で一緒に送迎練習を行います。<br>送迎練習は顔合わせに併せて、交通上の注意点、施設での引渡し方法、サービスの実際の流れなどを確認・説明させていただきます。</p>
+        </div>
+      </div>
+
+      <div class="flow3-item">
+        <div class="flow3-circle">
+          <span class="flow3-num">3</span>
+          <span class="flow3-label">利用開始</span>
+        </div>
+        <div class="flow3-card">
+          <p class="flow3-card-title">実際に送迎開始！</p>
+          <p class="flow3-card-desc">実際に託送者にお子さまの送迎をお願いすることができます。<br>自動予約・位置情報共有・受取確認・評価などの機能が使用可能となります。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LINE機能紹介動画 -->
+    <div class="vp-section">
+      <!-- タブ -->
+      <div class="vp-tabs" id="vpTabs" role="tablist" aria-label="LINE機能紹介動画"></div>
+      <!-- パネル本体 -->
+      <div class="vp-body" id="vpBody"></div>
+    </div>
+
+    <!-- 機能カード（動画以外の機能） -->
+    <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;">その他の機能</h3>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 40 40" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="8.5" width="33" height="23" rx="3.5" fill="rgba(239,107,58,0.06)" stroke="#EF6B3A" stroke-width="1.8"/><rect x="7" y="12" width="10" height="13" rx="2" fill="rgba(239,107,58,0.1)" stroke="#EF6B3A" stroke-width="1.4"/><circle cx="12" cy="16.5" r="2.4" stroke="#EF6B3A" stroke-width="1.3"/><path d="M8.5 25 Q12 22 15.5 25" stroke="#EF6B3A" stroke-width="1.4" stroke-linecap="round"/><line x1="21" y1="15" x2="34" y2="15" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><line x1="21" y1="19.5" x2="34" y2="19.5" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><line x1="21" y1="24" x2="29" y2="24" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><circle cx="33" cy="29" r="5" fill="white" stroke="#EF6B3A" stroke-width="1.5"/><path d="M30.5 29 L32.5 31.2 L36 27" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="feature-title">担当託送者と<br>託送者免許証の確認</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 40 40" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 8 Q20 5 23 8" stroke="#EF6B3A" stroke-width="1.7" stroke-linecap="round"/><path d="M9 27 Q9 12 20 9 Q31 12 31 27 Z" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7" stroke-linejoin="round"/><path d="M7 27 Q7 30 10 30 L30 30 Q33 30 33 27" fill="rgba(239,107,58,0.06)" stroke="#EF6B3A" stroke-width="1.7" stroke-linecap="round"/><line x1="20" y1="30" x2="20" y2="33" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><circle cx="20" cy="35" r="2" fill="rgba(239,107,58,0.12)" stroke="#EF6B3A" stroke-width="1.5"/><circle cx="31" cy="9" r="4" fill="#EF6B3A"/></svg></div>
+        <div class="feature-title">送迎開始・終了<br>通知</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 40 40" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 5 L34 5 Q36 5 36 7 L36 25 Q36 27 34 27 L16 27 L11 33 L9 27 L8 27 Q6 27 6 25 L6 7 Q6 5 8 5 Z" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7" stroke-linejoin="round"/><path d="M13 19 Q13 13 20 13 L26 13" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><path d="M23 10 L26 13 L23 16" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="feature-title">施設や先生からの<br>連絡確認</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 40 40" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="12" r="5" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7"/><path d="M5 29 Q5 21 13 21 Q21 21 21 29" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7" stroke-linecap="round"/><circle cx="29" cy="22" r="8" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7"/><path d="M25 22 L28 25 L33.5 18" stroke="#EF6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="feature-title">保護者による<br>受け取り確認</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 40 40" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="20,7 23.23,15.55 32.36,15.98 25.23,21.70 27.65,30.51 20,25.5 12.35,30.51 14.77,21.70 7.64,15.98 16.77,15.55" fill="rgba(239,107,58,0.1)" stroke="#EF6B3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="feature-title">託送者への<br>星1〜5評価</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 40 40" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4 L34 4 Q36 4 36 6 L36 24 Q36 26 34 26 L23 26 L20 32 L17 26 L8 26 Q6 26 6 24 L6 6 Q6 4 8 4 Z" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7" stroke-linejoin="round"/><path d="M13.5 21 L11 23 L13 23 Z" fill="#EF6B3A"/><path d="M13.5 21 L22 12.5 L24.5 15 L16 23.5 Z" fill="rgba(239,107,58,0.15)" stroke="#EF6B3A" stroke-width="1.3" stroke-linejoin="round"/><path d="M22 12.5 L24.5 10 Q25.5 9 27 10.5 Q28.5 12 27.5 13 L25 15.5 L22 12.5 Z" fill="rgba(239,107,58,0.2)" stroke="#EF6B3A" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+        <div class="feature-title">利用後の<br>フィードバック</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+  ④ 誰に子どもを託すか
+===================================================== -->
+<section id="carrier" class="section section--alt" aria-label="託送者について">
+  <div class="container">
+    <p class="sec-label">託送者について</p>
+    <h2 class="sec-heading">地域の誰かではなく、<br>確認と研修を受けた託送者へ</h2>
+    <p class="sec-desc">
+      MITSU管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br>実際の送迎は、免許証を取得した託送者が担当します。
+    </p>
+
+    <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;">主な確認・研修項目</h3>
+    <ul class="check-grid">
+      <li class="check-item">本人確認</li>
+      <li class="check-item">管理者による面談・適性確認</li>
+      <li class="check-item">子どもの安全に関する研修</li>
+      <li class="check-item">救命・緊急時対応に関する研修</li>
+      <li class="check-item">お子さまの情報・注意事項の事前共有</li>
+      <li class="check-item">経路と引き渡し方法の確認</li>
+      <li class="check-item">初回の三者送迎練習</li>
+      <li class="check-item">送迎後の評価・フィードバック</li>
+    </ul>
+
+    <div class="license-card">
+      <div class="license-card-top">
+        <span class="license-badge">MITSU 託送者免許証</span>
+        <span class="license-title">送迎前に担当者を確認できます</span>
+      </div>
+      <p style="font-size:14px;color:var(--text-sub);margin-bottom:16px;line-height:1.8;">
+        保護者は公式LINEから、担当託送者について次の4項目を送迎前に確認できます。
+      </p>
+      <div class="license-items-grid">
+        <div class="license-item">顔写真・氏名</div>
+        <div class="license-item">子どもに関わる経験・実績</div>
+        <div class="license-item">過去の送迎回数</div>
+        <div class="license-item">利用者からの評価</div>
+      </div>
+      <p class="license-note">
+        ※ 託送者免許証は一般公開せず、その託送者と関係する登録保護者だけが確認できます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+  ⑤ 安全性
+===================================================== -->
+<section id="safety" class="section" aria-label="安全性への取り組み">
+  <div class="container">
+    <p class="sec-label">安全性</p>
+    <h2 class="sec-heading">送迎中も、状況を確認できる安心を。</h2>
+    <p class="sec-desc">
+      託送者の確認だけでなく、送迎中から送迎後まで保護者自身が利用・確認できる機能があります。
+    </p>
+
+    <!-- 主要3項目：大カード -->
+    <div class="safety-featured">
+      <div class="safety-featured-item">
+        <div class="safety-featured-icon">
+          <svg viewBox="0 0 40 40" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 4 C12 4 8 8.5 8 14 C8 21 17 34 17 34 C17 34 26 21 26 14 C26 8.5 22 4 17 4 Z" fill="rgba(239,107,58,0.12)" stroke="#EF6B3A" stroke-width="1.7"/><circle cx="17" cy="14" r="3.5" fill="rgba(239,107,58,0.2)" stroke="#EF6B3A" stroke-width="1.5"/><path d="M29 11 Q32 14 29 17" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><path d="M32.5 8 Q37.5 14 32.5 20" stroke="#EF6B3A" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <p class="safety-featured-title">送迎中の<br>位置情報共有</p>
+        <p class="safety-featured-desc">リアルタイムでお子さまの現在地を確認できます。</p>
+      </div>
+      <div class="safety-featured-item">
+        <div class="safety-featured-icon">
+          <svg viewBox="0 0 40 40" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="8.5" width="33" height="23" rx="3.5" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.8"/><rect x="7" y="12" width="10" height="13" rx="2" fill="rgba(239,107,58,0.12)" stroke="#EF6B3A" stroke-width="1.4"/><circle cx="12" cy="16.5" r="2.4" stroke="#EF6B3A" stroke-width="1.3"/><path d="M8.5 25 Q12 22 15.5 25" stroke="#EF6B3A" stroke-width="1.4" stroke-linecap="round"/><line x1="21" y1="15" x2="34" y2="15" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><line x1="21" y1="19.5" x2="34" y2="19.5" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><line x1="21" y1="24" x2="29" y2="24" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round"/><circle cx="33" cy="29" r="5" fill="white" stroke="#EF6B3A" stroke-width="1.5"/><path d="M30.5 29 L32.5 31.2 L36 27" stroke="#EF6B3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="safety-featured-title">担当者を<br>送迎前に確認</p>
+        <p class="safety-featured-desc">顔写真・経歴・評価を、来る前に必ず確認できます。</p>
+      </div>
+      <div class="safety-featured-item">
+        <div class="safety-featured-icon">
+          <svg viewBox="0 0 40 40" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="12" r="5" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7"/><path d="M5 29 Q5 21 13 21 Q21 21 21 29" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7" stroke-linecap="round"/><circle cx="29" cy="22" r="8" fill="rgba(239,107,58,0.08)" stroke="#EF6B3A" stroke-width="1.7"/><path d="M25 22 L28 25 L33.5 18" stroke="#EF6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="safety-featured-title">保護者による<br>受け取り確認</p>
+        <p class="safety-featured-desc">お子さまを受け取ったことを保護者自身が確認します。</p>
+      </div>
+    </div>
+
+    <!-- 補足5項目：ピルバッジ -->
+    <p class="safety-sub-label">その他の安全機能</p>
+    <div class="safety-sub-list">
+      <span class="safety-sub-item">送迎開始通知</span>
+      <span class="safety-sub-item">送迎状況の確認</span>
+      <span class="safety-sub-item">施設や先生からの連絡共有</span>
+      <span class="safety-sub-item">送迎完了通知</span>
+      <span class="safety-sub-item">送迎後の評価とフィードバック</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+  中間CTA②（安全性セクション直後）
+===================================================== -->
+<div class="cta-mid" role="region" aria-label="公式LINEへの相談">
+  <p class="cta-mid-title">安全性について、<br>もっと詳しく知りたい方へ</p>
+  <p class="cta-mid-desc">ご不明な点は公式LINEからお気軽にご相談ください。</p>
+  <div style="display:flex;justify-content:center;">
+    <a class="btn-line js-cta" href="#">公式LINEで登録・相談する</a>
+  </div>
+  <p class="cta-sub" style="color:rgba(255,255,255,0.58);margin-top:14px;">
+    利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。
+  </p>
+</div>
+
+<!-- ====================================================
+  ⑥ 料金・先行利用条件
+===================================================== -->
+<section id="pricing" class="section section--alt" aria-label="料金・先行利用条件">
+  <div class="container">
+    <p class="sec-label">料金・先行利用</p>
+    <h2 class="sec-heading">料金と先行利用の条件</h2>
+
+    <!-- 先行利用無料期間・料金目安 -->
+    <div class="free-banner">
+      <span class="free-banner-label">先行利用特典</span>
+      <p class="free-banner-main">最初の<em>約1か月</em>は無料でご利用いただけます</p>
+      <p class="free-banner-note">無料期間は目安であり、正式な期間・条件については公式LINEからご確認ください。</p>
+    </div>
+    <div class="price-guide">
+      <strong>無料期間終了後の料金目安：</strong>送迎時間に応じた時間制料金（例：30分の送迎で目安1,000円前後）<br>
+      <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。詳細は公式LINEからご確認ください。</span>
+    </div>
+
+    <!-- 送迎時間の定義 -->
+    <div class="time-card">
+      <p class="time-card-head">送迎時間の定義</p>
+      <p>
+        送迎時間は、<strong>託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点</strong>から開始します。お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。
+      </p>
+      <br>
+      <p>
+        引き渡し後、<strong>託送者が公式LINEで送迎終了を送信した時点</strong>で終了となります。保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
+      </p>
+    </div>
+
+    <!-- モニター状態別表示（JSで書き込む） -->
+    <div class="monitor-card" id="monitorCard">
+      <div class="monitor-head" id="monitorHead"></div>
+      <div class="monitor-body" id="monitorBody"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+  ⑦ FAQ
+===================================================== -->
+<section id="faq" class="section" aria-label="よくある質問">
+  <div class="container">
+    <p class="sec-label">FAQ</p>
+    <h2 class="sec-heading">よくある質問</h2>
+    <ul class="faq-list" id="faqList" aria-label="よくある質問一覧"></ul>
+  </div>
+</section>
+
+<!-- ====================================================
+  ⑦-2 今できることと、これから目指すこと
+===================================================== -->
+<section id="roadmap" class="section section--alt" aria-label="今できることと、これから目指すこと">
+  <div class="container">
+    <h2 class="roadmap-heading">今できることと、<br>これから目指すこと。</h2>
+    <div class="roadmap-list">
+      <div class="roadmap-item">
+        <div class="roadmap-item-top">
+          <p class="roadmap-title">徒歩での送迎</p>
+          <span class="roadmap-badge roadmap-badge--active">先行提供中</span>
+        </div>
+        <p class="roadmap-desc">保育園・学童・習い事などへ、担い手が徒歩でお子さまを送り迎えします。</p>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-item-top">
+          <p class="roadmap-title">自転車・ベロタクシー</p>
+          <span class="roadmap-badge roadmap-badge--future">将来構想</span>
+        </div>
+        <p class="roadmap-desc">移動できる距離を広げるための手段として検討しています。</p>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-item-top">
+          <p class="roadmap-title">自家用車による送迎</p>
+          <span class="roadmap-badge roadmap-badge--future">将来構想</span>
+        </div>
+        <p class="roadmap-desc">法の枠内で実施できる形を、関係機関と対話しながら検討しています。</p>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-item-top">
+          <p class="roadmap-title">対応エリアの拡大</p>
+          <span class="roadmap-badge roadmap-badge--future">将来構想</span>
+        </div>
+        <p class="roadmap-desc">現在のエリアでの検証を終えたのち、順次広げることを目指しています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+  最終CTA③
+===================================================== -->
+<section id="contact" class="final-cta" aria-label="お問い合わせ・最終CTA">
+  <h2 class="final-title">まずは、送り迎えのお困りごとを<br>お聞かせください。</h2>
+  <p class="final-desc">
+    利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。<br>対象地域外の方からの事前登録も受け付けています。
+  </p>
+  <a class="btn-line js-cta" href="#" style="margin:0 auto 22px;">公式LINEで登録・相談する</a>
+  <p class="final-note">
+    公式LINEは<span id="lineHoursDisplay"></span>受け付けています。<br>
+    管理者による個別対応は<span id="adminHoursDisplay"></span>です。
+  </p>
+</section>
+
+<!-- ====================================================
+  フッター
+===================================================== -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">MITSU</div>
+      <p class="footer-tagline">
+        お子さまの送迎を、確認と研修を受けた託送者に依頼できる送迎マッチングサービス。
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>サービス</h4>
+      <ul>
+        <li><a href="#service">MITSUについて</a></li>
+        <li><a href="#features">利用の流れ</a></li>
+        <li><a href="#safety">安全への取り組み</a></li>
+        <li><a href="#pricing">料金・先行利用</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>その他</h4>
+      <ul>
+        <li><a class="js-driver-line" href="#">託送者として活動する</a></li>
+        <li><a href="#">利用規約</a></li>
+        <li><a href="#">プライバシーポリシー</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+      <div class="footer-line-links">
+        <h4>公式LINE</h4>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <a class="footer-line-link footer-line-link--parent js-cta" href="#">
+            📱 保護者用公式LINE
+          </a>
+          <a class="footer-line-link js-driver-line" href="#">
+            📱 託送者用公式LINE
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 MITSU 送迎マッチングサービス</span>
+    <div class="footer-bottom-links">
+      <a href="#">利用規約</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ====================================================
+  JavaScript（ページ全体の動作）
+===================================================== -->
+<script>
+(function () {
+  /* -------------------------------------------------------
+     1. LINE URL を全CTAに適用
+  ------------------------------------------------------- */
+  document.querySelectorAll('.js-cta').forEach(function (el) {
+    el.href = CONFIG.parentLineUrl;
+  });
+  document.querySelectorAll('.js-driver-line').forEach(function (el) {
+    el.href = CONFIG.driverLineUrl;
+  });
+
+  /* -------------------------------------------------------
+     2. 対応時間テキスト
+  ------------------------------------------------------- */
+  var elLine  = document.getElementById('lineHoursDisplay');
+  var elAdmin = document.getElementById('adminHoursDisplay');
+  if (elLine)  elLine.textContent  = CONFIG.support.lineHours;
+  if (elAdmin) elAdmin.textContent = CONFIG.support.adminHours;
+
+  /* -------------------------------------------------------
+     3. ヒーロー動画
+  ------------------------------------------------------- */
+  var heroVideo   = document.getElementById('heroVideo');
+  var heroWrap    = document.getElementById('heroWrap');
+  var heroFallback= document.getElementById('heroFallback');
+  var heroPlayBtn = document.getElementById('heroPlayBtn');
+
+  if (heroVideo && CONFIG.heroVideo.src) {
+    heroVideo.src = CONFIG.heroVideo.src;
+    if (CONFIG.heroVideo.poster) heroVideo.poster = CONFIG.heroVideo.poster;
+
+    heroVideo.addEventListener('error', function () {
+      heroWrap.style.display = 'none';
+      heroFallback.style.display = 'block';
+    });
+
+    if (heroPlayBtn) {
+      heroPlayBtn.addEventListener('click', function () {
+        if (heroVideo.paused) {
+          heroVideo.play();
+          heroPlayBtn.textContent = '⏸ 停止';
+          heroPlayBtn.setAttribute('aria-label', '動画を停止する');
+        } else {
+          heroVideo.pause();
+          heroPlayBtn.textContent = '▶ 再生';
+          heroPlayBtn.setAttribute('aria-label', '動画を再生する');
+        }
+      });
+    }
+  } else {
+    if (heroWrap)     heroWrap.style.display     = 'none';
+    if (heroFallback) heroFallback.style.display = 'block';
+  }
+
+  /* -------------------------------------------------------
+     4. モニター状態バッジ・カード
+  ------------------------------------------------------- */
+  var mon = CONFIG.monitor;
+
+  /* ヒーローバッジ */
+  var badge   = document.getElementById('heroBadge');
+  var heroAge = document.getElementById('heroAge');
+  if (badge) {
+    if (mon.status === 'open') {
+      badge.className = 'hero-badge';
+      badge.textContent = mon.area + 'で徒歩送迎を先行提供中';
+    } else if (mon.status === 'full') {
+      badge.className = 'hero-badge hero-badge--full';
+      badge.textContent = '先行利用定員到達 ｜ 事前登録受付中';
+    } else {
+      badge.className = 'hero-badge hero-badge--closed';
+      badge.textContent = '先行利用受付終了';
+    }
+  }
+  if (heroAge) {
+    heroAge.textContent = '主な対象：' + mon.targetAge + 'まで';
+  }
+
+  /* モニターカード */
+  var monHead = document.getElementById('monitorHead');
+  var monBody = document.getElementById('monitorBody');
+  if (monHead && monBody) {
+    if (mon.status === 'open') {
+      monHead.className   = 'monitor-head';
+      monHead.textContent = '🟢 徒歩送迎を先行提供中　参加受付中';
+      monBody.innerHTML   =
+        '<dl class="monitor-dl">' +
+          '<dt>対象地域</dt><dd>' + mon.area + '</dd>' +
+          '<dt>募集数</dt><dd>先着' + mon.capacity + '世帯</dd>' +
+          '<dt>利用料金</dt><dd>対象世帯は一定期間（目安として' + mon.freePeriod + '）無料</dd>' +
+          '<dt>主な対象年齢</dt><dd>' + mon.targetAge + 'まで</dd>' +
+          '<dt>対象条件</dt><dd>自立歩行とコミュニケーションができるお子さまを主な対象とします</dd>' +
+          '<dt>受付状況</dt><dd>公式LINEで確認できます</dd>' +
+          '<dt>事前登録</dt><dd>対象地域外の方からも受け付けています</dd>' +
+        '</dl>' +
+        '<p class="monitor-note">「' + mon.freePeriod + '」は目安であり、正式な適用期間や条件が別途確定した場合は先行利用情報のみを更新します。</p>';
+    } else if (mon.status === 'full') {
+      monHead.className   = 'monitor-head monitor-head--full';
+      monHead.textContent = '🟡 徒歩送迎先行提供　定員到達';
+      monBody.innerHTML   =
+        '<p style="font-size:14px;color:var(--text-sub);line-height:1.85;margin-bottom:14px;">' +
+          '現在、徒歩送迎の先行提供は定員に達したため受付を終了しています。<br>' +
+          '今後の利用に向けた事前登録・キャンセル待ちは、公式LINEから受け付けています。' +
+        '</p>' +
+        '<dl class="monitor-dl">' +
+          '<dt>対象地域</dt><dd>' + mon.area + '</dd>' +
+          '<dt>主な対象年齢</dt><dd>' + mon.targetAge + 'まで</dd>' +
+        '</dl>';
+    } else {
+      monHead.className   = 'monitor-head monitor-head--closed';
+      monHead.textContent = '⚫ 先行利用受付終了';
+      monBody.innerHTML   =
+        '<p style="font-size:14px;color:var(--text-sub);line-height:1.85;">' +
+          '現在、徒歩送迎の先行利用受付は終了しています。<br>' +
+          '今後の利用については公式LINEからお問い合わせください。' +
+        '</p>';
+    }
+  }
+
+  /* -------------------------------------------------------
+     5. LINE機能紹介動画タブプレイヤー
+        ・タブ/パネル対を動的生成
+        ・遅延ロード（選択時に src をセット）
+        ・再生/停止・ミュート切替
+        ・video error → フォールバック表示
+  ------------------------------------------------------- */
+  var vpTabs = document.getElementById('vpTabs');
+  var vpBody = document.getElementById('vpBody');
+  var activeIdx = 0;
+  var videoEls  = [];   /* HTMLVideoElement[] */
+  var playBtns  = [];   /* 各パネルの再生ボタン */
+
+  if (vpTabs && vpBody) {
+    /* スタイル注入（hidden-panel） */
+    var sty = document.createElement('style');
+    sty.textContent = '.vp-hidden{display:none!important;}';
+    document.head.appendChild(sty);
+
+    CONFIG.lineVideos.forEach(function (v, i) {
+      /* タブボタン */
+      var tab = document.createElement('button');
+      tab.className = 'vp-tab' + (i === 0 ? ' active' : '');
+      tab.textContent = v.label;
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      tab.setAttribute('aria-controls', 'vp-vid-' + v.id);
+      tab.dataset.idx = i;
+      vpTabs.appendChild(tab);
+
+      /* 左: info パネル */
+      var info = document.createElement('div');
+      info.className = 'vp-info' + (i !== 0 ? ' vp-hidden' : '');
+      info.setAttribute('role', 'tabpanel');
+      info.id = 'vp-info-' + v.id;
+      info.innerHTML =
+        '<p class="vp-panel-label">0' + (i + 1) + '</p>' +
+        '<h3 class="vp-panel-title">' + v.label + '</h3>' +
+        '<p class="vp-panel-desc">' + v.description + '</p>';
+
+      /* 右: video パネル */
+      var vidWrap = document.createElement('div');
+      vidWrap.className = 'vp-vid' + (i !== 0 ? ' vp-hidden' : '');
+      vidWrap.id = 'vp-vid-' + v.id;
+
+      var wrap = document.createElement('div');
+      wrap.className = 'vp-video-wrap';
+
+      var vid = document.createElement('video');
+      vid.className = 'vp-video';
+      vid.muted     = true;
+      vid.setAttribute('playsinline', '');
+      vid.setAttribute('preload', 'none');
+      vid.setAttribute('aria-label', v.label + 'の説明動画');
+      if (v.poster) vid.poster = v.poster;
+      if (i === 0 && v.src) { vid.src = v.src; vid.load(); } /* 先頭のみ即時ロード */
+      vid.dataset.lazySrc = v.src || '';
+
+      var fallback = document.createElement('div');
+      fallback.className = 'vp-video-fallback';
+      fallback.innerHTML = '<p>動画を読み込めませんでした。</p><p style="margin-top:6px;">' + v.description + '</p>';
+
+      vid.addEventListener('error', function () {
+        vid.style.display     = 'none';
+        fallback.style.display = 'block';
+      });
+
+      var ctrl = document.createElement('div');
+      ctrl.className = 'vp-controls';
+
+      var playBtn = document.createElement('button');
+      playBtn.className = 'vp-ctrl-btn';
+      playBtn.textContent = '▶ 再生';
+      playBtn.setAttribute('aria-label', '動画を再生する');
+      playBtn.addEventListener('click', function () {
+        if (vid.paused) {
+          vid.play().then(function () {
+            playBtn.textContent = '⏸ 停止';
+            playBtn.setAttribute('aria-label', '動画を停止する');
+          }).catch(function () {});
+        } else {
+          vid.pause();
+          playBtn.textContent = '▶ 再生';
+          playBtn.setAttribute('aria-label', '動画を再生する');
+        }
+      });
+      playBtns.push(playBtn);
+
+      ctrl.appendChild(playBtn);
+      wrap.appendChild(vid);
+      wrap.appendChild(fallback);
+      vidWrap.appendChild(wrap);
+      vidWrap.appendChild(ctrl);
+
+      videoEls.push(vid);
+      vpBody.appendChild(info);
+      vpBody.appendChild(vidWrap);
+    });
+
+    /* タブクリックイベント */
+    vpTabs.addEventListener('click', function (e) {
+      var tab = e.target.closest('.vp-tab');
+      if (!tab) return;
+      var idx = parseInt(tab.dataset.idx, 10);
+      if (idx === activeIdx) return;
+
+      /* 前の動画を停止 */
+      videoEls[activeIdx].pause();
+      playBtns[activeIdx].textContent = '▶ 再生';
+
+      /* タブ状態更新 */
+      vpTabs.querySelectorAll('.vp-tab').forEach(function (t, i) {
+        t.className = 'vp-tab' + (i === idx ? ' active' : '');
+        t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+
+      /* パネル切替 */
+      var infos = vpBody.querySelectorAll('.vp-info');
+      var vids  = vpBody.querySelectorAll('.vp-vid');
+      infos.forEach(function (el, i) {
+        el.className = 'vp-info' + (i !== idx ? ' vp-hidden' : '');
+      });
+      vids.forEach(function (el, i) {
+        el.className = 'vp-vid' + (i !== idx ? ' vp-hidden' : '');
+      });
+
+      /* 遅延ロード */
+      var newVid = videoEls[idx];
+      if (!newVid.src && newVid.dataset.lazySrc) {
+        newVid.src = newVid.dataset.lazySrc;
+        newVid.load();
+      }
+
+      activeIdx = idx;
+    });
+  }
+
+  /* -------------------------------------------------------
+     6. FAQアコーディオン（確定10問）
+  ------------------------------------------------------- */
+  var faqData = [
+    {
+      q: 'どの地域で利用できますか？',
+      a: '現在は' + CONFIG.monitor.area + 'を対象に、徒歩送迎の先行提供をしています。先行利用は先着' + CONFIG.monitor.capacity + '世帯です。受付状況については公式LINEからご確認いただけます。'
+    },
+    {
+      q: 'どのような送迎を依頼できますか？',
+      a: '現在は、保育園・幼稚園・学童・習い事・ご自宅への送迎を対象としています。ご家庭の状況や送迎内容によって対応可否が異なる場合がありますので、詳細は公式LINEよりご相談ください。'
+    },
+    {
+      q: '託送者はどのように確認されていますか？',
+      a: 'MITSUでは、託送者に対して本人確認、面談、安全に関する研修などを実施します。基準を満たした方には託送者免許証を交付し、実際の送迎を担当します。保護者は担当する託送者の免許証を事前に確認した上で利用できます。'
+    },
+    {
+      q: '担当する託送者は事前に確認できますか？',
+      a: 'はい。送迎を担当する託送者は、送迎前に公式LINEから確認できます。託送者免許証で顔写真、氏名、子どもに関わる経験や実績、過去の送迎回数、利用者からの評価などを確認できます。'
+    },
+    {
+      q: '初回の送迎はどのように行いますか？',
+      a: '初回は、保護者・お子さま・託送者の三者で、実際の送迎ルートを一緒に歩く、または移動する送迎練習を行います。顔合わせに加え、交通上の注意点、施設での引き渡し方法、お子さまの特性などを確認してから利用を開始します。'
+    },
+    {
+      q: '送迎中の位置情報は確認できますか？',
+      a: 'はい。送迎中は公式LINEから担当する託送者の現在位置や送迎状況を確認できます。また、送迎開始・送迎終了の通知も受け取ることができます。'
+    },
+    {
+      q: '料金はいつからいつまで計算されますか？',
+      a: '送迎時間は、託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点から開始します。お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。引き渡し後、託送者が公式LINEで送迎終了を送信した時点で終了となります。保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。'
+    },
+    {
+      q: '保育園や習い事への説明は必要ですか？',
+      a: '保育園・幼稚園・学童・習い事など、施設によって送迎に関する運用や対応方法が異なります。MITSUが基本的な調整や確認を行った上で利用を開始しますが、施設の方針によっては、保護者の方にも施設への説明や対応をお願いする場合があります。詳細は施設ごとの状況に応じて公式LINEよりご案内します。'
+    },
+    {
+      q: 'キャンセルした場合はどうなりますか？',
+      a: 'キャンセル方法やキャンセル料などの詳細は現在整備を進めています。正式な運用内容が確定次第、ホームページおよび公式LINEで案内します。不明点については公式LINEから問い合わせできます。'
+    },
+    {
+      q: '利用できない内容はありますか？',
+      a: '現在は、保育園・幼稚園・学童・習い事・ご自宅への送迎を対象としています。対象地域外での送迎や、対応時間・運営体制上お受けできない依頼については、対応できない場合があります。また、現在は先行提供の段階のため、対応できる内容には限りがあります。詳細は公式LINEよりお問い合わせください。'
+    }
+  ];
+
+  var faqList = document.getElementById('faqList');
+  if (faqList) {
+    faqData.forEach(function (item, i) {
+      var li  = document.createElement('li');
+      li.className = 'faq-item';
+
+      var btn = document.createElement('button');
+      btn.className = 'faq-btn';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', 'faq-ans-' + i);
+      btn.innerHTML =
+        '<span class="faq-q-text">Q' + (i + 1) + '．' + item.q + '</span>' +
+        '<i class="faq-icon" aria-hidden="true">＋</i>';
+
+      var ans = document.createElement('div');
+      ans.className = 'faq-ans';
+      ans.id = 'faq-ans-' + i;
+      ans.setAttribute('role', 'region');
+      ans.innerHTML = '<div class="faq-ans-inner">A．' + item.a + '</div>';
+
+      li.appendChild(btn);
+      li.appendChild(ans);
+      faqList.appendChild(li);
+    });
+
+    faqList.addEventListener('click', function (e) {
+      var btn = e.target.closest('.faq-btn');
+      if (!btn) return;
+      var item    = btn.closest('.faq-item');
+      var ans     = item.querySelector('.faq-ans');
+      var isOpen  = item.classList.contains('open');
+
+      /* 他を閉じる */
+      faqList.querySelectorAll('.faq-item.open').forEach(function (el) {
+        if (el === item) return;
+        el.classList.remove('open');
+        el.querySelector('.faq-ans').style.maxHeight = '0';
+        el.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+      });
+
+      if (isOpen) {
+        item.classList.remove('open');
+        ans.style.maxHeight = '0';
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+
+  /* -------------------------------------------------------
+     7. ハンバーガーメニュー
+  ------------------------------------------------------- */
+  var hamburger  = document.getElementById('hamburgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      hamburger.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-label', 'メニューを開く');
+      });
+    });
+  }
+
+})();
+
+/* -------------------------------------------------------
+   イントロ動画（タブを開いた初回1回のみ再生）
+------------------------------------------------------- */
+(function () {
+  var KEY     = 'mitsu_intro_played';
+  var overlay = document.getElementById('introOverlay');
+  var video   = document.getElementById('introVideo');
+
+  if (!overlay || !video) return;
+
+  /* 既視済みなら即除去してページを解放 */
+  if (sessionStorage.getItem(KEY)) {
+    overlay.remove();
+    return;
+  }
+
+  /* ページ操作をロック */
+  document.body.style.overflow        = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+
+  function dismiss() {
+    sessionStorage.setItem(KEY, '1');
+    document.body.style.overflow        = '';
+    document.documentElement.style.overflow = '';
+    overlay.classList.add('intro-fade-out');
+    overlay.addEventListener('animationend', function () {
+      overlay.remove();
+    }, { once: true });
+  }
+
+  /* 動画終了 → フェードアウト → ページ表示 */
+  video.addEventListener('ended', dismiss);
+
+  /* 動画読み込み・再生エラー時はオーバーレイを即除去して通常表示 */
+  video.addEventListener('error', function () {
+    overlay.remove();
+    document.body.style.overflow        = '';
+    document.documentElement.style.overflow = '';
+  });
+
+  /* タッチスクロール・右クリックをオーバーレイ上でブロック */
+  overlay.addEventListener('touchmove',   function (e) { e.preventDefault(); }, { passive: false });
+  overlay.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+  /* 自動再生（ブラウザポリシーでブロックされた場合はオーバーレイを解除） */
+  var p = video.play();
+  if (p !== undefined) {
+    p.catch(function () {
+      overlay.remove();
+      document.body.style.overflow        = '';
+      document.documentElement.style.overflow = '';
+    });
+  }
+})();
+</script>
+</body>
+</html>
