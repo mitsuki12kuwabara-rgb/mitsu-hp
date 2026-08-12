@@ -1111,10 +1111,11 @@ ul, ol { list-style: none; }
   font-size: 15px;
   color: rgba(255,255,255,0.85);
   margin-bottom: 36px;
-  max-width: 480px;
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.85;
+  text-align: center;
 }
 .final-cta .btn-line { margin: 0 auto 20px; font-size: 17px; padding: 18px 32px; }
 .final-note { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.9; }
@@ -1246,7 +1247,7 @@ footer {
   .hero-desc  { font-size: 14px; }
   .btn-hero-outline { min-width: 140px; font-size: 13px; padding: 12px 20px; }
   .cta-sub { white-space: normal; font-size: 12px; }
-  .vp-tab  { font-size: 11.5px; padding: 8px 4px; }
+  .vp-tab  { font-size: 10px; padding: 8px 3px; }
 
   .pain-grid  { grid-template-columns: 1fr; }
 
@@ -1315,9 +1316,7 @@ footer {
   イントロ動画オーバーレイ（初回表示のみ）
 ===================================================== -->
 <div id="introOverlay" aria-hidden="true">
-  <video id="introVideo" autoplay muted playsinline preload="auto">
-    <source src="videos/アニメーション.mp4" type="video/mp4">
-  </video>
+  <video id="introVideo" muted playsinline preload="auto"></video>
 </div>
 
 <!-- ====================================================
@@ -1437,8 +1436,8 @@ var CONFIG = {
     <div class="hero-inner">
       <h1 class="hero-title">送り迎えを、<span class="no-break">ひとりで抱えない</span></h1>
       <p class="hero-desc">
-        保育園、学童、習い事など、子どもの日々の移動を、地域の力で支える。<br>
-        MITSUは、送り迎えを担う地域の人と保護者をつなぎ、<br>世田谷区烏山エリアで先行提供をしています。
+        世田谷区烏山地域で、保育園・学童・習い事への<strong>徒歩送迎</strong>を先行提供しています。<br>
+        地域で信頼できる人と保護者をつなぎ、子どもの日々の移動を支えます。
       </p>
       <div class="hero-btns">
         <a class="btn-hero-outline btn-hero-solid" href="#about">サービスについて</a>
@@ -1518,7 +1517,7 @@ var CONFIG = {
         </div>
         <div class="flow3-card">
           <p class="flow3-card-title">託送者の確認</p>
-          <p class="flow3-card-desc">公式LINEよりお子さまの情報や保育園などを登録すると、担当の託送者の免許証を確認することができます。<br>免許証には顔写真や過去の評価、子供関係の経歴などを確認することができます。</p>
+          <p class="flow3-card-desc">公式LINEよりお子さまの情報や保育園などを登録します。MITSU担当者が内容を確認し、送迎を担当する託送者をご案内します。担当が決まると、免許証（顔写真・経歴・評価）を事前にご確認いただけます。</p>
         </div>
       </div>
 
@@ -1540,7 +1539,7 @@ var CONFIG = {
         </div>
         <div class="flow3-card">
           <p class="flow3-card-title">実際に送迎開始！</p>
-          <p class="flow3-card-desc">実際に託送者にお子さまの送迎をお願いすることができます。<br>自動予約・位置情報共有・受取確認・評価などの機能が使用可能となります。</p>
+          <p class="flow3-card-desc">実際に託送者にお子さまの送迎をお願いすることができます。<br>定期送迎の自動予約（同じ曜日・ルートの繰り返し予約）・位置情報共有・受取確認・評価などの機能が使用可能となります。</p>
         </div>
       </div>
 
@@ -1623,7 +1622,8 @@ var CONFIG = {
         <div class="license-item">利用者からの評価</div>
       </div>
       <p class="license-note">
-        ※ 託送者免許証は一般公開せず、その託送者と関係する登録保護者だけが確認できます。
+        ※ 託送者免許証は一般公開せず、その託送者と関係する登録保護者だけが確認できます。<br>
+        ※ 託送者免許証は、MITSU独自の確認・研修基準を満たしたことを示す認定証であり、公的資格ではありません。
       </p>
     </div>
   </div>
@@ -1635,7 +1635,7 @@ var CONFIG = {
 <section id="safety" class="section" aria-label="安全性への取り組み">
   <div class="container">
     <p class="sec-label">安全性</p>
-    <h2 class="sec-heading">送迎中も、状況を確認できる安心を。</h2>
+    <h2 class="sec-heading">状況を確認できる安心</h2>
     <p class="sec-desc">
       託送者の確認だけでなく、送迎中から送迎後まで保護者自身が利用・確認できる機能があります。
     </p>
@@ -1714,11 +1714,13 @@ var CONFIG = {
     <div class="time-card">
       <p class="time-card-head">送迎時間の定義</p>
       <p>
-        送迎時間は、<strong>託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点</strong>から開始します。お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。
+        送迎時間は、<strong>託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点</strong>から開始します。<br>
+        お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。
       </p>
       <br>
       <p>
-        引き渡し後、<strong>託送者が公式LINEで送迎終了を送信した時点</strong>で終了となります。保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
+        引き渡し後、<strong>託送者が公式LINEで送迎終了を送信した時点</strong>で終了となります。<br>
+        保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
       </p>
     </div>
 
@@ -1784,9 +1786,10 @@ var CONFIG = {
   最終CTA③
 ===================================================== -->
 <section id="contact" class="final-cta" aria-label="お問い合わせ・最終CTA">
-  <h2 class="final-title">まずは、送り迎えのお困りごとを<br>お聞かせください。</h2>
+  <h2 class="final-title">まずは、送り迎えのお困りごとをお聞かせください。</h2>
   <p class="final-desc">
-    利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。<br>対象地域外の方からの事前登録も受け付けています。
+    利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。<br>
+    対象地域外の方からの事前登録も受け付けています。
   </p>
   <a class="btn-line js-cta" href="#" style="margin:0 auto 22px;">公式LINEで登録・相談する</a>
   <p class="final-note">
@@ -2244,6 +2247,11 @@ var CONFIG = {
     overlay.remove();
     return;
   }
+
+  /* 画面幅でPC／スマホ用動画を切り替え */
+  var isMobile = window.innerWidth <= 768;
+  video.src = isMobile ? 'videos/スマホ用アニメーション.mp4' : 'videos/アニメーション.mp4';
+  video.load();
 
   /* ページ操作をロック */
   document.body.style.overflow        = 'hidden';
