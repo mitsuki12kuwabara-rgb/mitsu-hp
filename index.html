@@ -281,6 +281,9 @@ ul, ol { list-style: none; }
 }
 /* モバイルで句読点位置のみ折り返し可にするための補助クラス */
 .no-break { white-space: nowrap; }
+/* PC/スマホ出し分けクラス */
+.br-sp   { display: none; }
+.pc-only { display: inline; }
 .hero-desc {
   font-size: 15px;
   color: rgba(255,255,255,0.85);
@@ -1248,6 +1251,9 @@ footer {
   .btn-hero-outline { min-width: 140px; font-size: 13px; padding: 12px 20px; }
   .cta-sub { white-space: normal; font-size: 12px; }
   .vp-tab  { font-size: 10px; padding: 8px 3px; }
+  .br-sp   { display: inline; }
+  .pc-only { display: none; }
+  .line-notice-head { font-size: 22px; white-space: nowrap; }
 
   .pain-grid  { grid-template-columns: 1fr; }
 
@@ -1370,6 +1376,7 @@ var CONFIG = {
     {
       id:          "calendar",
       label:       "カレンダー機能",
+      labelMobile: "カレンダー",
       src:         "/static/videos/line_03_calendar.mp4",
       poster:      "",
       description: "予約済みの送迎予定をカレンダー形式で確認できます。"
@@ -1434,10 +1441,10 @@ var CONFIG = {
   <div class="hero">
     <div class="hero-badge">対象地域：世田谷区烏山地域</div>
     <div class="hero-inner">
-      <h1 class="hero-title">送り迎えを、<span class="no-break">ひとりで抱えない</span></h1>
+      <h1 class="hero-title">送り迎えを<span class="pc-only">、</span><span class="no-break">ひとりで抱えない</span></h1>
       <p class="hero-desc">
-        世田谷区烏山地域で、保育園・学童・習い事への<strong>徒歩送迎</strong>を先行提供しています。<br>
-        地域で信頼できる人と保護者をつなぎ、子どもの日々の移動を支えます。
+        世田谷区烏山地域で、保育園・学童・習い事への<br class="br-sp"><strong>徒歩送迎</strong>を先行提供しています。<br>
+        地域で信頼できる人と保護者をつなぎ<span class="pc-only">、</span><br class="br-sp">子どもの日々の移動を支えます。
       </p>
       <div class="hero-btns">
         <a class="btn-hero-outline btn-hero-solid" href="#about">サービスについて</a>
@@ -1449,7 +1456,7 @@ var CONFIG = {
   <!-- CTA① -->
   <div class="cta-wrap">
     <a class="btn-line js-cta" href="#">公式LINEで登録・相談する</a>
-    <p class="cta-sub">最初の約1か月は無料でご利用いただけます。詳細や先行利用の受付状況は公式LINEからご確認ください。</p>
+    <p class="cta-sub">最初の約1か月は無料でご利用いただけます。<br class="br-sp">詳細や先行利用<span class="pc-only">の受付状況</span>は公式LINEからご確認ください。</p>
   </div>
 </section>
 
@@ -1494,7 +1501,7 @@ var CONFIG = {
         </svg>
       </div>
       <p class="line-notice-head">すべてが公式LINEから</p>
-      <p class="line-notice-desc">アプリのインストール不要。利用登録、予約、位置情報共有などを公式LINEから行えます。</p>
+      <p class="line-notice-desc">アプリのインストール不要。<br class="br-sp">利用登録、予約、位置情報共有などを<br class="br-sp">公式LINEから行えます。</p>
     </div>
   </div>
 </section>
@@ -1995,7 +2002,8 @@ var CONFIG = {
       /* タブボタン */
       var tab = document.createElement('button');
       tab.className = 'vp-tab' + (i === 0 ? ' active' : '');
-      tab.textContent = v.label;
+      var isMobile = window.innerWidth <= 768;
+      tab.textContent = (isMobile && v.labelMobile) ? v.labelMobile : v.label;
       tab.setAttribute('role', 'tab');
       tab.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
       tab.setAttribute('aria-controls', 'vp-vid-' + v.id);
