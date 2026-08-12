@@ -284,6 +284,7 @@ ul, ol { list-style: none; }
 /* PC/スマホ出し分けクラス */
 .br-sp   { display: none; }
 .pc-only { display: inline; }
+.sp-only { display: none; }
 .hero-desc {
   font-size: 15px;
   color: rgba(255,255,255,0.85);
@@ -1253,6 +1254,10 @@ footer {
   .vp-tab  { font-size: 10px; padding: 8px 3px; }
   .br-sp   { display: inline; }
   .pc-only { display: none; }
+  .sp-only { display: inline; }
+  .license-title { font-size: 12px; }
+  .safety-featured-item { padding: 18px 8px 14px; }
+  .safety-featured-desc { font-size: 12px; }
   .line-notice-head { font-size: 22px; white-space: nowrap; }
 
   .pain-grid  { grid-template-columns: 1fr; }
@@ -1364,7 +1369,7 @@ var CONFIG = {
       label:       "登録",
       src:         "/static/videos/line_01_register.mp4",
       poster:      "",
-      description: "保護者・お子さま・施設情報等の登録と、担当する託送者を送迎前に確認できます。"
+      description: "保護者・お子さま・施設情報等の登録と、<br class=\"br-sp\">担当する託送者を送迎前に確認できます。"
     },
     {
       id:          "booking",
@@ -1524,7 +1529,7 @@ var CONFIG = {
         </div>
         <div class="flow3-card">
           <p class="flow3-card-title">託送者の確認</p>
-          <p class="flow3-card-desc">公式LINEよりお子さまの情報や保育園などを登録します。MITSU担当者が内容を確認し、送迎を担当する託送者をご案内します。担当が決まると、免許証（顔写真・経歴・評価）を事前にご確認いただけます。</p>
+          <p class="flow3-card-desc"><span class="pc-only">公式LINEよりお子さまの情報や保育園などを登録します。MITSU担当者が内容を確認し、送迎を担当する託送者をご案内します。担当が決まると、免許証（顔写真・経歴・評価）を事前にご確認いただけます。</span><span class="sp-only">（顔写真・経歴など）を事前にご確認いただけます。</span></p>
         </div>
       </div>
 
@@ -1599,7 +1604,7 @@ var CONFIG = {
     <p class="sec-label">託送者について</p>
     <h2 class="sec-heading">地域の誰かではなく、<br>確認と研修を受けた託送者へ</h2>
     <p class="sec-desc">
-      MITSU管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br>実際の送迎は、免許証を取得した託送者が担当します。
+      MITSU管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br><span class="pc-only">実際の</span>送迎は、免許証を取得した託送者が担当します。
     </p>
 
     <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;">主な確認・研修項目</h3>
