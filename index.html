@@ -1258,6 +1258,9 @@ footer {
   .license-title { font-size: 12px; }
   .safety-featured-item { padding: 18px 8px 14px; }
   .safety-featured-desc { font-size: 12px; }
+  .safety-sub-list { justify-content: center; }
+  .free-banner-main { font-size: 14px; }
+  .faq-btn { font-size: 12px; }
   .line-notice-head { font-size: 22px; white-space: nowrap; }
 
   .pain-grid  { grid-template-columns: 1fr; }
@@ -1649,7 +1652,7 @@ var CONFIG = {
     <p class="sec-label">安全性</p>
     <h2 class="sec-heading">状況を確認できる安心</h2>
     <p class="sec-desc">
-      託送者の確認だけでなく、送迎中から送迎後まで保護者自身が利用・確認できる機能があります。
+      託送者の確認だけでなく、送迎中から送迎後まで<br class="br-sp">保護者自身が利用・確認できる機能があります。
     </p>
 
     <!-- 主要3項目：大カード -->
@@ -1699,7 +1702,7 @@ var CONFIG = {
     <a class="btn-line js-cta" href="#">公式LINEで登録・相談する</a>
   </div>
   <p class="cta-sub" style="color:rgba(255,255,255,0.58);margin-top:14px;">
-    利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。
+    利用できる地域や送迎内容、先行利用の受付状況について<span class="pc-only">、</span><br class="br-sp">公式LINEからご相談いただけます。
   </p>
 </div>
 
@@ -1715,23 +1718,23 @@ var CONFIG = {
     <div class="free-banner">
       <span class="free-banner-label">先行利用特典</span>
       <p class="free-banner-main">最初の<em>約1か月</em>は無料でご利用いただけます</p>
-      <p class="free-banner-note">無料期間は目安であり、正式な期間・条件については公式LINEからご確認ください。</p>
+      <p class="free-banner-note">無料期間は目安であり、正式な期間・条件について<span class="pc-only">は</span><br class="br-sp">公式LINEからご確認ください。</p>
     </div>
     <div class="price-guide">
-      <strong>無料期間終了後の料金目安：</strong>送迎時間に応じた時間制料金（例：30分の送迎で目安1,000円前後）<br>
-      <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。詳細は公式LINEからご確認ください。</span>
+      <strong>無料期間終了後の料金目安：</strong><br class="br-sp">送迎時間に応じた時間制料金<br class="br-sp">（例：30分の送迎で目安1,000円前後）<br>
+      <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。<br class="br-sp">詳細は公式LINEからご確認ください。</span>
     </div>
 
     <!-- 送迎時間の定義 -->
     <div class="time-card">
       <p class="time-card-head">送迎時間の定義</p>
       <p>
-        送迎時間は、<strong>託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点</strong>から開始します。<br>
+        送迎時間は<span class="pc-only">、</span><br class="br-sp"><strong>託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点</strong><br class="br-sp">から開始します。<br>
         お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。
       </p>
       <br>
       <p>
-        引き渡し後、<strong>託送者が公式LINEで送迎終了を送信した時点</strong>で終了となります。<br>
+        引き渡し後<span class="pc-only">、</span><br class="br-sp"><strong>託送者が公式LINEで送迎終了を送信した時点</strong><br class="br-sp">で終了となります。<br>
         保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
       </p>
     </div>
@@ -1798,7 +1801,7 @@ var CONFIG = {
   最終CTA③
 ===================================================== -->
 <section id="contact" class="final-cta" aria-label="お問い合わせ・最終CTA">
-  <h2 class="final-title">まずは、送り迎えのお困りごとをお聞かせください。</h2>
+  <h2 class="final-title">まずは、送り迎えのお困りごとを<br class="br-sp">お聞かせください。</h2>
   <p class="final-desc">
     利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。<br>
     対象地域外の方からの事前登録も受け付けています。
@@ -1954,7 +1957,7 @@ var CONFIG = {
         '<dl class="monitor-dl">' +
           '<dt>対象地域</dt><dd>' + mon.area + '</dd>' +
           '<dt>募集数</dt><dd>先着' + mon.capacity + '世帯</dd>' +
-          '<dt>利用料金</dt><dd>対象世帯は一定期間（目安として' + mon.freePeriod + '）無料</dd>' +
+          '<dt>利用料金</dt><dd>対象世帯は一定期間無料<br class="br-sp">（目安として' + mon.freePeriod + '）</dd>' +
           '<dt>主な対象年齢</dt><dd>' + mon.targetAge + 'まで</dd>' +
           '<dt>対象条件</dt><dd>自立歩行とコミュニケーションができるお子さまを主な対象とします</dd>' +
           '<dt>受付状況</dt><dd>公式LINEで確認できます</dd>' +
