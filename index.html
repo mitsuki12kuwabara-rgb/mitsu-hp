@@ -321,7 +321,7 @@ ul, ol { list-style: none; }
 .pc-only      { display: inline; }
 .sp-only      { display: none; }
 .sp-block     { display: none; }
-.sp-text-right{ display: inline; }
+.sp-text-right{ display: none; }
 .hero-desc {
   font-size: 15px;
   color: rgba(255,255,255,0.85);
@@ -2251,6 +2251,7 @@ var CONFIG = {
       ans.id = 'faq-ans-' + i;
       ans.setAttribute('role', 'region');
       ans.innerHTML = '<div class="faq-ans-inner">A．' + item.a + '</div>';
+      ans.style.maxHeight = '0';
 
       li.appendChild(btn);
       li.appendChild(ans);
