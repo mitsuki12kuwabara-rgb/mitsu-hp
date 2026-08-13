@@ -614,7 +614,29 @@ ul, ol { list-style: none; }
   background: var(--bg);
 }
 .vp-tab.active::after {
-  opacity: 1;
+  opacity: 0; /* タイマーバーに置き換えるため非表示 */
+}
+
+@keyframes vp-timer-drain {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+.vp-timer-bar {
+  position: absolute;
+  bottom: -19px;
+  left: -5px;
+  right: -5px;
+  height: 2px;
+  background: var(--orange);
+  border-radius: 2px;
+  transform-origin: right center;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+.vp-timer-bar.active {
+  transform: scaleX(1);
+  animation: vp-timer-drain 5s linear forwards;
+  box-shadow: 0 -8px 18px 3px rgba(239,107,58,0.4), 0 -2px 6px rgba(239,107,58,0.75);
 }
 
 .vp-body {
@@ -636,8 +658,9 @@ ul, ol { list-style: none; }
   border-radius: var(--radius);
   overflow: hidden;
   position: relative;
+  aspect-ratio: 27 / 16; /* 縦9:16動画の上1/3を表示するデフォルト値。JSがloadedmetadataで実寸に上書きする */
 }
-.vp-video { width: 100%; display: block; border-radius: var(--radius); }
+.vp-video { width: 100%; height: auto; display: block; border-radius: var(--radius); }
 .vp-video-fallback {
   display: none;
   padding: 32px 16px;
@@ -667,6 +690,49 @@ ul, ol { list-style: none; }
 }
 .vp-ctrl-btn:hover { opacity: 0.82; }
 .vp-ctrl-btn--mute { background: var(--text-sub); }
+
+/* ---- 動画モーダル ---- */
+#vp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#vp-modal-inner {
+  position: relative;
+}
+#vp-modal-video {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  background: #000;
+  display: block;
+}
+#vp-modal-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  background: rgba(0,0,0,0.70);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+#vp-modal-close:hover { background: rgba(0,0,0,0.95); }
+@media (max-width: 768px) {
+  #vp-modal-video  { max-width: 92vw; max-height: 75vh; }
+  #vp-modal-close  { top: -12px; right: -6px; font-size: 12px; padding: 5px 10px; }
+}
 
 /* ---- 機能カード ---- */
 .feature-cards {
@@ -1352,14 +1418,14 @@ var CONFIG = {
     {
       id:          "register",
       label:       "登録",
-      src:         "/static/videos/line_01_register.mp4",
+      src:         "videos/登録.mp4",
       poster:      "",
       description: "<span class=\"pc-only\">保護者・お子さま・施設情報等の登録と、担当する託送者を送迎前に確認できます。</span><span class=\"sp-only\">情報を登録すると、担当する託送者を確認できます。</span>"
     },
     {
       id:          "booking",
       label:       "予約",
-      src:         "/static/videos/line_02_booking.mp4",
+      src:         "videos/予約.mp4",
       poster:      "",
       description: "送迎内容や日時を入力して送迎を予約します。"
     },
@@ -1367,21 +1433,21 @@ var CONFIG = {
       id:          "calendar",
       label:       "カレンダー機能",
       labelMobile: "カレンダー",
-      src:         "/static/videos/line_03_calendar.mp4",
+      src:         "videos/カレンダー機能.mp4",
       poster:      "",
       description: "予約済みの送迎予定をカレンダー形式で確認できます。"
     },
     {
       id:          "location",
       label:       "位置情報",
-      src:         "/static/videos/line_04_location.mp4",
+      src:         "videos/位置情報共有.mp4",
       poster:      "",
       description: "送迎中は、担当する託送者の現在位置や送迎状況を公式LINEから確認できます。"
     },
     {
       id:          "complete",
       label:       "送迎終了後",
-      src:         "/static/videos/line_05_complete.mp4",
+      src:         "videos/送迎終了後.mp4",
       poster:      "",
       description: "受け取り確認、施設からのお子さまの様子や先生からの連絡確認、送迎の評価を行います。"
     }
@@ -1951,6 +2017,57 @@ var CONFIG = {
     sty.textContent = '.vp-hidden{display:none!important;}';
     document.head.appendChild(sty);
 
+    /* 動画モーダル生成 */
+    var modal = document.createElement('div');
+    modal.id = 'vp-modal';
+    modal.style.display = 'none';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', '動画プレーヤー');
+
+    var modalInner = document.createElement('div');
+    modalInner.id = 'vp-modal-inner';
+
+    var modalVideo = document.createElement('video');
+    modalVideo.id = 'vp-modal-video';
+    modalVideo.setAttribute('playsinline', '');
+    modalVideo.controls = true;
+
+    var modalClose = document.createElement('button');
+    modalClose.id = 'vp-modal-close';
+    modalClose.textContent = '✕ 閉じる';
+    modalClose.setAttribute('aria-label', '動画を閉じる');
+
+    modalInner.appendChild(modalVideo);
+    modalInner.appendChild(modalClose);
+    modal.appendChild(modalInner);
+    document.body.appendChild(modal);
+
+    function openModal(src) {
+      if (modalVideo.getAttribute('data-modal-src') !== src) {
+        modalVideo.src = src;
+        modalVideo.setAttribute('data-modal-src', src);
+        modalVideo.load();
+      }
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      modalVideo.play().catch(function () {});
+    }
+
+    function closeModal() {
+      modalVideo.pause();
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.style.display !== 'none') closeModal();
+    });
+
     CONFIG.lineVideos.forEach(function (v, i) {
       /* タブボタン */
       var tab = document.createElement('button');
@@ -1961,6 +2078,9 @@ var CONFIG = {
       tab.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
       tab.setAttribute('aria-controls', 'vp-vid-' + v.id);
       tab.dataset.idx = i;
+      var timerBar = document.createElement('span');
+      timerBar.className = 'vp-timer-bar';
+      tab.appendChild(timerBar);
       vpTabs.appendChild(tab);
 
       /* 左: info パネル */
@@ -1996,8 +2116,18 @@ var CONFIG = {
       fallback.innerHTML = '<p>動画を読み込めませんでした。</p><p style="margin-top:6px;">' + v.description + '</p>';
 
       vid.addEventListener('error', function () {
-        vid.style.display     = 'none';
+        vid.style.display      = 'none';
         fallback.style.display = 'block';
+        wrap.style.aspectRatio = 'auto';
+        wrap.style.height      = 'auto';
+      });
+
+      vid.addEventListener('loadedmetadata', function () {
+        if (vid.videoWidth > 0) {
+          var h = Math.round(wrap.offsetWidth * (vid.videoHeight / vid.videoWidth) / 3);
+          wrap.style.aspectRatio = 'auto';
+          wrap.style.height      = h + 'px';
+        }
       });
 
       var ctrl = document.createElement('div');
@@ -2008,16 +2138,7 @@ var CONFIG = {
       playBtn.textContent = '▶ 再生';
       playBtn.setAttribute('aria-label', '動画を再生する');
       playBtn.addEventListener('click', function () {
-        if (vid.paused) {
-          vid.play().then(function () {
-            playBtn.textContent = '⏸ 停止';
-            playBtn.setAttribute('aria-label', '動画を停止する');
-          }).catch(function () {});
-        } else {
-          vid.pause();
-          playBtn.textContent = '▶ 再生';
-          playBtn.setAttribute('aria-label', '動画を再生する');
-        }
+        openModal(v.src || '');
       });
       playBtns.push(playBtn);
 
@@ -2031,6 +2152,29 @@ var CONFIG = {
       vpBody.appendChild(info);
       vpBody.appendChild(vidWrap);
     });
+
+    /* タイマーバーのアニメーションをリセットして指定タブで再開 */
+    function resetTimerBars(idx) {
+      vpTabs.querySelectorAll('.vp-timer-bar').forEach(function (bar, i) {
+        bar.classList.remove('active');
+        if (i === idx) {
+          bar.offsetWidth; /* リフロー強制でアニメーション再起動 */
+          bar.classList.add('active');
+        }
+      });
+    }
+
+    /* 5秒自動タブ切替 */
+    var autoTimer = null;
+    function startAutoTimer() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function () {
+        if (modal.style.display !== 'none') return; /* モーダル表示中はスキップ */
+        var nextIdx = (activeIdx + 1) % CONFIG.lineVideos.length;
+        var nextTab = vpTabs.querySelectorAll('.vp-tab')[nextIdx];
+        if (nextTab) nextTab.click();
+      }, 5000);
+    }
 
     /* タブクリックイベント */
     vpTabs.addEventListener('click', function (e) {
@@ -2067,7 +2211,12 @@ var CONFIG = {
       }
 
       activeIdx = idx;
+      startAutoTimer();
+      resetTimerBars(idx);
     });
+
+    startAutoTimer();
+    resetTimerBars(0); /* 起動時にタブ0のバーを開始 */
   }
 
   /* -------------------------------------------------------
