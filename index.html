@@ -317,9 +317,11 @@ ul, ol { list-style: none; }
 /* モバイルで句読点位置のみ折り返し可にするための補助クラス */
 .no-break { white-space: nowrap; }
 /* PC/スマホ出し分けクラス */
-.br-sp   { display: none; }
-.pc-only { display: inline; }
-.sp-only { display: none; }
+.br-sp        { display: none; }
+.pc-only      { display: inline; }
+.sp-only      { display: none; }
+.sp-block     { display: none; }
+.sp-text-right{ display: inline; }
 .hero-desc {
   font-size: 15px;
   color: rgba(255,255,255,0.85);
@@ -1290,9 +1292,11 @@ footer {
   .btn-hero-outline { min-width: 140px; font-size: 13px; padding: 12px 20px; }
   .cta-sub { white-space: normal; font-size: 12px; }
   .vp-tab  { font-size: 10px; padding: 8px 3px; }
-  .br-sp   { display: inline; }
-  .pc-only { display: none; }
-  .sp-only { display: inline; }
+  .br-sp        { display: inline; }
+  .pc-only      { display: none; }
+  .sp-only      { display: inline; }
+  .sp-block     { display: block; }
+  .sp-text-right{ display: block; text-align: right; }
   .license-card-top { flex-direction: column; align-items: flex-start; gap: 6px; }
   .safety-featured-item { padding: 18px 8px 14px; }
   .safety-featured-desc { font-size: 12px; }
@@ -1328,7 +1332,7 @@ footer {
 
   /* イラスト画像 モバイル専用位置・レイアー */
   .hero-illust     { left: 0; width: 25vw; }
-  .ctamid-illust   { left: 42.5vw; width: 15vw; z-index: 0; }
+  .ctamid-illust   { left: 80vw; width: 20vw; z-index: 0; }
   #safety          { padding-bottom: 22vw; }
   .finalcta-illust { left: 75vw; width: 20vw; z-index: 0; }
   #roadmap         { padding-bottom: 22vw; }
@@ -1418,7 +1422,7 @@ var CONFIG = {
       label:       "登録",
       src:         "/static/videos/line_01_register.mp4",
       poster:      "",
-      description: "保護者・お子さま・施設情報等の登録と、<br class=\"br-sp\">担当する託送者を送迎前に確認できます。"
+      description: "<span class=\"pc-only\">保護者・お子さま・施設情報等の登録と、担当する託送者を送迎前に確認できます。</span><span class=\"sp-only\">情報を登録すると、担当する託送者を確認できます。</span>"
     },
     {
       id:          "booking",
@@ -1498,8 +1502,10 @@ var CONFIG = {
     <div class="hero-inner">
       <h1 class="hero-title">送り迎えを<span class="pc-only">、</span><span class="no-break">ひとりで抱えない</span></h1>
       <p class="hero-desc">
-        世田谷区烏山地域で、保育園・学童・習い事への<br class="br-sp"><strong>徒歩送迎</strong>を先行提供しています。<br>
-        地域で信頼できる人と保護者をつなぎ<span class="pc-only">、</span><br class="br-sp">子どもの日々の移動を支えます。
+        <span class="pc-only">世田谷区烏山地域で、保育園・学童・習い事への<strong>徒歩送迎</strong>を先行提供しています。<br>
+        地域で信頼できる人と保護者をつなぎ、子どもの日々の移動を支えます。</span>
+        <span class="sp-block" style="font-size:12px;">地域で信頼できる人とつなぎ、子どもの日々の移動を支えます。</span>
+        <span class="sp-block" style="font-size:12px;">世田谷区で、徒歩送迎を先行提供しています。</span>
       </p>
       <div class="hero-btns">
         <a class="btn-hero-outline btn-hero-solid" href="#about">サービスについて</a>
@@ -1654,7 +1660,9 @@ var CONFIG = {
     <p class="sec-label">託送者について</p>
     <h2 class="sec-heading">地域の誰かではなく、<br>確認と研修を受けた託送者へ</h2>
     <p class="sec-desc">
-      MITSU管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br><span class="pc-only">実際の</span>送迎は、免許証を取得した託送者が担当します。
+      <span class="pc-only">MITSU管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br>実際の送迎は、免許証を取得した託送者が担当します。</span>
+      <span class="sp-block" style="font-size:12px;">MITSU管理者が基準を満たした方に託送者免許証を交付します。</span>
+      <span class="sp-block" style="font-size:12px;">送迎は、免許証を取得した託送者が担当します。</span>
     </p>
 
     <h3 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px;">主な確認・研修項目</h3>
@@ -1777,12 +1785,15 @@ var CONFIG = {
     <div class="time-card">
       <p class="time-card-head">送迎時間の定義</p>
       <p>
-        送迎時間は<span class="pc-only">、</span><br class="br-sp"><strong>託送者が保育園・幼稚園・学童などのお迎え先へ到着した時点</strong><br class="br-sp">から開始します。<br>
-        お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。
+        <span class="pc-only">送迎時間は、<strong>託送者が保育園などのお迎え先に到着した時点</strong>から開始します。<br>
+        お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。</span>
+        <span class="sp-block" style="font-size:13px;">託送者が保育園などのお迎え先に到着した時点</span>
+        <span class="sp-text-right" style="font-size:13px;">から開始します。</span>
+        <span class="sp-block">お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。</span>
       </p>
       <br>
       <p>
-        引き渡し後<span class="pc-only">、</span><br class="br-sp"><strong>託送者が公式LINEで送迎終了を送信した時点</strong><br class="br-sp">で終了となります。<br>
+        引き渡し後<span class="pc-only">、</span><br class="br-sp"><strong>託送者が公式LINEで送迎終了を送信した時点</strong><span class="pc-only">で終了となります。</span><span class="sp-text-right">で終了となります。</span><br>
         保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
       </p>
     </div>
