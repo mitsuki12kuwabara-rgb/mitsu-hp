@@ -331,6 +331,7 @@ ul, ol { list-style: none; }
 /* PC/スマホ出し分けクラス */
 .br-sp        { display: none; }
 .pc-only      { display: inline; }
+li.pc-only    { display: list-item; }
 .sp-only      { display: none; }
 .sp-block     { display: none; }
 .sp-text-right{ display: none; }
@@ -1542,10 +1543,10 @@ var CONFIG = {
         <p class="pain-col-head">こんな場面で使われています</p>
         <ul class="pain-list">
           <li>保育園から習いごとへの送りをお願いしたい</li>
-          <li>学童から自宅までのお迎えを頼みたい</li>
+          <li class="pc-only">学童から自宅までのお迎えを頼みたい</li>
           <li>習いごと中の待ち時間、往復時間を無くしたい</li>
           <li>小学校に向けて歩いて行く練習をしておきたい</li>
-          <li>保育士さんからの伝言などを確認したい</li>
+          <li class="pc-only">保育士さんからの伝言などを確認したい</li>
         </ul>
       </div>
       <div>
@@ -1553,8 +1554,8 @@ var CONFIG = {
         <ul class="value-list">
           <li>夕食や家事を進める時間</li>
           <li>仕事をひと段落させる時間</li>
-          <li>きょうだいへの時間</li>
-          <li>帰宅後にお子さまとゆっくり過ごすゆとり</li>
+          <li class="pc-only">きょうだいへの時間</li>
+          <li class="pc-only">帰宅後にお子さまとゆっくり過ごすゆとり</li>
           <li>「間に合うかな？」という心配がない心のゆとり</li>
         </ul>
       </div>
