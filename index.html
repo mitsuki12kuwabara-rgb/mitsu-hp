@@ -792,6 +792,71 @@ li.pc-only    { display: list-item; }
   margin-top: 1px;
 }
 
+/* ---- 確認・研修項目 スロットスクローラー ---- */
+.check-slot-wrap {
+  display: none; /* PC では非表示 */
+  position: relative;
+  height: 204px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  outline: none;
+  cursor: ns-resize;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 22%, black 38%, black 62%, rgba(0,0,0,0.85) 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.85) 22%, black 38%, black 62%, rgba(0,0,0,0.85) 78%, transparent 100%);
+}
+.check-slot-track {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.check-slot-item {
+  height: 58px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 0 14px 0 38px;
+  position: relative;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.35;
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  transition: transform 0.35s ease, opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  transform-origin: center center;
+  overflow: hidden;
+}
+.check-slot-item::before {
+  content: "✓";
+  position: absolute;
+  left: 14px;
+  color: var(--orange);
+  font-weight: 900;
+  font-size: 13px;
+}
+.check-slot-item.slot-center {
+  transform: scale(1);
+  opacity: 1;
+  border-color: var(--orange);
+  box-shadow: 0 2px 10px rgba(239,107,58,0.22);
+}
+.check-slot-item.slot-adjacent {
+  transform: scale(0.88);
+  opacity: 0.5;
+}
+.check-slot-item.slot-far {
+  transform: scale(0.78);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
 .license-card {
   background: var(--surface);
   border: 2px solid var(--orange);
@@ -1346,7 +1411,8 @@ footer {
   .vp-vid  { grid-column: 1; grid-row: 2; }
 
   .feature-cards { grid-template-columns: repeat(2, 1fr); }
-  .check-grid    { grid-template-columns: 1fr; }
+  .check-grid        { display: none; }
+  .check-slot-wrap   { display: block; }
   .license-items-grid { grid-template-columns: 1fr; }
 
 
@@ -2390,6 +2456,114 @@ var CONFIG = {
       }
     });
   }
+
+  /* -------------------------------------------------------
+     6b. 確認・研修項目 スロットスクローラー
+  ------------------------------------------------------- */
+  (function () {
+    var SLOT_ITEMS = [
+      '本人確認',
+      '管理者による面談・適性確認',
+      '子どもの安全に関する研修',
+      '救命・緊急時対応に関する研修',
+      'お子さまの情報・注意事項の事前共有',
+      '経路と引き渡し方法の確認',
+      '初回の三者送迎練習',
+      '送迎後の評価・フィードバック'
+    ];
+    var SLOT_H = 68; /* 58px item + 10px gap */
+    var slotIdx = 1; /* 管理者による面談 を初期中央 */
+
+    var oldGrid = document.querySelector('.check-grid');
+    if (!oldGrid) return;
+
+    var slotWrap = document.createElement('div');
+    slotWrap.className = 'check-slot-wrap';
+    slotWrap.setAttribute('tabindex', '0');
+    slotWrap.setAttribute('role', 'listbox');
+    slotWrap.setAttribute('aria-label', '確認・研修項目 (スクロールで切替)');
+
+    var slotTrack = document.createElement('ul');
+    slotTrack.className = 'check-slot-track';
+
+    SLOT_ITEMS.forEach(function (text) {
+      var li = document.createElement('li');
+      li.className = 'check-slot-item';
+      li.textContent = text;
+      slotTrack.appendChild(li);
+    });
+
+    slotWrap.appendChild(slotTrack);
+    /* PC のグリッドは残し、スロットはその直後に挿入 */
+    oldGrid.parentNode.insertBefore(slotWrap, oldGrid.nextSibling);
+
+    function slotUpdate(animate) {
+      if (!animate) {
+        slotTrack.style.transition = 'none';
+        slotTrack.offsetWidth;
+      }
+      slotTrack.style.transform = 'translateY(' + (-(slotIdx - 1) * SLOT_H) + 'px)';
+      if (!animate) {
+        slotTrack.offsetWidth;
+        slotTrack.style.transition = '';
+      }
+      slotTrack.querySelectorAll('.check-slot-item').forEach(function (el, i) {
+        el.classList.remove('slot-center', 'slot-adjacent', 'slot-far');
+        var d = Math.abs(i - slotIdx);
+        if (d === 0)      el.classList.add('slot-center');
+        else if (d === 1) el.classList.add('slot-adjacent');
+        else              el.classList.add('slot-far');
+      });
+    }
+
+    /* 3秒ごとに次へ（ループ） */
+    var slotTimer = null;
+    function slotAutoAdvance() {
+      slotIdx = (slotIdx + 1) % SLOT_ITEMS.length;
+      slotUpdate(true);
+    }
+    function startSlotTimer() {
+      clearInterval(slotTimer);
+      slotTimer = setInterval(slotAutoAdvance, 3000);
+    }
+
+    /* ホイール（クールダウン方式） */
+    var slotLastMove = 0;
+    slotWrap.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var now = Date.now();
+      var delta = e.deltaMode === 0 ? e.deltaY : (e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY * 800);
+      if (Math.abs(delta) < 5) return;
+      if (now - slotLastMove < 250) return;
+      slotIdx      = Math.max(0, Math.min(SLOT_ITEMS.length - 1, slotIdx + (delta > 0 ? 1 : -1)));
+      slotLastMove = now;
+      slotUpdate(true);
+      startSlotTimer();
+    }, { passive: false });
+
+    /* タッチ */
+    var slotTY = 0;
+    slotWrap.addEventListener('touchstart', function (e) { slotTY = e.touches[0].clientY; }, { passive: true });
+    slotWrap.addEventListener('touchmove', function (e) {
+      e.preventDefault();
+      var dy = slotTY - e.touches[0].clientY;
+      if (Math.abs(dy) >= 28) {
+        slotIdx = Math.max(0, Math.min(SLOT_ITEMS.length - 1, slotIdx + (dy > 0 ? 1 : -1)));
+        slotTY  = e.touches[0].clientY;
+        slotUpdate(true);
+        startSlotTimer();
+      }
+    }, { passive: false });
+
+    /* キーボード */
+    slotWrap.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown')    { slotIdx = Math.min(SLOT_ITEMS.length - 1, slotIdx + 1); slotUpdate(true); startSlotTimer(); e.preventDefault(); }
+      else if (e.key === 'ArrowUp') { slotIdx = Math.max(0, slotIdx - 1); slotUpdate(true); startSlotTimer(); e.preventDefault(); }
+    });
+
+    slotUpdate(false);
+    startSlotTimer();
+  })();
 
   /* -------------------------------------------------------
      7. ハンバーガーメニュー
