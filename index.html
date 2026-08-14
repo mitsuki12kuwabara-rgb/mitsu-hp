@@ -287,6 +287,17 @@ ul, ol { list-style: none; }
   user-select: none;
   z-index: 2;
 }
+.caution-illust {
+  position: absolute;
+  top: 0;
+  transform: translateY(calc(-100% - 6px));
+  left: 25vw;
+  width: 15vw;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
 .finalcta-illust {
   position: absolute;
   bottom: 0;
@@ -1331,6 +1342,7 @@ footer {
   /* イラスト画像 モバイル専用位置・レイアー */
   .hero-illust     { left: 0; width: 35vw; }
   .ctamid-illust   { left: 40vw; width: 20vw; z-index: 0; }
+  .caution-illust  { left: 20vw; width: 20vw; z-index: 0; }
   .finalcta-illust { left: 75vw; width: 20vw; z-index: 0; }
   #roadmap         { padding-bottom: 22vw; }
   #carrier         { padding-bottom: 22vw; }
@@ -1700,6 +1712,7 @@ var CONFIG = {
 ===================================================== -->
 <div class="cta-mid" role="region" aria-label="公式LINEへの相談">
   <img class="ctamid-illust" src="finalcta-illust.png" alt="" aria-hidden="true">
+  <img class="caution-illust" src="挿入画像/注意.png" alt="" aria-hidden="true">
   <p class="cta-mid-title">安全性について、<br>もっと詳しく知りたい方へ</p>
   <p class="cta-mid-desc">ご不明な点は公式LINEからお気軽にご相談ください。</p>
   <div style="display:flex;justify-content:center;">
@@ -1812,6 +1825,7 @@ var CONFIG = {
 <section id="contact" class="final-cta" aria-label="お問い合わせ・最終CTA">
   <svg class="final-cta-chevron" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <polygon points="0,0 200,0 100,80" fill="#FFFFFF"/>
+    <text x="100" y="30" text-anchor="middle" dominant-baseline="middle" font-size="22" font-weight="700" fill="#C8501E" font-family="inherit" letter-spacing="2">MITSU</text>
   </svg>
   <h2 class="final-title">まずは、送り迎えのお困りごとを<br class="br-sp">お聞かせください。</h2>
   <p class="final-desc">
