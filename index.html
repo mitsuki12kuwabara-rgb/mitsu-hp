@@ -2322,18 +2322,46 @@ var CONFIG = {
       faqList.appendChild(li);
     });
 
-    /* もっと見るボタン */
-    var faqMoreBtn = document.createElement('button');
+    /* もっと見る / 閉じる ボタン */
+    var faqMoreBtn  = document.createElement('button');
     faqMoreBtn.className = 'faq-more-btn';
     faqMoreBtn.textContent = 'もっと見る';
     faqMoreBtn.setAttribute('aria-label', 'FAQをすべて表示する');
-    faqList.parentNode.insertBefore(faqMoreBtn, faqList.nextSibling);
+
+    var faqCloseBtn = document.createElement('button');
+    faqCloseBtn.className = 'faq-more-btn';
+    faqCloseBtn.textContent = '閉じる';
+    faqCloseBtn.setAttribute('aria-label', 'FAQを閉じる');
+    faqCloseBtn.style.display = 'none';
+
+    var faqBtnWrap = document.createElement('div');
+    faqBtnWrap.appendChild(faqMoreBtn);
+    faqBtnWrap.appendChild(faqCloseBtn);
+    faqList.parentNode.insertBefore(faqBtnWrap, faqList.nextSibling);
 
     faqMoreBtn.addEventListener('click', function () {
       faqList.querySelectorAll('.faq-hidden').forEach(function (el) {
         el.classList.remove('faq-hidden');
       });
-      faqMoreBtn.style.display = 'none';
+      faqMoreBtn.style.display  = 'none';
+      faqCloseBtn.style.display = 'block';
+    });
+
+    faqCloseBtn.addEventListener('click', function () {
+      /* 4問目以降を再び非表示にして、開いていれば閉じる */
+      var items = faqList.querySelectorAll('.faq-item');
+      items.forEach(function (el, i) {
+        if (i >= 3) {
+          el.classList.add('faq-hidden');
+          if (el.classList.contains('open')) {
+            el.classList.remove('open');
+            el.querySelector('.faq-ans').style.maxHeight = '0';
+            el.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+      faqCloseBtn.style.display = 'none';
+      faqMoreBtn.style.display  = 'block';
     });
 
     faqList.addEventListener('click', function (e) {
