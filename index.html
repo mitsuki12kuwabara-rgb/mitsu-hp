@@ -782,6 +782,13 @@ li.pc-only    { display: list-item; }
   background: var(--surface);
   border-radius: 10px;
   border: 1px solid var(--border);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.check-item:hover {
+  transform: scale(1.035);
+  z-index: 1;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
 }
 .check-item::before {
   content: "✓";
