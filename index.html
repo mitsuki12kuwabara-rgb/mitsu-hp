@@ -1075,6 +1075,21 @@ li.pc-only    { display: list-item; }
   color: var(--text-sub);
   line-height: 1.95;
 }
+.faq-hidden { display: none; }
+.faq-more-btn {
+  display: block;
+  margin: 16px 0 0 auto;
+  background: var(--orange-dark);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+.faq-more-btn:hover { opacity: 0.82; }
 
 /* ===================================================
    ⑦-2 ロードマップ（今できることと、これから目指すこと）
@@ -2285,7 +2300,7 @@ var CONFIG = {
   if (faqList) {
     faqData.forEach(function (item, i) {
       var li  = document.createElement('li');
-      li.className = 'faq-item';
+      li.className = 'faq-item' + (i >= 3 ? ' faq-hidden' : '');
 
       var btn = document.createElement('button');
       btn.className = 'faq-btn';
@@ -2305,6 +2320,20 @@ var CONFIG = {
       li.appendChild(btn);
       li.appendChild(ans);
       faqList.appendChild(li);
+    });
+
+    /* もっと見るボタン */
+    var faqMoreBtn = document.createElement('button');
+    faqMoreBtn.className = 'faq-more-btn';
+    faqMoreBtn.textContent = 'もっと見る';
+    faqMoreBtn.setAttribute('aria-label', 'FAQをすべて表示する');
+    faqList.parentNode.insertBefore(faqMoreBtn, faqList.nextSibling);
+
+    faqMoreBtn.addEventListener('click', function () {
+      faqList.querySelectorAll('.faq-hidden').forEach(function (el) {
+        el.classList.remove('faq-hidden');
+      });
+      faqMoreBtn.style.display = 'none';
     });
 
     faqList.addEventListener('click', function (e) {
