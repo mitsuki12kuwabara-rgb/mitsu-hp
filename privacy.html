@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プライバシーポリシー｜MITSU</title>
+<style>
+  @font-face {
+    font-family: 'Shirokuma';
+    src: url('shirokuma-mitsu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FFF2EC;
+    --surface: #ffffff;
+    --text: #1a1212;
+    --text-sub: #6B5B53;
+    --orange: #EF6B3A;
+    --orange-dark: #C8501E;
+    --navy: #1F3864;
+    --border: #e0d0c8;
+    --amber-bg: #fff8e1;
+    --amber-border: #f59e0b;
+    --amber-text: #78350f;
+    --placeholder-bg: #fef3c7;
+    --placeholder-color: #92400e;
+    --font-logo: 'Shirokuma', sans-serif;
+    --font-body: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic Medium', 'Meiryo', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a0f0a;
+      --surface: #261810;
+      --text: #f0e6e0;
+      --text-sub: #b09080;
+      --border: #4a3028;
+      --amber-bg: #2d1f00;
+      --amber-border: #d97706;
+      --amber-text: #fde68a;
+      --placeholder-bg: #2d1800;
+      --placeholder-color: #fcd34d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a0f0a;
+    --surface: #261810;
+    --text: #f0e6e0;
+    --text-sub: #b09080;
+    --border: #4a3028;
+    --amber-bg: #2d1f00;
+    --amber-border: #d97706;
+    --amber-text: #fde68a;
+    --placeholder-bg: #2d1800;
+    --placeholder-color: #fcd34d;
+  }
+  :root[data-theme="light"] {
+    --bg: #FFF2EC;
+    --surface: #ffffff;
+    --text: #1a1212;
+    --text-sub: #6B5B53;
+    --border: #e0d0c8;
+    --amber-bg: #fff8e1;
+    --amber-border: #f59e0b;
+    --amber-text: #78350f;
+    --placeholder-bg: #fef3c7;
+    --placeholder-color: #92400e;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--orange);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .back-link {
+    color: var(--text-sub);
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .back-link::before { content: '←'; font-size: 16px; }
+  .header-brand {
+    font-family: var(--font-logo);
+    font-size: 22px;
+    color: var(--orange);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .header-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+  }
+  .header-title {
+    font-size: 14px;
+    color: var(--text-sub);
+    font-weight: 600;
+  }
+
+  /* ===== MAIN ===== */
+  .main-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ===== WARNING BANNER ===== */
+  .warning-banner {
+    background: var(--amber-bg);
+    border: 1.5px solid var(--amber-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .warning-icon { font-size: 20px; flex-shrink: 0; line-height: 1.6; }
+  .warning-text {
+    color: var(--amber-text);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .warning-text strong { font-size: 14px; display: block; margin-bottom: 4px; }
+
+  /* ===== DOCUMENT HEADER ===== */
+  .doc-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+  .doc-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .doc-preamble {
+    font-size: 14px;
+    color: var(--text-sub);
+    line-height: 1.8;
+    background: var(--surface);
+    border-left: 4px solid var(--orange);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    margin-top: 16px;
+  }
+
+  /* ===== ARTICLES ===== */
+  .article {
+    margin-bottom: 36px;
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 24px 28px;
+    border: 1px solid var(--border);
+  }
+  .article-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .article-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+    background: color-mix(in srgb, var(--orange) 10%, transparent);
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .article-body {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--text);
+  }
+  .article-body p { margin-bottom: 10px; }
+  .article-body p:last-child { margin-bottom: 0; }
+
+  /* 番号付きリスト */
+  .clause-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .clause-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .clause-num {
+    color: var(--orange);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 1.5em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 丸数字リスト */
+  .item-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .item-list li {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.75;
+    padding-left: 8px;
+  }
+  .item-list li::before {
+    content: '・';
+    color: var(--orange);
+    flex-shrink: 0;
+  }
+
+  /* テーブル */
+  .legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0 0;
+    overflow-x: auto;
+    display: block;
+  }
+  .legal-table th, .legal-table td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  .legal-table th {
+    background: color-mix(in srgb, var(--navy) 8%, var(--surface));
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* プレースホルダーハイライト */
+  .ph {
+    background: var(--placeholder-bg);
+    color: var(--placeholder-color);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+
+  /* ===== 制定日 ===== */
+  .enacted-date {
+    text-align: right;
+    font-size: 14px;
+    color: var(--text-sub);
+    margin-top: 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ===== FOOTER ===== */
+  .page-footer {
+    background: var(--navy);
+    color: #c8d8f0;
+    padding: 32px 24px;
+    margin-top: 0;
+  }
+  .footer-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a {
+    color: #c8d8f0;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .footer-links a:hover { opacity: 1; text-decoration: underline; }
+  .footer-brand {
+    font-family: var(--font-logo);
+    color: var(--orange);
+    font-size: 18px;
+  }
+
+  @media (max-width: 600px) {
+    .main-wrap { padding: 32px 16px 60px; }
+    .article { padding: 18px 16px; }
+    .site-header { padding: 12px 16px; }
+    .doc-title { font-size: 21px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="./index.html" class="back-link">トップページ</a>
+  <div class="header-divider"></div>
+  <span class="header-brand">MITSU</span>
+  <div class="header-divider"></div>
+  <span class="header-title">プライバシーポリシー</span>
+</header>
+
+<main class="main-wrap">
+
+  <div class="warning-banner">
+    <span class="warning-icon">⚠️</span>
+    <div class="warning-text">
+      <strong>未確定項目のご確認をお願いします</strong>
+      このページには <span class="ph">【このような形式】</span> でハイライトされた未確定の箇所があります。正式公開・同意取得に使用する前に、すべての箇所を確定情報に差し替えてください。
+    </div>
+  </div>
+
+  <div class="doc-header">
+    <h1 class="doc-title">プライバシーポリシー</h1>
+    <div class="doc-preamble">
+      <span class="ph">【運営法人名】</span>（所在地：<span class="ph">【法人所在地】</span>、代表者：<span class="ph">【代表者氏名】</span>。以下「当社」といいます。）は、送迎マッチングサービス「MITSU」（以下「本サービス」といいます。）における個人情報その他の利用者に関する情報を、以下のとおり取り扱います。
+    </div>
+  </div>
+
+  <!-- 第1条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第1条</span>適用範囲
+    </div>
+    <div class="article-body">
+      <p>本プライバシーポリシーは、本サービスを利用する保護者およびその子どもに関して、当社が取得・利用する情報に適用されます。本サービスは、保護者と、確認および研修を受けた送迎担当者（以下「託送者」といいます。）を仲介・マッチングするサービスです。</p>
+    </div>
+  </div>
+
+  <!-- 第2条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第2条</span>取得する情報
+    </div>
+    <div class="article-body">
+      <p>当社は、本サービスの提供に必要な範囲で、次の情報を取得します。</p>
+      <ul class="item-list">
+        <li><strong>保護者に関する情報：</strong>氏名、連絡先、住所、LINEアカウントに関連する識別情報その他登録時に入力された情報</li>
+        <li><strong>子どもに関する情報：</strong>氏名、年齢、生年月日、所属施設、送迎時に必要な特性・注意事項、緊急連絡に必要な情報</li>
+        <li><strong>緊急時・引渡しに関する情報：</strong>緊急連絡先、保護者が指定する引渡し相手の氏名・関係・連絡先、事故・急病時の対応記録</li>
+        <li><strong>安全上必要な健康情報：</strong>アレルギー、服薬、既往歴、障害その他送迎上の配慮事項（取得する場合に限り、保護者の明確な同意を得ます。）</li>
+        <li><strong>送迎に関する情報：</strong>送迎元・送迎先、希望日時、予約内容、担当託送者、送迎状況、利用履歴、引渡しに関する情報</li>
+        <li><strong>位置情報：</strong>送迎中の現在地、移動経路、位置情報の送受信時刻その他位置情報共有機能により取得される情報</li>
+        <li><strong>問い合わせ等の情報：</strong>公式LINEその他の方法で寄せられた相談、問い合わせ、連絡および対応履歴</li>
+        <li><strong>決済に関する情報：</strong>有料化後に決済事業者から提供される決済結果、利用金額その他支払管理に必要な情報（カード番号等は、原則として決済事業者が管理します。）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第3条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第3条</span>利用目的
+    </div>
+    <div class="article-body">
+      <p>当社は、取得した情報を次の目的で利用します。</p>
+      <ul class="item-list">
+        <li>本サービスへの登録、本人確認、利用資格の確認および利用者管理のため</li>
+        <li>送迎の予約受付、託送者とのマッチング、送迎計画の作成および送迎実施のため</li>
+        <li>保護者、託送者、送迎先施設その他必要な関係者との連絡・調整のため</li>
+        <li>送迎中の位置情報共有、進行状況の確認、安全確保および引渡し確認のため</li>
+        <li>事故、急病、災害、行方不明その他の緊急事態に対応するため</li>
+        <li>利用料金の計算、請求、決済、返金その他有料サービスの提供に必要な処理のため</li>
+        <li>問い合わせ、苦情、開示等の請求への対応および紛争の予防・解決のため</li>
+        <li>不正利用の防止、利用規約違反への対応および本サービスの安全管理のため</li>
+        <li>個人を識別できない形に加工した統計情報を作成し、サービス改善や事業運営の検討に利用するため</li>
+        <li>法令上の義務を履行するため</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第4条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第4条</span>子どもの個人情報
+    </div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、子どもの個人情報を保護者その他の法定代理人から取得し、またはその同意に基づいて取り扱います。保護者は、本サービスに入力・提供する子どもの情報について、提供する権限を有していることを確認するものとします。</span></li>
+        <li><span class="clause-num">２</span><span>当社は、子どもの安全に直結する情報であることを踏まえ、利用目的の達成に必要な最小限の範囲で取り扱います。</span></li>
+        <li><span class="clause-num">３</span><span>子ども本人から直接同意を得ることには依存せず、原則として保護者その他の法定代理人から同意を得ます。</span></li>
+        <li><span class="clause-num">４</span><span>病歴、障害その他の要配慮個人情報を取得する場合は、法令上の例外に該当する場合を除き、取得前に保護者の明確な同意を得ます。</span></li>
+        <li><span class="clause-num">５</span><span>これらの情報は、安全な送迎に必要な当社担当者および担当託送者に限って共有し、目的外利用を行いません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第5条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第5条</span>位置情報の取扱い
+    </div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、送迎状況の確認および子どもの安全確保のため、送迎中の位置情報を取得・利用します。</span></li>
+        <li><span class="clause-num">２</span><span>位置情報の取得は、原則として託送者が送迎開始操作をした時点から、子どもの引渡し完了操作をした時点までに限定します。</span></li>
+        <li><span class="clause-num">３</span><span>保護者、担当託送者および安全管理上必要な当社担当者のみが、必要な範囲で確認できるようにします。</span></li>
+        <li><span class="clause-num">４</span><span>常時追跡や、広告・行動分析を目的とした利用は行いません。</span></li>
+        <li><span class="clause-num">５</span><span>位置履歴の保存期間は<span class="ph">【引渡し完了後○日間】</span>とし、事故・紛争への対応または法令上の保存が必要な場合を除き、期間経過後に削除または個人を識別できない状態にします。保存期間は、実際のシステム設定と一致させます。</span></li>
+        <li><span class="clause-num">６</span><span>利用者は、端末または外部サービスの設定により位置情報の送信を制限できる場合があります。ただし、位置情報の提供を停止した場合、本サービスの全部または一部を利用できないことがあります。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第6条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第6条</span>第三者への提供
+    </div>
+    <div class="article-body">
+      <p>当社は、法令に基づく場合を除き、あらかじめ保護者本人の同意を得ることなく個人データを第三者に提供しません。ただし、本サービスの実施に必要な範囲で、次の者に必要最小限の情報を提供することがあります。</p>
+      <ul class="item-list">
+        <li><strong>担当託送者：</strong>子どもの氏名、送迎日時、送迎元・送迎先、連絡事項、安全確保に必要な情報</li>
+        <li><strong>送迎先の保育園・幼稚園・学童・習い事施設等：</strong>子どもの氏名、送迎予定、担当託送者、引渡し・受取りに必要な情報</li>
+        <li><strong>保険会社および事故対応事業者：</strong>事故の状況、関係者情報、利用履歴その他保険手続および事故対応に必要な情報</li>
+      </ul>
+      <p style="margin-top:12px;">また、人の生命、身体または財産の保護のために必要で、本人の同意を得ることが困難な場合には、警察、消防、医療機関その他の関係機関に必要な情報を提供することがあります。</p>
+      <p>託送者が当社から個人データの取扱いを受託し、当社の指示の範囲内でのみ取り扱う場合は、当該提供を委託として管理し、秘密保持、目的外利用の禁止、再委託の制限、返却・削除、事故報告等を契約で定めて監督します。</p>
+      <p>一方、託送者が独立した送迎契約の当事者その他第三者に該当する場合、当社は、担当託送者、提供目的および提供項目を保護者に示し、提供前に同意を得ます。また、法令に従い第三者提供に関する記録を作成・保存します。</p>
+    </div>
+  </div>
+
+  <!-- 第6の2条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第6の2条</span>外国にある第三者への提供・国外での取扱い
+    </div>
+    <div class="article-body">
+      <p>当社が、外国にある事業者へ個人データを提供する場合は、法令上の例外に該当する場合を除き、提供先の所在国、当該国の個人情報保護制度、提供先が講ずる保護措置その他法令で求められる情報をあらかじめ提供し、保護者の同意を得ます。外国に設置されたサーバを利用する場合は、契約上のアクセス可否、保存国および安全管理措置を確認します。</p>
+    </div>
+  </div>
+
+  <!-- 第7条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第7条</span>取扱いの委託および外部サービス
+    </div>
+    <div class="article-body">
+      <p>当社は、利用目的の達成に必要な範囲で、個人情報の取扱いの全部または一部を外部事業者に委託することがあります。委託先を選定する際は、個人情報を適切に取り扱う体制を確認し、必要な契約を締結したうえで、適切な監督を行います。</p>
+      <p>本サービスでは、次の種類の外部サービスを利用する予定です。各サービスにおける情報の取扱いは、当社の管理範囲に加え、各提供事業者の利用規約・プライバシーポリシーの適用を受ける場合があります。</p>
+      <ul class="item-list">
+        <li>LINE公式アカウント・LINEミニアプリ</li>
+        <li>Googleフォーム・Googleスプレッドシート等の情報管理サービス</li>
+        <li>地図・位置情報サービス</li>
+        <li>オンライン決済サービス</li>
+      </ul>
+      <p style="margin-top:12px;">利用する外部サービスの正式名称、提供会社、利用目的、取扱情報、保存国および国外提供の該当性は、次の情報を確定したうえで掲載します。未確定のまま運用を開始しません。</p>
+      <div style="overflow-x:auto; margin-top:8px;">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th>区分</th>
+              <th>正式サービス名</th>
+              <th>提供会社</th>
+              <th>取扱情報</th>
+              <th>保存国等</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>LINE</td>
+              <td><span class="ph">【確定】</span></td>
+              <td><span class="ph">【確定】</span></td>
+              <td>登録・連絡・予約等</td>
+              <td><span class="ph">【確定】</span></td>
+            </tr>
+            <tr>
+              <td>フォーム・表計算</td>
+              <td><span class="ph">【確定】</span></td>
+              <td><span class="ph">【確定】</span></td>
+              <td>登録・予約・利用履歴等</td>
+              <td><span class="ph">【確定】</span></td>
+            </tr>
+            <tr>
+              <td>地図・位置情報</td>
+              <td><span class="ph">【確定】</span></td>
+              <td><span class="ph">【確定】</span></td>
+              <td>現在地・経路等</td>
+              <td><span class="ph">【確定】</span></td>
+            </tr>
+            <tr>
+              <td>決済</td>
+              <td><span class="ph">【確定】</span></td>
+              <td><span class="ph">【確定】</span></td>
+              <td>決済結果・金額等</td>
+              <td><span class="ph">【確定】</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第8条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第8条</span>安全管理措置
+    </div>
+    <div class="article-body">
+      <p>当社は、次の安全管理措置を実際に実装・運用したうえで本サービスを提供します。公開時には、実装済みの措置のみを残し、実態と一致させます。</p>
+      <ul class="item-list">
+        <li><strong>基本方針・規程：</strong>取得、利用、保存、提供、削除・廃棄の段階ごとの取扱規程を整備する。</li>
+        <li><strong>組織的措置：</strong>個人情報管理責任者を置き、取扱担当者と取扱範囲を限定し、違反・漏えい時の報告体制と定期点検を整備する。</li>
+        <li><strong>人的措置：</strong>従業者および託送者へ研修を実施し、秘密保持義務、目的外利用禁止および退任・契約終了後の義務を定める。</li>
+        <li><strong>物理的措置：</strong>個人データを扱う端末・書類の盗難、紛失、覗き見を防止し、廃棄時に復元困難な処理を行う。</li>
+        <li><strong>技術的措置：</strong>担当者別アカウント、強固な認証、最小権限のアクセス制御、通信の暗号化、端末ロック、更新・マルウェア対策およびアクセス記録を導入する。</li>
+        <li><strong>委託先管理：</strong>委託先の選定、契約、取扱状況の確認、事故報告および契約終了時の返却・削除を管理する。</li>
+        <li><strong>外的環境：</strong>国外で個人データを取り扱う場合は、当該国の制度および委託先の保護措置を把握する。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第9条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第9条</span>保存期間および削除
+    </div>
+    <div class="article-body">
+      <p>当社は、次の保存期間を社内規程およびシステム設定で確定し、期間経過後は復元困難な方法で消去または個人を識別できない状態にします。事故、紛争、料金精算または法令上の保存義務がある場合は、その対応に必要な範囲で例外的に保存します。</p>
+      <ul class="item-list">
+        <li><strong>登録情報・子どもの基本情報：</strong><span class="ph">【退会または最終利用後○年間】</span></li>
+        <li><strong>予約・送迎・引渡し履歴：</strong><span class="ph">【送迎完了後○年間】</span></li>
+        <li><strong>位置履歴：</strong><span class="ph">【引渡し完了後○日間】</span></li>
+        <li><strong>健康・配慮情報：</strong><span class="ph">【必要性消滅または退会後○日以内】</span></li>
+        <li><strong>問い合わせ・苦情対応記録：</strong><span class="ph">【対応終了後○年間】</span></li>
+        <li><strong>決済・会計記録：</strong><span class="ph">【法令上必要な期間】</span></li>
+        <li><strong>第三者提供記録：</strong><span class="ph">【法令で定める期間】</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第10条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第10条</span>開示・訂正・利用停止等
+    </div>
+    <div class="article-body">
+      <p>本人またはその代理人は、法令に基づき、当社が保有する個人データおよび第三者提供記録について、利用目的の通知、開示、訂正・追加・削除、利用停止・消去または第三者提供の停止を請求できます。</p>
+      <ul class="item-list">
+        <li><strong>申出先：</strong>第13条記載のMITSU公式LINE</li>
+        <li><strong>申出内容：</strong>希望する請求の種類、対象となる情報、登録氏名および当社が案内する確認事項</li>
+        <li><strong>本人確認：</strong>登録済みLINEアカウントとの照合、登録情報に関する質問その他、取り扱う情報の性質に応じた方法。必要以上の本人確認情報は求めません。</li>
+        <li><strong>代理人確認：</strong>未成年者の法定代理人その他代理権を確認できる資料を求める場合があります。</li>
+        <li><strong>回答方法：</strong>原則として本人が希望する電磁的方法。技術的に困難な場合等は書面その他適切な方法で回答します。</li>
+        <li><strong>手数料：</strong>原則として無料。実費を要する例外的な場合は、請求者へ事前に金額と理由を通知し、法令上認められる範囲で取り扱います。</li>
+      </ul>
+      <p style="margin-top:10px;">当社は、請求を受けた後、遅滞なく対応します。全部または一部に応じない場合、対象情報が存在しない場合、または希望する方法での開示が困難な場合は、その旨および可能な範囲で理由を通知します。</p>
+    </div>
+  </div>
+
+  <!-- 第11条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第11条</span>漏えい等が発生した場合
+    </div>
+    <div class="article-body">
+      <p>個人データの漏えい等が発生し、またはそのおそれがある場合、当社は事実関係を調査し、被害拡大防止、再発防止その他必要な措置を講じます。法令上必要な場合には、個人情報保護委員会への報告および本人への通知を行います。</p>
+    </div>
+  </div>
+
+  <!-- 第12条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第12条</span>本ポリシーの変更
+    </div>
+    <div class="article-body">
+      <p>当社は、法令の改正、本サービスの内容または取扱情報の変更その他必要に応じて、本ポリシーを変更することがあります。重要な変更を行う場合は、本サービス上、公式LINEその他適切な方法により周知し、法令上必要な場合には改めて同意を取得します。</p>
+    </div>
+  </div>
+
+  <!-- 第13条 -->
+  <div class="article">
+    <div class="article-title">
+      <span class="article-num">第13条</span>お問い合わせ窓口
+    </div>
+    <div class="article-body">
+      <p>本ポリシーおよび個人情報の取扱いに関するお問い合わせは、次の窓口へご連絡ください。</p>
+      <div style="overflow-x:auto; margin-top:12px;">
+        <table class="legal-table">
+          <tbody>
+            <tr>
+              <th>運営者</th>
+              <td><span class="ph">【運営法人名】</span></td>
+            </tr>
+            <tr>
+              <th>所在地</th>
+              <td><span class="ph">【法人所在地】</span></td>
+            </tr>
+            <tr>
+              <th>代表者</th>
+              <td><span class="ph">【代表者氏名】</span></td>
+            </tr>
+            <tr>
+              <th>窓口</th>
+              <td>MITSU公式LINE　<span class="ph">【アカウント名またはURL】</span></td>
+            </tr>
+            <tr>
+              <th>受付内容</th>
+              <td>個人情報の取扱いに関する質問・苦情、開示等の請求</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="enacted-date">制定日：2026年8月17日</div>
+
+</main>
+
+<footer class="page-footer">
+  <div class="footer-inner">
+    <span class="footer-brand">MITSU</span>
+    <div class="footer-links">
+      <a href="./index.html">トップページ</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="./privacy.html" aria-current="page">プライバシーポリシー</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

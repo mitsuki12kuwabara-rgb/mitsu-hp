@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>利用規約｜MITSU</title>
+<style>
+  @font-face {
+    font-family: 'Shirokuma';
+    src: url('shirokuma-mitsu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FFF2EC;
+    --surface: #ffffff;
+    --text: #1a1212;
+    --text-sub: #6B5B53;
+    --orange: #EF6B3A;
+    --orange-dark: #C8501E;
+    --navy: #1F3864;
+    --border: #e0d0c8;
+    --amber-bg: #fff8e1;
+    --amber-border: #f59e0b;
+    --amber-text: #78350f;
+    --placeholder-bg: #fef3c7;
+    --placeholder-color: #92400e;
+    --font-logo: 'Shirokuma', sans-serif;
+    --font-body: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic Medium', 'Meiryo', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a0f0a;
+      --surface: #261810;
+      --text: #f0e6e0;
+      --text-sub: #b09080;
+      --border: #4a3028;
+      --amber-bg: #2d1f00;
+      --amber-border: #d97706;
+      --amber-text: #fde68a;
+      --placeholder-bg: #2d1800;
+      --placeholder-color: #fcd34d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a0f0a;
+    --surface: #261810;
+    --text: #f0e6e0;
+    --text-sub: #b09080;
+    --border: #4a3028;
+    --amber-bg: #2d1f00;
+    --amber-border: #d97706;
+    --amber-text: #fde68a;
+    --placeholder-bg: #2d1800;
+    --placeholder-color: #fcd34d;
+  }
+  :root[data-theme="light"] {
+    --bg: #FFF2EC;
+    --surface: #ffffff;
+    --text: #1a1212;
+    --text-sub: #6B5B53;
+    --border: #e0d0c8;
+    --amber-bg: #fff8e1;
+    --amber-border: #f59e0b;
+    --amber-text: #78350f;
+    --placeholder-bg: #fef3c7;
+    --placeholder-color: #92400e;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  .site-header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--orange);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .back-link {
+    color: var(--text-sub);
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .back-link::before { content: '←'; font-size: 16px; }
+  .header-brand {
+    font-family: var(--font-logo);
+    font-size: 22px;
+    color: var(--orange);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .header-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+  }
+  .header-title {
+    font-size: 14px;
+    color: var(--text-sub);
+    font-weight: 600;
+  }
+
+  .main-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .warning-banner {
+    background: var(--amber-bg);
+    border: 1.5px solid var(--amber-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .warning-icon { font-size: 20px; flex-shrink: 0; line-height: 1.6; }
+  .warning-text {
+    color: var(--amber-text);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .warning-text strong { font-size: 14px; display: block; margin-bottom: 4px; }
+
+  .doc-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+  .doc-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .doc-meta {
+    font-size: 13px;
+    color: var(--text-sub);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .doc-meta span { display: flex; gap: 6px; align-items: center; }
+
+  .article {
+    margin-bottom: 28px;
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 24px 28px;
+    border: 1px solid var(--border);
+  }
+  .article-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .article-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+    background: color-mix(in srgb, var(--orange) 10%, transparent);
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .article-body {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--text);
+  }
+  .article-body > p { margin-bottom: 10px; }
+  .article-body > p:last-child { margin-bottom: 0; }
+
+  .clause-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .clause-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .clause-num {
+    color: var(--orange);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 1.5em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .item-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .item-list li {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.75;
+    padding-left: 8px;
+  }
+  .item-list li::before {
+    content: '・';
+    color: var(--orange);
+    flex-shrink: 0;
+  }
+
+  /* 号リスト（(1)(2)...） */
+  .ko-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ko-list li {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .ko-num {
+    color: var(--text-sub);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ph {
+    background: var(--placeholder-bg);
+    color: var(--placeholder-color);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+
+  .article-supplement {
+    background: color-mix(in srgb, var(--navy) 5%, var(--surface));
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 28px;
+    margin-bottom: 28px;
+  }
+  .article-supplement .article-title {
+    color: var(--navy);
+    font-size: 15px;
+  }
+
+  .enacted-date {
+    text-align: right;
+    font-size: 14px;
+    color: var(--text-sub);
+    margin-top: 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .page-footer {
+    background: var(--navy);
+    color: #c8d8f0;
+    padding: 32px 24px;
+  }
+  .footer-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a {
+    color: #c8d8f0;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .footer-links a:hover { opacity: 1; text-decoration: underline; }
+  .footer-brand {
+    font-family: var(--font-logo);
+    color: var(--orange);
+    font-size: 18px;
+  }
+
+  @media (max-width: 600px) {
+    .main-wrap { padding: 32px 16px 60px; }
+    .article, .article-supplement { padding: 18px 16px; }
+    .site-header { padding: 12px 16px; }
+    .doc-title { font-size: 21px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="./index.html" class="back-link">トップページ</a>
+  <div class="header-divider"></div>
+  <span class="header-brand">MITSU</span>
+  <div class="header-divider"></div>
+  <span class="header-title">利用規約</span>
+</header>
+
+<main class="main-wrap">
+
+  <div class="warning-banner">
+    <span class="warning-icon">⚠️</span>
+    <div class="warning-text">
+      <strong>未確定項目のご確認をお願いします</strong>
+      このページには <span class="ph">【このような形式】</span> または <span class="ph">［　このような形式　］</span> でハイライトされた未確定の箇所があります。正式公開・同意取得に使用する前に、すべての箇所を確定情報に差し替えてください。
+    </div>
+  </div>
+
+  <div class="doc-header">
+    <h1 class="doc-title">MITSU 保護者向け利用規約</h1>
+    <div class="doc-meta">
+      <span>制定日：<span class="ph">［　　年　月　日］</span></span>
+      <span>運営者：<span class="ph">［法人名未確定］</span>（以下「当社」といいます。）</span>
+    </div>
+  </div>
+
+  <!-- 第1条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第1条</span>適用</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>本規約は、当社が「MITSU」の名称で提供する、保護者と託送者をつなぐ子どもの送迎マッチングサービス（以下「本サービス」といいます。）の利用条件を定めるものです。</span></li>
+        <li><span class="clause-num">２</span><span>本サービスを利用する保護者（以下「利用者」といいます。）は、本規約の内容に同意したうえで本サービスを利用するものとします。</span></li>
+        <li><span class="clause-num">３</span><span>当社が公式LINE、LINEミニアプリ、ウェブサイトその他の方法で掲示する個別のルール、料金表、注意事項およびプライバシーポリシーは、本規約の一部を構成します。これらと本規約の内容が異なる場合は、個別の定めが優先します。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第2条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第2条</span>定義</div>
+    <div class="article-body">
+      <p>本規約における用語の意味は、次のとおりとします。</p>
+      <ul class="ko-list">
+        <li><span class="ko-num">(1)</span><span>「託送者」とは、当社による本人確認、面談、安全および子ども対応に関する研修その他の所定の確認を経て、当社から託送者免許証の交付を受け、本サービスを通じて送迎を行う者をいいます。「託送者免許証」は当社独自の活動資格であり、国または地方公共団体が交付する免許・資格ではありません。</span></li>
+        <li><span class="ko-num">(2)</span><span>「対象児童」とは、本サービスによる送迎の対象として登録された子どもをいいます。</span></li>
+        <li><span class="ko-num">(3)</span><span>「送迎契約」とは、利用者の依頼と託送者の承諾により成立する個別の送迎に関する契約をいいます。</span></li>
+        <li><span class="ko-num">(4)</span><span>「送迎施設」とは、保育園、幼稚園、学童、習い事施設その他、送迎の出発地または到着地となる施設をいいます。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第3条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第3条</span>本サービス、送迎契約および当社の立場</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>本サービスは、利用者から送迎依頼を受け付け、条件に合う託送者とのマッチング、連絡、予約管理、位置情報の共有、受渡し確認その他の運営支援を行うものです。</span></li>
+        <li><span class="clause-num">２</span><span>当社が純粋な仲介者として本サービスを提供する場合、個別の送迎契約は利用者と託送者との間で成立します。この場合、当社は契約成立の支援、安全管理、苦情・事故対応その他本規約に明記した業務を負います。</span></li>
+        <li><span class="clause-num">３</span><span>当社が託送者との契約関係、業務指示、料金決定、代金受領、安全管理その他の実態に照らして送迎または保育の提供主体となる場合、当社は「仲介者」との表示にかかわらず、法令および個別契約に従い提供主体としての責任を負います。当社は、形式的な表示によって法令上の責任を免れるものではありません。</span></li>
+        <li><span class="clause-num">４</span><span>当社は、正式運用の開始前に、当社および託送者に必要となる許可、届出、登録、研修、保険その他の法令上の要件を確認し、必要な手続が完了していない者に送迎を行わせません。乳幼児の預かりに該当し、児童福祉法第59条の2その他の法令に基づく届出が必要となる場合、当社は届出を証明する資料を確認します。</span></li>
+        <li><span class="clause-num">５</span><span>当社は、利用希望、地域、日時、対象児童の状況、託送者の稼働状況等により、マッチングの成立または特定の託送者による対応を保証するものではありません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第4条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第4条</span>利用登録</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>利用者は、対象児童の親権者その他、対象児童について本サービスの利用を申し込む正当な権限を有する18歳以上の者でなければなりません。</span></li>
+        <li><span class="clause-num">２</span><span>利用者は、当社所定の方法により、氏名、連絡先、緊急連絡先、対象児童に関する情報、送迎先、健康上の注意事項その他当社が必要とする情報を、真実かつ正確に登録するものとします。</span></li>
+        <li><span class="clause-num">３</span><span>登録情報に変更が生じた場合、利用者は速やかに更新または当社へ連絡するものとします。</span></li>
+        <li><span class="clause-num">４</span><span>当社は、初回利用前に、利用者と託送者が対面または当社が安全上適切と認める方法で事前面談を行う機会を設け、利用者が担当託送者の氏名、顔写真、本人確認・研修・届出等の確認状況および緊急連絡方法を確認できるようにします。</span></li>
+        <li><span class="clause-num">５</span><span>利用者は、規約の版、提示日および同意内容を確認できる画面で明示的に同意するものとし、当社は同意記録を保存します。単に公式LINEを友だち追加したことのみをもって、本規約への同意とはみなしません。</span></li>
+        <li><span class="clause-num">６</span><span>当社は、申込内容の確認、安全な送迎の実施が困難であると判断した場合、その他当社が事前に開示する合理的な基準を満たさない場合、理由を示して登録または利用をお断りすることがあります。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第5条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第5条</span>対象児童および利用条件</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>本サービスの対象は、原則として2歳から10歳までであり、自立歩行および年齢相応の意思疎通が可能な子どもとします。</span></li>
+        <li><span class="clause-num">２</span><span>対象児童に持病、障害、アレルギー、服薬、発作歴、行動上の特性その他送迎時に配慮を要する事情がある場合、利用者は予約前に当社へ正確に申告しなければなりません。</span></li>
+        <li><span class="clause-num">３</span><span>当社または託送者が、安全な送迎の実施が困難であると合理的に判断した場合、利用の全部または一部をお断りすることがあります。</span></li>
+        <li><span class="clause-num">４</span><span>対象児童の発熱、感染症の疑い、著しい体調不良その他安全な送迎が困難な状態がある場合、利用者は利用を控えるものとします。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第6条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第6条</span>予約および送迎契約の成立</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>利用者は、公式LINE、LINEミニアプリその他当社が指定する方法により、送迎日時、出発地、到着地、対象児童、送迎方法その他必要事項を入力して依頼します。</span></li>
+        <li><span class="clause-num">２</span><span>送迎契約は、当社所定の方法により担当託送者および依頼内容が確定し、利用者へ通知された時点で成立します。</span></li>
+        <li><span class="clause-num">３</span><span>送迎施設ごとに受渡し方法や必要な手続が異なる場合があります。利用者は、施設への事前連絡、委任手続、利用承諾の取得その他必要な協力を行うものとします。</span></li>
+        <li><span class="clause-num">４</span><span>予約確定前に、当社は担当託送者、送迎方法、料金、予定経路、受渡し方法、保険の概要、キャンセル条件その他重要事項を利用者が確認できる状態にします。自転車に対象児童を同乗させる場合は、その旨について個別に利用者の同意を得ます。</span></li>
+        <li><span class="clause-num">５</span><span>託送者は、当社および利用者の事前承諾なく、第三者へ送迎を再委託し、または担当者を交代してはなりません。</span></li>
+        <li><span class="clause-num">６</span><span>利用者は、予約内容に誤りがないことを確認し、変更がある場合は速やかに当社へ連絡するものとします。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第7条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第7条</span>送迎方法</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>送迎方法は、徒歩または自転車とし、個別の送迎ごとに安全性、距離、対象児童の年齢および体格、道路状況その他の事情を踏まえて決定します。</span></li>
+        <li><span class="clause-num">２</span><span>自転車に対象児童を同乗させる場合は、道路交通法、東京都道路交通規則その他の適用法令により認められる年齢および態様に限ります。東京都内では、原則として小学校就学の始期に達するまでの子どもを、適法な幼児用座席に乗車させる場合等に限るものとし、小学生を幼児用座席に同乗させません。</span></li>
+        <li><span class="clause-num">３</span><span>自転車送迎では、対象児童に乗車用ヘルメットを着用させ、年齢および体格に適合する幼児用座席ならびに安全装備を使用します。利用者は、当社が事前に指定するヘルメット等の準備に協力するものとします。</span></li>
+        <li><span class="clause-num">４</span><span>当社は、自転車の所有・管理主体、幼児用座席およびヘルメットの規格、対象児童の身長・体重制限、乗車前点検、定期整備、保険加入状況ならびに事故時の連絡手順を別途安全基準として定め、当該基準に適合しない自転車を送迎に使用させません。</span></li>
+        <li><span class="clause-num">５</span><span>託送者は、対象児童を幼児用座席に乗せたまま自転車から離れず、スマートフォン操作、傘差し、イヤホン使用その他安全を損なう運転を行いません。</span></li>
+        <li><span class="clause-num">６</span><span>雨天、強風、路面状況、対象児童の状態、機材不良その他の事情により安全な自転車利用が困難な場合、徒歩への変更または送迎の中止を行うことがあります。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第8条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第8条</span>送迎の開始および終了</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>送迎の開始時点は、託送者が指定された送迎施設に到着し、対象児童の帰宅準備、施設職員からの引継ぎその他送迎に必要な対応を開始した時点とします。</span></li>
+        <li><span class="clause-num">２</span><span>送迎の終了時点は、対象児童を利用者または利用者が指定した受取人へ安全に引き渡し、当社所定の方法により送迎終了の処理を行った時点とします。</span></li>
+        <li><span class="clause-num">３</span><span>有料利用において時間に応じて料金を算定する場合、前二項の開始時点から終了時点までを料金算定の対象時間とし、託送者が送迎終了後に送迎施設等へ戻る時間は含みません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第9条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第9条</span>引渡しおよび受取人</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>利用者は、対象児童の受取人を事前に登録し、または当日、公式LINEその他当社が指定する方法により指定することができます。</span></li>
+        <li><span class="clause-num">２</span><span>当日指定を行う場合、利用者は、受取人の氏名、続柄、連絡先その他当社が求める情報を、引渡し前までに正確に通知するものとします。</span></li>
+        <li><span class="clause-num">３</span><span>託送者は、受取人の本人確認ができない場合、指定内容と一致しない場合、受取人が対象児童を安全に受け取れる状態にないと合理的に判断した場合、その他安全上の懸念がある場合、引渡しを行いません。</span></li>
+        <li><span class="clause-num">４</span><span>受取人が予定時刻に現れない場合、託送者は利用者および緊急連絡先へ順次連絡し、対象児童とともに事前に定めた安全な場所で待機します。標準待機時間、連絡回数、管理者への引継ぎ、施設への相談、警察・児童相談所その他関係機関への相談基準は、正式運用前に書面の手順として定め、利用者に事前表示します。これらが未設定の状態では送迎を実施しません。</span></li>
+        <li><span class="clause-num">５</span><span>将来、待機に伴う追加料金を設定する場合、当社は適用前に金額および条件を表示し、利用者の同意を得るものとします。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第10条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第10条</span>利用者の協力義務</div>
+    <div class="article-body">
+      <p>利用者は、安全な送迎のため、次の事項を遵守するものとします。</p>
+      <ul class="ko-list">
+        <li><span class="ko-num">(1)</span><span>対象児童の健康状態、アレルギー、服薬、行動特性、緊急連絡先等を正確に申告すること。</span></li>
+        <li><span class="ko-num">(2)</span><span>送迎施設に対して必要な届出、委任、承諾取得および情報共有を行うこと。</span></li>
+        <li><span class="ko-num">(3)</span><span>対象児童に送迎予定、担当託送者および安全上の約束を事前に説明すること。</span></li>
+        <li><span class="ko-num">(4)</span><span>受取人が予定時刻に受取り可能な状態を確保すること。</span></li>
+        <li><span class="ko-num">(5)</span><span>対象児童の写真・動画撮影、服薬介助、食事提供、自宅への入室その他通常の送迎を超える対応の希望がある場合、事前に当社へ申告し、当社所定の書面または画面で個別に合意すること。</span></li>
+        <li><span class="ko-num">(6)</span><span>当社または託送者から安全確保のための確認または協力を求められた場合、合理的な範囲で対応すること。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第11条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第11条</span>料金および支払</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>無料モニターの対象者、対象期間、利用回数その他の条件は、募集案内または個別の通知により定めます。無料モニター期間中は、当該案内で有料と明示された費用を除き、利用料金は発生しません。</span></li>
+        <li><span class="clause-num">２</span><span>有料サービスの料金、手数料、最低利用時間、決済方法、支払時期、返金方法および事業者情報は、利用者が予約を確定する前に、料金表、予約画面、特定商取引法に基づく表示その他当社所定の方法で表示します。</span></li>
+        <li><span class="clause-num">３</span><span>料金体系または決済方法を新たに導入もしくは変更する場合、当社は適用開始前に利用者へ通知します。既に成立している送迎契約には、利用者の同意なく遡って適用しません。</span></li>
+        <li><span class="clause-num">４</span><span>現時点では利用者都合による予約キャンセル料は発生しません。将来キャンセル料を導入する場合、当社は金額、発生時点および適用条件を事前に表示し、適用開始後に成立する予約から適用します。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第12条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第12条</span>予約の変更およびキャンセル</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>利用者は、当社所定の方法により予約の変更またはキャンセルを申し出ることができます。ただし、送迎開始後の変更は、安全または運用上の理由によりお受けできない場合があります。</span></li>
+        <li><span class="clause-num">２</span><span>利用者は、変更またはキャンセルの必要が生じた場合、判明後速やかに連絡するものとします。</span></li>
+        <li><span class="clause-num">３</span><span>繰り返し無断キャンセルを行うなど、本サービスの運営または託送者に著しい支障を生じさせた場合、当社は利用制限その他必要な措置を講じることがあります。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第13条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第13条</span>中止および変更</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社または託送者は、悪天候、災害、警報、交通障害、感染症、託送者の急病、機材不良、対象児童の体調その他、安全な送迎が困難であると合理的に判断した場合、送迎方法の変更、開始時刻の変更または送迎の中止を行うことができます。</span></li>
+        <li><span class="clause-num">２</span><span>当社は、可能な範囲で代替託送者の調整に努めますが、代替者の手配または送迎の実施を保証しません。</span></li>
+        <li><span class="clause-num">３</span><span>当社または託送者の都合により有料の送迎が実施されなかった場合、当該未実施分の料金は請求せず、既に受領しているときは、利用者が容易に確認できる方法により速やかに返金します。当社の故意または過失による損害については、返金のみをもって当社の法令上の責任が終了するものではありません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第14条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第14条</span>緊急時の対応</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>事故、急病、災害その他の緊急事態が発生した場合、託送者および当社は、対象児童の安全確保を最優先とし、必要に応じて119番、110番、医療機関その他の関係機関へ連絡したうえで、利用者および緊急連絡先へ通知します。</span></li>
+        <li><span class="clause-num">２</span><span>生命または身体の保護のため緊急の必要があり、事前に利用者の指示を得ることが困難な場合、託送者および当社は、救急搬送への同行、応急手当その他合理的に必要な措置を講じることができます。ただし、託送者または当社が保護者に代わって医療行為へ包括的に同意できることを意味しません。医療機関の判断および適用法令に従います。</span></li>
+        <li><span class="clause-num">３</span><span>利用者は、緊急連絡先を常に連絡可能な状態に保ち、医療上の注意事項その他緊急対応に必要な情報を事前に提供するものとします。</span></li>
+        <li><span class="clause-num">４</span><span>利用者は、初回利用前に、救急要請、搬送先の希望、かかりつけ医、保険証情報、服薬・アレルギーその他緊急時対応に必要な事項を別途確認する書面または画面に回答するものとします。</span></li>
+        <li><span class="clause-num">５</span><span>緊急対応に伴い医療費、交通費その他の実費が発生した場合、その負担は、事故等の原因および法令上の責任関係に従って決定します。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第15条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第15条</span>保険および事故対応</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、本サービスに関連する事故に備え、送迎開始前から有効な保険へ加入します。保険契約が有効であることを確認できない期間は送迎を実施しません。</span></li>
+        <li><span class="clause-num">２</span><span>当社は、予約確定前に、保険会社、保険の種類、対象となる事故、対人・対物等の補償限度額、主な免責事項、事故時の連絡先および請求手順を、利用者が確認できる方法で表示します。</span></li>
+        <li><span class="clause-num">３</span><span>事故が発生した場合、当社は事故受付、初動対応、関係機関への報告、利用者への経過連絡および再発防止を行い、利用者は、当社、託送者、保険会社および関係機関による調査、必要書類の提出その他の事故対応に合理的な範囲で協力するものとします。</span></li>
+        <li><span class="clause-num">４</span><span>当社は、事故、けが、行方不明、虐待・わいせつ行為の疑い、重大なヒヤリハットその他子どもの安全に関する申告を受け付ける窓口を設け、必要に応じて警察、自治体、児童相談所その他の関係機関へ報告します。</span></li>
+        <li><span class="clause-num">５</span><span>保険による補償の可否および金額は、保険会社の審査および保険契約の内容により決定されます。保険が適用されないことのみを理由として、法令上認められる当社または託送者の責任が当然に免除されるものではありません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第16条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第16条</span>禁止事項</div>
+    <div class="article-body">
+      <p>利用者は、本サービスの利用にあたり、次の行為をしてはなりません。</p>
+      <ul class="ko-list">
+        <li><span class="ko-num">(1)</span><span>虚偽または重要事項を欠いた情報を登録または申告する行為。</span></li>
+        <li><span class="ko-num">(2)</span><span>当社または託送者の安全上の指示に従わない行為。</span></li>
+        <li><span class="ko-num">(3)</span><span>託送者に対し、予約内容にない送迎、法令に反する自転車同乗、対象児童のみの放置その他危険または不適切な対応を求める行為。</span></li>
+        <li><span class="ko-num">(4)</span><span>当社、託送者、送迎施設、他の利用者または第三者に対する暴言、脅迫、差別、嫌がらせ、プライバシー侵害その他の迷惑行為。</span></li>
+        <li><span class="ko-num">(5)</span><span>託送者に無断で対象児童の写真・動画を撮影させ、私的な連絡先交換、金銭授受または当社の安全管理を回避する形で確定済み予約を変更するよう求める行為。</span></li>
+        <li><span class="ko-num">(6)</span><span>託送者または当社に、医療行為、投薬、食事提供、入浴、長時間の保育その他合意した送迎範囲を超える行為を無断で求める行為。</span></li>
+        <li><span class="ko-num">(7)</span><span>法令、公序良俗または本規約に違反する行為。</span></li>
+        <li><span class="ko-num">(8)</span><span>その他当社が事前に開示した安全基準に照らし、本サービスの安全または適正な運営を具体的に妨げる行為。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第17条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第17条</span>利用停止および登録解除</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、利用者が本規約に重大に違反した場合、登録情報に重大な虚偽がある場合、料金の支払を相当期間にわたり怠った場合、対象児童または関係者の安全確保に具体的な支障がある場合、その他利用継続が著しく困難であると合理的に判断した場合、原則として理由および是正期間を事前に通知したうえで、必要な範囲に限り利用を制限し、または登録を解除できます。</span></li>
+        <li><span class="clause-num">２</span><span>緊急性が高い場合、重大な違反がある場合その他事前通知が困難または不適切な場合、当社は事前通知なく必要な措置を講じ、事後速やかに理由を通知します。</span></li>
+        <li><span class="clause-num">３</span><span>利用者は、当社所定の方法により、いつでも将来に向かって登録解除を申し出ることができます。ただし、未払料金その他既に発生した義務は消滅しません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第18条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第18条</span>本サービスの変更、中断および終了</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、安全確保、法令対応、システム保守、事業運営上の必要その他合理的な理由がある場合、本サービスの内容を変更し、一時中断し、または終了することがあります。</span></li>
+        <li><span class="clause-num">２</span><span>利用者に重大な影響を与える変更または本サービスの終了を行う場合、当社は、緊急やむを得ない場合を除き、相当な予告期間を設けて公式LINE、ウェブサイトその他適切な方法により通知します。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第19条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第19条</span>個人情報および位置情報</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、利用者および対象児童の個人情報、送迎先、予約・利用履歴、位置情報その他の情報を、当社のプライバシーポリシーに従って取り扱います。</span></li>
+        <li><span class="clause-num">２</span><span>当社は、送迎の実施、安全確認、緊急対応、保険対応その他本サービスの提供に必要な範囲で、担当託送者、送迎施設、警察・消防・医療機関、保険会社・事故対応事業者および業務委託先に情報を共有することがあります。</span></li>
+        <li><span class="clause-num">３</span><span>利用者は、位置情報共有機能が通信状況、端末設定、システム障害等により遅延し、または正確に表示されない場合があることを理解するものとします。位置情報表示は安全確認を補助する機能であり、常時の正確な監視を保証するものではありません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第20条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第20条</span>知的財産権</div>
+    <div class="article-body">
+      <p>本サービスに関する文章、画像、動画、ロゴ、システムその他のコンテンツに関する知的財産権は、当社または正当な権利者に帰属します。利用者は、私的利用の範囲を超えて、これらを無断で複製、転載、改変または配布してはなりません。</p>
+    </div>
+  </div>
+
+  <!-- 第21条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第21条</span>責任</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、本サービスの提供に関して当社の故意または過失により利用者に損害を与えた場合、法令に従ってその損害を賠償します。</span></li>
+        <li><span class="clause-num">２</span><span>当社は、当社の責めに帰することができない事由、利用者による重要事項の不申告または誤申告、利用者もしくは受取人の指示違反、天災地変その他の不可抗力により生じた損害について、責任を負いません。ただし、当社に故意または過失がある場合はこの限りではありません。</span></li>
+        <li><span class="clause-num">３</span><span>当社の軽過失により生じた損害については、法令により許される範囲で、通常かつ直接の損害を賠償します。対象児童の生命または身体に生じた損害、個人情報・位置情報の漏えいによる損害その他、責任制限が不相当または法令上認められない場合には、この制限を適用しません。</span></li>
+        <li><span class="clause-num">４</span><span>当社の故意または重大な過失により生じた損害について、前項の責任制限は適用しません。</span></li>
+        <li><span class="clause-num">５</span><span>託送者の行為に関する責任は、送迎契約、当社と託送者との契約関係、実際の指揮監督関係および法令に従って判断されます。当社は、マッチング事業者であることのみを理由として、当社自身の選任、確認、研修、安全管理、情報提供、苦情処理または事故対応上の責任を免れません。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第22条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第22条</span>本規約の変更</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社は、変更が利用者の一般の利益に適合する場合、または変更の必要性、内容の相当性その他の事情に照らして合理的である場合、法令に従い本規約を変更できます。</span></li>
+        <li><span class="clause-num">２</span><span>当社は、本規約を変更するときは、変更内容および効力発生日を、効力発生日までに公式LINE、ウェブサイトその他適切な方法で周知します。</span></li>
+        <li><span class="clause-num">３</span><span>利用者の権利または義務に重大な影響を与える変更について法令上同意が必要となる場合、当社は利用者から必要な同意を取得します。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第23条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第23条</span>通知および問い合わせ</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>当社から利用者への通知は、公式LINE、登録された連絡先、ウェブサイトへの掲載その他当社が適切と判断する方法で行います。</span></li>
+        <li><span class="clause-num">２</span><span>本サービス、本規約、苦情、事故および子どもの安全に関する通報窓口は、MITSU公式LINEとします。管理者による通常の対応時間は9時から17時までとします。自動応答は対応時間外にも作動する場合があります。当社は、事故または安全上の通報について、受付日時、対応経過および結果を記録します。</span></li>
+        <li><span class="clause-num">３</span><span>緊急時は、公式LINEへの連絡のみで完結させず、状況に応じて119番または110番その他必要な緊急通報を行ってください。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 第24条 -->
+  <div class="article">
+    <div class="article-title"><span class="article-num">第24条</span>準拠法および合意管轄</div>
+    <div class="article-body">
+      <ul class="clause-list">
+        <li><span class="clause-num">１</span><span>本規約および本サービスに関する契約には、日本法を準拠法とします。</span></li>
+        <li><span class="clause-num">２</span><span>本規約または本サービスに関して紛争が生じた場合、当社および利用者は、誠実に協議して解決を図るものとします。</span></li>
+        <li><span class="clause-num">３</span><span>協議によって解決しない場合、法令に別段の定めがある場合を除き、<span class="ph">［当社本店所在地を管轄する地方裁判所または簡易裁判所］</span>を第一審の合意管轄裁判所とします。正式公開前に当社所在地に応じて裁判所名を確定します。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 附則 -->
+  <div class="article-supplement">
+    <div class="article-title"><span class="article-num">附則</span></div>
+    <div class="article-body">
+      <p>本規約は、<span class="ph">［　　年　月　日］</span>から施行します。</p>
+    </div>
+  </div>
+
+  <div class="enacted-date">制定日：<span class="ph">［　　年　月　日］</span></div>
+
+</main>
+
+<footer class="page-footer">
+  <div class="footer-inner">
+    <span class="footer-brand">MITSU</span>
+    <div class="footer-links">
+      <a href="./index.html">トップページ</a>
+      <a href="./terms.html" aria-current="page">利用規約</a>
+      <a href="./privacy.html">プライバシーポリシー</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
