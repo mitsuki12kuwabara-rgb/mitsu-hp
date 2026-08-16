@@ -553,6 +553,11 @@ li.pc-only    { display: list-item; }
   text-align: left;
 }
 
+/* SP版タブUI（PC では非表示） */
+.flow3-sp-wrap  { display: none; }
+.flow3-sp-dots  { display: none; }
+.flow3-sp-panels{ display: none; }
+
 .info-box {
   background: #FFF0EA;
   border-left: 4px solid var(--orange);
@@ -1606,8 +1611,68 @@ footer {
   .pain-grid  { grid-template-columns: 1fr; }
 
   .flow-steps  { grid-template-columns: 1fr 1fr; }
-  .flow3-grid  { grid-template-columns: 1fr; gap: 28px; }
-  .flow3-card  { width: 100%; }
+  /* flow3 SP版タブUI */
+  .flow3-grid     { display: none; }
+  .flow3-sp-wrap  { display: block; margin: 20px 0 32px; }
+  .flow3-sp-dots  {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 32px;
+    padding-top: 10px;
+  }
+  .flow3-sp-dot {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flow3-sp-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(239,107,58,0.32);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+  }
+  .flow3-sp-num {
+    font-family: var(--font-hand);
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .flow3-sp-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.92);
+    margin-top: 2px;
+  }
+  .flow3-sp-dot.active .flow3-sp-circle {
+    transform: scale(1.22);
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,0.95),
+      0 0 0 7px rgba(239,107,58,0.32),
+      0 0 22px 10px rgba(239,107,58,0.32),
+      0 4px 18px rgba(239,107,58,0.5);
+  }
+  .flow3-sp-panels { display: block; }
+  .flow3-sp-panel  { display: none; }
+  .flow3-sp-panel.active { display: block; }
+  .flow3-sp-panel.flow3-card {
+    margin-top: 0;
+    padding-top: 26px;
+    width: 100%;
+  }
 
   .vp-body {
     grid-template-columns: 1fr;
@@ -2860,6 +2925,75 @@ var CONFIG = {
       if (m.modal.style.display !== 'none') m.close();
     });
   });
+
+  /* -------------------------------------------------------
+     6d. MITSUの使い方 SP版 タブUI
+  ------------------------------------------------------- */
+  (function () {
+    var grid = document.querySelector('.flow3-grid');
+    if (!grid) return;
+    var items = grid.querySelectorAll('.flow3-item');
+    if (!items.length) return;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'flow3-sp-wrap';
+
+    var dotsRow = document.createElement('div');
+    dotsRow.className = 'flow3-sp-dots';
+
+    var panelsWrap = document.createElement('div');
+    panelsWrap.className = 'flow3-sp-panels';
+
+    var dots   = [];
+    var panels = [];
+
+    items.forEach(function (item, i) {
+      var circle = item.querySelector('.flow3-circle');
+      var card   = item.querySelector('.flow3-card');
+      if (!circle || !card) return;
+
+      var numEl   = circle.querySelector('.flow3-num');
+      var lblEl   = circle.querySelector('.flow3-label');
+      var num     = numEl   ? numEl.textContent.trim()   : String(i + 1);
+      var label   = lblEl   ? lblEl.textContent.trim()   : '';
+
+      var dot = document.createElement('button');
+      dot.className = 'flow3-sp-dot' + (i === 0 ? ' active' : '');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', num + ': ' + label);
+      dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      dot.innerHTML =
+        '<div class="flow3-sp-circle">' +
+          '<span class="flow3-sp-num">'  + num   + '</span>' +
+          '<span class="flow3-sp-lbl">'  + label + '</span>' +
+        '</div>';
+
+      var panel = document.createElement('div');
+      panel.className = 'flow3-sp-panel flow3-card' + (i === 0 ? ' active' : '');
+      panel.innerHTML = card.innerHTML;
+
+      dotsRow.appendChild(dot);
+      panelsWrap.appendChild(panel);
+      dots.push(dot);
+      panels.push(panel);
+
+      (function (idx) {
+        dot.addEventListener('click', function () {
+          dots.forEach(function (d, j) {
+            d.classList.toggle('active', j === idx);
+            d.setAttribute('aria-selected', j === idx ? 'true' : 'false');
+          });
+          panels.forEach(function (p, j) {
+            p.classList.toggle('active', j === idx);
+          });
+        });
+      })(i);
+    });
+
+    wrap.appendChild(dotsRow);
+    wrap.appendChild(panelsWrap);
+    grid.parentNode.insertBefore(wrap, grid);
+  })();
 
   /* -------------------------------------------------------
      7. ハンバーガーメニュー
