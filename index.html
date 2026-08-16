@@ -1067,10 +1067,12 @@ li.pc-only    { display: list-item; }
 .time-card-head { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
 .time-card strong { color: var(--navy); }
 
-/* -- 料金目安 SP ボタン＆モーダル -- */
+/* -- 料金目安・送迎時間 SP ボタン＆モーダル -- */
 .price-guide-sp-btn { display: none; }
 .price-guide-content { display: block; }
-#priceGuideModal {
+.time-card-sp-btn { display: none; }
+.time-card-content { display: block; }
+#priceGuideModal, #timeGuideModal {
   position: fixed; inset: 0; z-index: 9100;
   background: rgba(0,0,0,0.55);
   display: flex; align-items: center; justify-content: center;
@@ -1583,9 +1585,11 @@ footer {
   .free-banner-main { font-size: 14px; }
   .faq-btn { font-size: 12px; }
   .line-notice-head { font-size: 22px; white-space: nowrap; }
-  /* 料金目安：SP ではボタンのみ表示 */
+  /* 料金目安・送迎時間定義：SP ではボタンのみ表示 */
   .price-guide-content { display: none; }
-  .price-guide-sp-btn {
+  .time-card-content   { display: none; }
+  .price-guide-sp-btn,
+  .time-card-sp-btn {
     display: block;
     width: 100%;
     padding: 13px 16px;
@@ -2042,20 +2046,35 @@ var CONFIG = {
 
     <!-- 送迎時間の定義 -->
     <div class="time-card">
-      <p class="time-card-head">送迎時間の定義</p>
-      <p>
-        <span class="pc-only">送迎時間は、<strong>託送者が保育園などのお迎え先に到着した時点</strong>から開始します。<br>
-        お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。</span>
-        <span class="sp-block" style="font-size:13px;">送迎時間は</span>
-        <span class="sp-block" style="color:var(--navy);font-weight:bold;text-align:center;">託送者がお迎え先に到着した時点</span>
-        <span class="sp-text-right">から開始します。</span>
-        <span class="sp-block" style="margin-top:1em;">お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。</span>
-      </p>
-      <br>
-      <p>
-        引き渡し後<span class="pc-only">、</span><br class="br-sp"><strong>託送者が公式LINEで送迎終了を送信した時点</strong><span class="pc-only">で終了となります。</span><span class="sp-text-right">で終了となります。</span><br>
-        保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
-      </p>
+      <button class="time-card-sp-btn" id="timeGuideBtn">送迎時間の定義</button>
+      <div class="time-card-content">
+        <p class="time-card-head">送迎時間の定義</p>
+        <p>
+          <span class="pc-only">送迎時間は、<strong>託送者が保育園などのお迎え先に到着した時点</strong>から開始します。<br>
+          お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。</span>
+          <span class="sp-block" style="font-size:13px;">送迎時間は</span>
+          <span class="sp-block" style="color:var(--navy);font-weight:bold;text-align:center;">託送者がお迎え先に到着した時点</span>
+          <span class="sp-text-right">から開始します。</span>
+          <span class="sp-block" style="margin-top:1em;">お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。</span>
+        </p>
+        <br>
+        <p>
+          引き渡し後<span class="pc-only">、</span><br class="br-sp"><strong>託送者が公式LINEで送迎終了を送信した時点</strong><span class="pc-only">で終了となります。</span><span class="sp-text-right">で終了となります。</span><br>
+          保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。
+        </p>
+      </div>
+    </div>
+
+    <!-- 送迎時間モーダル（SP用） -->
+    <div id="timeGuideModal" style="display:none;" role="dialog" aria-modal="true" aria-label="送迎時間の定義">
+      <div class="price-guide-modal-inner">
+        <strong>送迎時間の定義</strong>
+        送迎時間は、<strong style="color:var(--navy);">託送者がお迎え先に到着した時点</strong>から開始します。<br><br>
+        お子さまの帰る準備や施設との引き渡し確認にかかる時間も送迎時間に含まれます。<br><br>
+        引き渡し後、<strong style="color:var(--navy);">託送者が公式LINEで送迎終了を送信した時点</strong>で終了となります。<br><br>
+        <span style="font-size:12px;">保護者による受け取り確認は安全確認のための機能であり、料金計算の終了時刻には影響しません。</span>
+        <button class="price-guide-modal-close" id="timeGuideModalClose">閉じる</button>
+      </div>
     </div>
 
     <!-- モニター状態別表示（JSで書き込む） -->
@@ -2810,28 +2829,37 @@ var CONFIG = {
   })();
 
   /* -------------------------------------------------------
-     6c. 料金目安モーダル（SP用）
+     6c. 料金目安・送迎時間定義 モーダル（SP用）
   ------------------------------------------------------- */
-  var pgBtn   = document.getElementById('priceGuideBtn');
-  var pgModal = document.getElementById('priceGuideModal');
-  var pgClose = document.getElementById('priceGuideModalClose');
-  if (pgBtn && pgModal && pgClose) {
-    pgBtn.addEventListener('click', function () {
-      pgModal.style.display = 'flex';
+  function makeSpModal(btnId, modalId, closeId) {
+    var btn   = document.getElementById(btnId);
+    var modal = document.getElementById(modalId);
+    var close = document.getElementById(closeId);
+    if (!btn || !modal || !close) return null;
+    btn.addEventListener('click', function () {
+      modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     });
-    function closePgModal() {
-      pgModal.style.display = 'none';
+    function closeModal() {
+      modal.style.display = 'none';
       document.body.style.overflow = '';
     }
-    pgClose.addEventListener('click', closePgModal);
-    pgModal.addEventListener('click', function (e) {
-      if (e.target === pgModal) closePgModal();
+    close.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
     });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && pgModal.style.display !== 'none') closePgModal();
-    });
+    return { modal: modal, close: closeModal };
   }
+  var spModals = [
+    makeSpModal('priceGuideBtn', 'priceGuideModal', 'priceGuideModalClose'),
+    makeSpModal('timeGuideBtn',  'timeGuideModal',  'timeGuideModalClose')
+  ].filter(Boolean);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    spModals.forEach(function (m) {
+      if (m.modal.style.display !== 'none') m.close();
+    });
+  });
 
   /* -------------------------------------------------------
      7. ハンバーガーメニュー
