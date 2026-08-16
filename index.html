@@ -1067,6 +1067,43 @@ li.pc-only    { display: list-item; }
 .time-card-head { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
 .time-card strong { color: var(--navy); }
 
+/* -- 料金目安 SP ボタン＆モーダル -- */
+.price-guide-sp-btn { display: none; }
+.price-guide-content { display: block; }
+#priceGuideModal {
+  position: fixed; inset: 0; z-index: 9100;
+  background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.price-guide-modal-inner {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 24px 20px 64px;
+  width: 100%;
+  max-height: 82vh;
+  overflow-y: auto;
+  position: relative;
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.85;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.price-guide-modal-inner strong {
+  display: block;
+  font-size: 15px;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.price-guide-modal-close {
+  position: absolute; bottom: 16px; right: 16px;
+  background: var(--orange-dark); color: #fff;
+  border: none; border-radius: 8px;
+  padding: 9px 22px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer;
+}
+
 .monitor-card { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
 .monitor-head {
   padding: 15px 22px;
@@ -1546,6 +1583,21 @@ footer {
   .free-banner-main { font-size: 14px; }
   .faq-btn { font-size: 12px; }
   .line-notice-head { font-size: 22px; white-space: nowrap; }
+  /* 料金目安：SP ではボタンのみ表示 */
+  .price-guide-content { display: none; }
+  .price-guide-sp-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 16px;
+    background: var(--surface);
+    border: 2px solid var(--orange-dark);
+    border-radius: 8px;
+    color: var(--orange-dark);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+  }
 
   .pain-grid  { grid-template-columns: 1fr; }
 
@@ -1971,8 +2023,21 @@ var CONFIG = {
       <p class="free-banner-note">無料期間は目安であり、正式な期間・条件について<span class="pc-only">は</span><br class="br-sp">公式LINEからご確認ください。</p>
     </div>
     <div class="price-guide">
-      <strong>無料期間終了後の料金目安：</strong><br class="br-sp">送迎時間に応じた時間制料金<br class="br-sp">（例：30分の送迎で目安1,000円前後）<br>
-      <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。<br class="br-sp">詳細は公式LINEからご確認ください。</span>
+      <button class="price-guide-sp-btn" id="priceGuideBtn">無料期間終了後の料金目安</button>
+      <div class="price-guide-content">
+        <strong>無料期間終了後の料金目安</strong><br class="br-sp">送迎時間に応じた時間制料金<br class="br-sp">（例：30分の送迎で目安1,000円前後）<br>
+        <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。<br class="br-sp">詳細は公式LINEからご確認ください。</span>
+      </div>
+    </div>
+
+    <!-- 料金目安モーダル（SP用） -->
+    <div id="priceGuideModal" style="display:none;" role="dialog" aria-modal="true" aria-label="無料期間終了後の料金目安">
+      <div class="price-guide-modal-inner">
+        <strong>無料期間終了後の料金目安</strong>
+        送迎時間に応じた時間制料金<br>（例：30分の送迎で目安1,000円前後）<br><br>
+        <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。詳細は公式LINEからご確認ください。</span>
+        <button class="price-guide-modal-close" id="priceGuideModalClose">閉じる</button>
+      </div>
     </div>
 
     <!-- 送迎時間の定義 -->
@@ -2743,6 +2808,30 @@ var CONFIG = {
     slotUpdate(false);
     startSlotTimer();
   })();
+
+  /* -------------------------------------------------------
+     6c. 料金目安モーダル（SP用）
+  ------------------------------------------------------- */
+  var pgBtn   = document.getElementById('priceGuideBtn');
+  var pgModal = document.getElementById('priceGuideModal');
+  var pgClose = document.getElementById('priceGuideModalClose');
+  if (pgBtn && pgModal && pgClose) {
+    pgBtn.addEventListener('click', function () {
+      pgModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    function closePgModal() {
+      pgModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    pgClose.addEventListener('click', closePgModal);
+    pgModal.addEventListener('click', function (e) {
+      if (e.target === pgModal) closePgModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && pgModal.style.display !== 'none') closePgModal();
+    });
+  }
 
   /* -------------------------------------------------------
      7. ハンバーガーメニュー
