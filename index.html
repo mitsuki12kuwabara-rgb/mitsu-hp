@@ -122,6 +122,16 @@ ul, ol { list-style: none; }
   color: var(--orange);
   letter-spacing: 0.08em;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-img {
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 /* MITSU ブランド名インライン統一フォント */
 .mitsu-brand {
@@ -1863,7 +1873,7 @@ var CONFIG = {
 ===================================================== -->
 <header class="header" role="banner">
   <div class="header-inner">
-    <a href="/project" class="logo" aria-label="MITSU トップページ">MITSU</a>
+    <a href="/project" class="logo" aria-label="MITSU トップページ"><img src="logo.png" alt="" class="logo-img" aria-hidden="true">MITSU</a>
     <nav class="nav-links" aria-label="サイトナビゲーション">
       <a href="#service">サービスについて</a>
       <a href="#features">できること</a>
