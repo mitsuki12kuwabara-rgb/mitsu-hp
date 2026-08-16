@@ -9,6 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Shippori+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
 <meta name="description" content="MITSUは、保育園・幼稚園・学童・習い事などへのお子さまの送迎を、確認と研修を受けた託送者に依頼できる送迎マッチングサービスです。世田谷区烏山地域で徒歩送迎を先行提供中。">
 <style>
+@font-face {
+  font-family: 'Shirokuma';
+  src: url('shirokuma-mitsu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===================================================
    リセット & ベース
 =================================================== */
@@ -50,6 +58,7 @@ ul, ol { list-style: none; }
   /* フォントルール: 原色オレンジ使用場面 / 相対的に大きな文字 */
   --font-display: 'Shippori Mincho', 'Hiragino Mincho ProN', '游明朝', 'Yu Mincho', serif;
   --font-hand:    'Caveat', cursive;
+  --font-logo:    'Shirokuma', sans-serif;
 }
 
 /* ===================================================
@@ -108,10 +117,18 @@ ul, ol { list-style: none; }
 }
 .logo {
   font-size: 21px;
-  font-weight: 900;
+  font-weight: normal;
+  font-family: var(--font-logo);
   color: var(--orange);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.08em;
   flex-shrink: 0;
+}
+/* MITSU ブランド名インライン統一フォント */
+.mitsu-brand {
+  font-family: var(--font-logo);
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  font-style: normal;
 }
 .nav-links {
   display: flex;
@@ -1467,7 +1484,7 @@ footer {
   grid-template-columns: 1.4fr 1fr 1fr;
   gap: 40px;
 }
-.footer-logo { font-size: 19px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+.footer-logo { font-size: 19px; font-weight: normal; font-family: var(--font-logo); letter-spacing: 0.08em; color: #fff; margin-bottom: 10px; }
 .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.75; }
 .footer-col h4 {
   font-size: 11px;
@@ -1948,7 +1965,7 @@ var CONFIG = {
 <section id="features" class="section" aria-label="MITSUでできること">
   <div class="container">
     <p class="sec-label">できること</p>
-    <h2 class="sec-heading">MITSUの使い方</h2>
+    <h2 class="sec-heading"><span class="mitsu-brand">MITSU</span>の使い方</h2>
 
     <!-- 3段階フロー -->
     <div class="flow3-grid">
@@ -1960,7 +1977,7 @@ var CONFIG = {
         </div>
         <div class="flow3-card">
           <p class="flow3-card-title">託送者の確認</p>
-          <p class="flow3-card-desc">公式LINEよりお子さまの情報や保育園などを登録します。MITSU担当者が内容を確認し、送迎を担当する託送者をご案内します。担当が決まると、免許証（顔写真・経歴など）を事前にご確認いただけます。</p>
+          <p class="flow3-card-desc">公式LINEよりお子さまの情報や保育園などを登録します。<span class="mitsu-brand">MITSU</span>担当者が内容を確認し、送迎を担当する託送者をご案内します。担当が決まると、免許証（顔写真・経歴など）を事前にご確認いただけます。</p>
         </div>
       </div>
 
@@ -2035,8 +2052,8 @@ var CONFIG = {
     <p class="sec-label">託送者について</p>
     <h2 class="sec-heading">地域の誰かではなく、<br>確認と研修を受けた託送者へ</h2>
     <p class="sec-desc">
-      <span class="pc-only">MITSU管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br>実際の送迎は、免許証を取得した託送者が担当します。</span>
-      <span class="sp-block" style="font-size:12px;">MITSU管理者が基準を満たした方に託送者免許証を交付します。</span>
+      <span class="pc-only"><span class="mitsu-brand">MITSU</span>管理者が託送者の本人確認・面談・安全に関する研修などを行い、基準を満たした方に託送者免許証を交付します。<br>実際の送迎は、免許証を取得した託送者が担当します。</span>
+      <span class="sp-block" style="font-size:12px;"><span class="mitsu-brand">MITSU</span>管理者が基準を満たした方に託送者免許証を交付します。</span>
       <span class="sp-block" style="font-size:12px;">送迎は、免許証を取得した託送者が担当します。</span>
     </p>
 
@@ -2054,7 +2071,7 @@ var CONFIG = {
 
     <div class="license-card">
       <div class="license-card-top">
-        <span class="license-badge">MITSU 託送者免許証</span>
+        <span class="license-badge"><span class="mitsu-brand">MITSU</span> 託送者免許証</span>
         <span class="license-title">送迎前に担当者を確認できます</span>
       </div>
       <p style="font-size:14px;color:var(--text-sub);margin-bottom:16px;line-height:1.8;">
@@ -2068,7 +2085,7 @@ var CONFIG = {
       </div>
       <p class="license-note">
         ※ 託送者免許証は一般公開せず、その託送者と関係する登録保護者だけが確認できます。<br>
-        ※ 託送者免許証は、MITSU独自の確認・研修基準を満たしたことを示す認定証であり、公的資格ではありません。
+        ※ 託送者免許証は、<span class="mitsu-brand">MITSU</span>独自の確認・研修基準を満たしたことを示す認定証であり、公的資格ではありません。
       </p>
     </div>
   </div>
@@ -2220,7 +2237,7 @@ var CONFIG = {
 <section id="contact" class="final-cta" aria-label="お問い合わせ・最終CTA">
   <svg class="final-cta-chevron" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <polygon points="0,0 200,0 100,80" fill="#FFFFFF"/>
-    <text x="100" y="30" text-anchor="middle" dominant-baseline="middle" font-size="22" font-weight="700" fill="#C8501E" font-family="inherit" letter-spacing="2">MITSU</text>
+    <text x="100" y="30" text-anchor="middle" dominant-baseline="middle" font-size="22" font-weight="normal" fill="#C8501E" font-family="'Shirokuma', sans-serif" letter-spacing="2">MITSU</text>
   </svg>
   <h2 class="final-title">まずは、送り迎えのお困りごとを<br class="br-sp">お聞かせください。</h2>
   <p class="final-desc">
@@ -2248,7 +2265,7 @@ var CONFIG = {
     <div class="footer-col">
       <h4>サービス</h4>
       <ul>
-        <li><a href="#service">MITSUについて</a></li>
+        <li><a href="#service"><span class="mitsu-brand">MITSU</span>について</a></li>
         <li><a href="#features">利用の流れ</a></li>
         <li><a href="#pricing">料金・先行利用</a></li>
         <li><a href="#faq">よくある質問</a></li>
@@ -2276,7 +2293,7 @@ var CONFIG = {
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 MITSU 送迎マッチングサービス</span>
+    <span>© 2026 <span class="mitsu-brand">MITSU</span> 送迎マッチングサービス</span>
     <div class="footer-bottom-links">
       <a href="#">利用規約</a>
       <a href="#">プライバシーポリシー</a>
@@ -2671,7 +2688,7 @@ var CONFIG = {
     },
     {
       q: '託送者はどのように確認されていますか？',
-      a: 'MITSUでは、託送者に対して本人確認、面談、安全に関する研修などを実施します。基準を満たした方には託送者免許証を交付し、実際の送迎を担当します。保護者は担当する託送者の免許証を事前に確認した上で利用できます。'
+      a: '<span class="mitsu-brand">MITSU</span>では、託送者に対して本人確認、面談、安全に関する研修などを実施します。基準を満たした方には託送者免許証を交付し、実際の送迎を担当します。保護者は担当する託送者の免許証を事前に確認した上で利用できます。'
     },
     {
       q: '担当する託送者は事前に確認できますか？',
@@ -2691,7 +2708,7 @@ var CONFIG = {
     },
     {
       q: '保育園や習い事への説明は必要ですか？',
-      a: '保育園・幼稚園・学童・習い事など、施設によって送迎に関する運用や対応方法が異なります。MITSUが基本的な調整や確認を行った上で利用を開始しますが、施設の方針によっては、保護者の方にも施設への説明や対応をお願いする場合があります。詳細は施設ごとの状況に応じて公式LINEよりご案内します。'
+      a: '保育園・幼稚園・学童・習い事など、施設によって送迎に関する運用や対応方法が異なります。<span class="mitsu-brand">MITSU</span>が基本的な調整や確認を行った上で利用を開始しますが、施設の方針によっては、保護者の方にも施設への説明や対応をお願いする場合があります。詳細は施設ごとの状況に応じて公式LINEよりご案内します。'
     },
     {
       q: 'キャンセルした場合はどうなりますか？',
