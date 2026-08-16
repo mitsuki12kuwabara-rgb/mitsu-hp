@@ -154,6 +154,14 @@ ul, ol { list-style: none; }
   border-radius: 6px;
 }
 .nav-links a:hover { color: var(--orange); background: var(--bg-alt); }
+/* 公式LINEからテキストリンク（インライン） */
+.line-txt-link {
+  color: var(--orange);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 700;
+  cursor: pointer;
+}
 .hamburger {
   display: none;
   flex-direction: column;
@@ -1848,7 +1856,7 @@ var CONFIG = {
       label:       "位置情報",
       src:         "videos/位置情報共有.mp4",
       poster:      "",
-      description: "送迎中は、担当する託送者の現在位置や送迎状況を公式LINEから確認できます。"
+      description: '送迎中は、担当する託送者の現在位置や送迎状況を<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>確認できます。'
     },
     {
       id:          "complete",
@@ -1919,7 +1927,7 @@ var CONFIG = {
   <!-- CTA① -->
   <div class="cta-wrap">
     <a class="btn-line js-cta" href="#">公式LINEで登録・相談する</a>
-    <p class="cta-sub">最初の約1か月は無料でご利用いただけます。<br class="br-sp">詳細や先行利用<span class="pc-only">の受付状況</span>は公式LINEからご確認ください。</p>
+    <p class="cta-sub">最初の約1か月は無料でご利用いただけます。<br class="br-sp">詳細や先行利用<span class="pc-only">の受付状況</span>は<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご確認ください。</p>
   </div>
 </section>
 
@@ -1963,8 +1971,8 @@ var CONFIG = {
           <path d="M14 31 L14 37 L22 31" stroke="#EF6B3A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <p class="line-notice-head">すべてが公式LINEから</p>
-      <p class="line-notice-desc">アプリのインストール不要。<br class="br-sp">利用登録、予約、位置情報共有などを<br class="br-sp">公式LINEから行えます。</p>
+      <p class="line-notice-head">すべてが<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a></p>
+      <p class="line-notice-desc">アプリのインストール不要。<br class="br-sp">利用登録、予約、位置情報共有などを<br class="br-sp"><a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>行えます。</p>
     </div>
   </div>
 </section>
@@ -2085,7 +2093,7 @@ var CONFIG = {
         <span class="license-title">送迎前に担当者を確認できます</span>
       </div>
       <p style="font-size:14px;color:var(--text-sub);margin-bottom:16px;line-height:1.8;">
-        保護者は公式LINEから、担当託送者について次の4項目を送迎前に確認できます。
+        保護者は<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>、担当託送者について次の4項目を送迎前に確認できます。
       </p>
       <div class="license-items-grid">
         <div class="license-item">顔写真・氏名</div>
@@ -2108,12 +2116,12 @@ var CONFIG = {
   <img class="ctamid-illust" src="finalcta-illust.png" alt="" aria-hidden="true">
   <img class="caution-illust" src="挿入画像/注意.png" alt="" aria-hidden="true">
   <p class="cta-mid-title"><span class="pc-only">安全性について、<br></span>もっと詳しく知りたい方へ</p>
-  <p class="cta-mid-desc">ご不明な点は公式LINEからお気軽にご相談ください。</p>
+  <p class="cta-mid-desc">ご不明な点は<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>お気軽にご相談ください。</p>
   <div style="display:flex;justify-content:center;">
     <a class="btn-line js-cta" href="#">公式LINEで登録・相談する</a>
   </div>
   <p class="cta-sub" style="color:rgba(255,255,255,0.58);margin-top:14px;">
-    利用できる地域や送迎内容、先行利用の受付状況について<span class="pc-only">、</span><br class="br-sp">公式LINEからご相談いただけます。
+    利用できる地域や送迎内容、先行利用の受付状況について<span class="pc-only">、</span><br class="br-sp"><a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご相談いただけます。
   </p>
 </div>
 
@@ -2129,13 +2137,13 @@ var CONFIG = {
     <div class="free-banner">
       <span class="free-banner-label">先行利用特典</span>
       <p class="free-banner-main">最初の<em>約1か月</em>は無料でご利用いただけます</p>
-      <p class="free-banner-note">無料期間は目安であり、正式な期間・条件について<span class="pc-only">は</span><br class="br-sp">公式LINEからご確認ください。</p>
+      <p class="free-banner-note">無料期間は目安であり、正式な期間・条件について<span class="pc-only">は</span><br class="br-sp"><a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご確認ください。</p>
     </div>
     <div class="price-guide">
       <button class="price-guide-sp-btn" id="priceGuideBtn">無料期間終了後の料金目安</button>
       <div class="price-guide-content">
         <strong>無料期間終了後の料金目安</strong><br class="br-sp">送迎時間に応じた時間制料金<br class="br-sp">（例：30分の送迎で目安1,000円前後）<br>
-        <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。<br class="br-sp">詳細は公式LINEからご確認ください。</span>
+        <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。<br class="br-sp">詳細は<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご確認ください。</span>
       </div>
     </div>
 
@@ -2144,7 +2152,7 @@ var CONFIG = {
       <div class="price-guide-modal-inner">
         <strong>無料期間終了後の料金目安</strong>
         送迎時間に応じた時間制料金<br>（例：30分の送迎で目安1,000円前後）<br><br>
-        <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。詳細は公式LINEからご確認ください。</span>
+        <span style="font-size:11px;">※ 料金は現在調整中のため変更となる場合があります。詳細は<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご確認ください。</span>
         <button class="price-guide-modal-close" id="priceGuideModalClose">閉じる</button>
       </div>
     </div>
@@ -2251,7 +2259,7 @@ var CONFIG = {
   </svg>
   <h2 class="final-title">まずは、送り迎えのお困りごとを<br class="br-sp">お聞かせください。</h2>
   <p class="final-desc">
-    <span class="pc-only">利用できる地域や送迎内容、先行利用の受付状況について、公式LINEからご相談いただけます。<br></span>
+    <span class="pc-only">利用できる地域や送迎内容、先行利用の受付状況について、<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご相談いただけます。<br></span>
     対象地域外の方からの事前登録も受け付けています。
   </p>
   <a class="btn-line js-cta" href="#" style="margin:0 auto 22px;">公式LINEで登録・相談する</a>
@@ -2447,7 +2455,7 @@ var CONFIG = {
       monBody.innerHTML   =
         '<p style="font-size:14px;color:var(--text-sub);line-height:1.85;margin-bottom:14px;">' +
           '現在、徒歩送迎の先行提供は定員に達したため受付を終了しています。<br>' +
-          '今後の利用に向けた事前登録・キャンセル待ちは、公式LINEから受け付けています。' +
+          '今後の利用に向けた事前登録・キャンセル待ちは、<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>受け付けています。' +
         '</p>' +
         '<dl class="monitor-dl">' +
           '<dt>対象地域</dt><dd>' + mon.area + '</dd>' +
@@ -2459,7 +2467,7 @@ var CONFIG = {
       monBody.innerHTML   =
         '<p style="font-size:14px;color:var(--text-sub);line-height:1.85;">' +
           '現在、徒歩送迎の先行利用受付は終了しています。<br>' +
-          '今後の利用については公式LINEからお問い合わせください。' +
+          '今後の利用については<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>お問い合わせください。' +
         '</p>';
     }
   }
@@ -2691,7 +2699,7 @@ var CONFIG = {
   var faqData = [
     {
       q: 'どの地域で利用できますか？',
-      a: '現在は' + CONFIG.monitor.area + 'を対象に、徒歩送迎の先行提供をしています。先行利用は先着' + CONFIG.monitor.capacity + '世帯です。受付状況については公式LINEからご確認いただけます。'
+      a: '現在は' + CONFIG.monitor.area + 'を対象に、徒歩送迎の先行提供をしています。先行利用は先着' + CONFIG.monitor.capacity + '世帯です。受付状況については<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>ご確認いただけます。'
     },
     {
       q: 'どのような送迎を依頼できますか？',
@@ -2703,7 +2711,7 @@ var CONFIG = {
     },
     {
       q: '担当する託送者は事前に確認できますか？',
-      a: 'はい。送迎を担当する託送者は、送迎前に公式LINEから確認できます。託送者免許証で顔写真、氏名、子どもに関わる経験や実績、過去の送迎回数、利用者からの評価などを確認できます。'
+      a: 'はい。送迎を担当する託送者は、送迎前に<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>確認できます。託送者免許証で顔写真、氏名、子どもに関わる経験や実績、過去の送迎回数、利用者からの評価などを確認できます。'
     },
     {
       q: '初回の送迎はどのように行いますか？',
@@ -2711,7 +2719,7 @@ var CONFIG = {
     },
     {
       q: '送迎中の位置情報は確認できますか？',
-      a: 'はい。送迎中は公式LINEから担当する託送者の現在位置や送迎状況を確認できます。また、送迎開始・送迎終了の通知も受け取ることができます。'
+      a: 'はい。送迎中は<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>担当する託送者の現在位置や送迎状況を確認できます。また、送迎開始・送迎終了の通知も受け取ることができます。'
     },
     {
       q: '料金はいつからいつまで計算されますか？',
@@ -2723,7 +2731,7 @@ var CONFIG = {
     },
     {
       q: 'キャンセルした場合はどうなりますか？',
-      a: 'キャンセル方法やキャンセル料などの詳細は現在整備を進めています。正式な運用内容が確定次第、ホームページおよび公式LINEで案内します。不明点については公式LINEから問い合わせできます。'
+      a: 'キャンセル方法やキャンセル料などの詳細は現在整備を進めています。正式な運用内容が確定次第、ホームページおよび公式LINEで案内します。不明点については<a href="#" class="js-cta line-txt-link" target="_blank" rel="noopener noreferrer">公式LINEから</a>問い合わせできます。'
     },
     {
       q: '利用できない内容はありますか？',
@@ -3058,6 +3066,11 @@ var CONFIG = {
       });
     });
   }
+
+  /* 動的生成コンテンツ内のjs-ctaリンクにも適用 */
+  document.querySelectorAll('.js-cta').forEach(function (el) {
+    el.href = CONFIG.parentLineUrl;
+  });
 
 })();
 
