@@ -3089,6 +3089,67 @@ var CONFIG = {
 
   if (!overlay || !video) return;
 
+  /* --------------------------------------------------
+     ロゴ収縮アニメーション
+     イントロ終了直後: 中央に大きなロゴ → ヘッダー位置へ収縮
+  -------------------------------------------------- */
+  function startLogoAnimation() {
+    var headerLogoEl = document.querySelector('.logo-img');
+    var isMobile     = window.innerWidth <= 768;
+    var logoSize     = isMobile ? 96 : 120;
+
+    /* 白オーバーレイ（z-index:9999 = イントロ下・他の要素上） */
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#fff;display:flex;align-items:center;justify-content:center;pointer-events:none;';
+
+    /* ロゴ画像（大サイズ・中央） */
+    var img = document.createElement('img');
+    img.src = 'logo.png';
+    img.alt = '';
+    img.style.cssText = 'display:block;width:' + logoSize + 'px;height:' + logoSize + 'px;border-radius:50%;object-fit:contain;transform-origin:50% 50%;will-change:transform;';
+
+    wrap.appendChild(img);
+    document.body.appendChild(wrap);
+
+    /* ヘッダーロゴは収縮先と重ならないよう非表示 */
+    if (headerLogoEl) headerLogoEl.style.opacity = '0';
+
+    /* 0.6s 表示後に収縮 */
+    setTimeout(function () {
+      if (!headerLogoEl) {
+        wrap.style.transition = 'opacity 0.4s';
+        wrap.style.opacity = '0';
+        setTimeout(function () { wrap.remove(); }, 400);
+        return;
+      }
+
+      /* getBoundingClientRect で実行時の正確な位置を取得（SP/PC共通） */
+      var rect    = headerLogoEl.getBoundingClientRect();
+      var targetX = rect.left + rect.width  / 2;
+      var targetY = rect.top  + rect.height / 2;
+      var originX = window.innerWidth  / 2;
+      var originY = window.innerHeight / 2;
+      var tx      = targetX - originX;
+      var ty      = targetY - originY;
+      var sc      = rect.width / logoSize;
+
+      img.style.transition = 'transform 0.9s cubic-bezier(0.4,0,0.2,1)';
+      img.style.transform  = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+
+      /* 収縮完了後: オーバーレイをフェードアウト & ヘッダーロゴを復元 */
+      setTimeout(function () {
+        wrap.style.transition = 'opacity 0.25s ease';
+        wrap.style.opacity    = '0';
+        headerLogoEl.style.transition = 'opacity 0.25s ease';
+        headerLogoEl.style.opacity    = '1';
+        setTimeout(function () {
+          wrap.remove();
+          headerLogoEl.style.transition = '';
+        }, 250);
+      }, 900);
+    }, 600);
+  }
+
   /* 既視済みなら即除去してページを解放 */
   if (sessionStorage.getItem(KEY)) {
     overlay.remove();
@@ -3110,11 +3171,12 @@ var CONFIG = {
     document.documentElement.style.overflow = '';
     overlay.classList.add('intro-fade-out');
     overlay.addEventListener('animationend', function () {
+      startLogoAnimation(); /* イントロ透明化直後にロゴオーバーレイを先に作成 */
       overlay.remove();
     }, { once: true });
   }
 
-  /* 動画終了 → フェードアウト → ページ表示 */
+  /* 動画終了 → フェードアウト → ロゴアニメーション */
   video.addEventListener('ended', dismiss);
 
   /* 動画読み込み・再生エラー時はオーバーレイを即除去して通常表示 */
@@ -3128,7 +3190,7 @@ var CONFIG = {
   overlay.addEventListener('touchmove',   function (e) { e.preventDefault(); }, { passive: false });
   overlay.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
-  /* 自動再生（ブラウザポリシーでブロックされた場合はオーバーレイを解除） */
+  /* 自動再生（ブラウザポリシーでブロックされた場合はオーバーレイを即除去） */
   var p = video.play();
   if (p !== undefined) {
     p.catch(function () {
