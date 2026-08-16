@@ -3091,18 +3091,20 @@ var CONFIG = {
 
   /* --------------------------------------------------
      ロゴ収縮アニメーション
-     イントロ終了直後: 中央に大きなロゴ → ヘッダー位置へ収縮
+     dismiss() 内でオーバーレイを先に作成し、
+     イントロのフェード中に白背景が透けて見えるようにすることで
+     フェード完了後の「間」をなくす
   -------------------------------------------------- */
-  function startLogoAnimation() {
+
+  /* ① フェード開始前にオーバーレイとロゴ画像を DOM に追加 */
+  function prepLogoAnim() {
     var headerLogoEl = document.querySelector('.logo-img');
     var isMobile     = window.innerWidth <= 768;
     var logoSize     = isMobile ? 96 : 120;
 
-    /* 白オーバーレイ（z-index:9999 = イントロ下・他の要素上） */
     var wrap = document.createElement('div');
     wrap.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#fff;display:flex;align-items:center;justify-content:center;pointer-events:none;';
 
-    /* ロゴ画像（大サイズ・中央） */
     var img = document.createElement('img');
     img.src = 'logo.png';
     img.alt = '';
@@ -3111,40 +3113,41 @@ var CONFIG = {
     wrap.appendChild(img);
     document.body.appendChild(wrap);
 
-    /* ヘッダーロゴは収縮先と重ならないよう非表示 */
     if (headerLogoEl) headerLogoEl.style.opacity = '0';
 
-    /* 0.6s 表示後に収縮 */
+    return { wrap: wrap, img: img, headerLogoEl: headerLogoEl, logoSize: logoSize };
+  }
+
+  /* ② イントロ除去後に収縮アニメーションを実行 */
+  function runLogoShrink(d) {
     setTimeout(function () {
-      if (!headerLogoEl) {
-        wrap.style.transition = 'opacity 0.4s';
-        wrap.style.opacity = '0';
-        setTimeout(function () { wrap.remove(); }, 400);
+      if (!d.headerLogoEl) {
+        d.wrap.style.transition = 'opacity 0.4s';
+        d.wrap.style.opacity    = '0';
+        setTimeout(function () { d.wrap.remove(); }, 400);
         return;
       }
 
-      /* getBoundingClientRect で実行時の正確な位置を取得（SP/PC共通） */
-      var rect    = headerLogoEl.getBoundingClientRect();
+      var rect    = d.headerLogoEl.getBoundingClientRect();
       var targetX = rect.left + rect.width  / 2;
       var targetY = rect.top  + rect.height / 2;
       var originX = window.innerWidth  / 2;
       var originY = window.innerHeight / 2;
       var tx      = targetX - originX;
       var ty      = targetY - originY;
-      var sc      = rect.width / logoSize;
+      var sc      = rect.width / d.logoSize;
 
-      img.style.transition = 'transform 0.9s cubic-bezier(0.4,0,0.2,1)';
-      img.style.transform  = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+      d.img.style.transition = 'transform 0.9s cubic-bezier(0.4,0,0.2,1)';
+      d.img.style.transform  = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
 
-      /* 収縮完了後: オーバーレイをフェードアウト & ヘッダーロゴを復元 */
       setTimeout(function () {
-        wrap.style.transition = 'opacity 0.25s ease';
-        wrap.style.opacity    = '0';
-        headerLogoEl.style.transition = 'opacity 0.25s ease';
-        headerLogoEl.style.opacity    = '1';
+        d.wrap.style.transition          = 'opacity 0.25s ease';
+        d.wrap.style.opacity             = '0';
+        d.headerLogoEl.style.transition  = 'opacity 0.25s ease';
+        d.headerLogoEl.style.opacity     = '1';
         setTimeout(function () {
-          wrap.remove();
-          headerLogoEl.style.transition = '';
+          d.wrap.remove();
+          d.headerLogoEl.style.transition = '';
         }, 250);
       }, 900);
     }, 600);
@@ -3169,10 +3172,14 @@ var CONFIG = {
     sessionStorage.setItem(KEY, '1');
     document.body.style.overflow        = '';
     document.documentElement.style.overflow = '';
+
+    /* フェード開始前にオーバーレイを作成 → イントロが透けるにつれ白背景が見え間が生じない */
+    var animData = prepLogoAnim();
+
     overlay.classList.add('intro-fade-out');
     overlay.addEventListener('animationend', function () {
-      startLogoAnimation(); /* イントロ透明化直後にロゴオーバーレイを先に作成 */
       overlay.remove();
+      runLogoShrink(animData);
     }, { once: true });
   }
 
